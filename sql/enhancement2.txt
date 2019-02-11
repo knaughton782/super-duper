@@ -1,0 +1,15 @@
+
+insert into clients (clientFirstname, clientLastname, clientEmail, clientPassword, comments) Values ("Tony", "Stark", "tony@starknet.com", "Iam1ronM@n", "I am the real Ironman");
+
+
+update clients SET clientLevel = 3 where clientLevel = 1;
+
+
+update inventory set invName = replace("Nylon Rope", "Nylon", "Climbing"), invDescription = replace("This nylon rope is ideal for all uses. Each rope is the highest quality nylon and comes in 100 foot lengths.", "nylon", "climbing") where invId = 15;
+
+
+select invName, categoryName from inventory inner join categories on inventory.categoryId = categories.categoryId where categories.categoryName = "Misc";
+
+
+delete from inventory where invName = "Koenigsegg CCX Car";
+
