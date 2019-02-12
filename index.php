@@ -42,7 +42,7 @@ switch ($action) {
     case 'login':
         include 'view/login.php';
         break;
-    case 'registration':
+    case 'register':
         include 'view/registration.php';
         break;
     case 'template':

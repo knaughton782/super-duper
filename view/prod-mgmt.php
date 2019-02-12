@@ -8,6 +8,6 @@
 
 /*
  * two links to add a new category and new product 
- * both links should direct back to products controller passing a key/value pair to direct tehe controller
+ * both links should direct back to products controller passing a key/value pair to direct the controller to provide the needed view
  */ 
 

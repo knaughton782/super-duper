@@ -8,5 +8,5 @@
 
 /*
  * only requires a new name
- * auto incrementing id
+ * auto incrementing id so you don't need to ask for that
  */

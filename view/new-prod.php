@@ -6,6 +6,7 @@
  * and open the template in the editor.
  */
 
-/* select dropdown list for entering category type
+/* for adding a new product
+ *  select dropdown list for entering category type
  *  this list is dynamically created from db by controller
  */

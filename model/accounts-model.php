@@ -9,7 +9,7 @@ function regClient($clientFirstname, $clientLastname, $clientEmail, $clientPassw
         
     $db = acmeConnect();  //create db connection object
     
-    $sql = 'Insert into clients (clientFirsname, clientLastname, clientEmail, clientPassword) values (:clientFirstname, :clientLastname, :clientEmail, :clientPassword)';  //the sql query
+    $sql = 'Insert into clients (clientFirstname, clientLastname, clientEmail, clientPassword) values (:clientFirstname, :clientLastname, :clientEmail, :clientPassword)';  //the sql query
     
     $stmt = $db->prepare($sql); //create the prepared statement using the acme db connection
     
