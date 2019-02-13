@@ -155,11 +155,16 @@ input[type=submit]:hover {
 
     #heroSection {
         background-image: url("../images/site/rocketfeature.jpg");
+        width: 100%;
         background-size: cover;
         background-position: center;
-        display: flex;
+        padding-bottom: 35%;
+/*        display: flex;
         justify-content: flex-end;
-        align-items: center;
+        align-items: center;*/
+/*     
+       
+        */
     }
 
     .acmeRocket {

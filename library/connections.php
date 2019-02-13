@@ -4,9 +4,8 @@
 function acmeConnect(){
  $server = 'localhost';
  $dbname= 'acme';
-
- $username = '********';
- $password = '**************';
+ $username = 'iClient';
+ $password = 'gUjL5swVbXl1EhcV';
  $dsn = "mysql:host=$server;dbname=$dbname";
  $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 
