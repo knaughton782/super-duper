@@ -5,6 +5,7 @@
  */
 require_once '../library/connections.php'; //get db connection (must be first)
 require_once '../model/acme-model.php'; //get model (gets info from db)
+require_once '../model/products-model.php'; //get model (gets info from db)
 
 // TODO: use the products model which hasn't been created yet
 //TODO: create the catlist variable to build a drop down select list, category name must appear but the value shoudl be the category id
@@ -23,6 +24,19 @@ $navList .= '</ul>';
 
 //echo $navList;
 //exit;
+
+//dynamic drop-down select list
+$catList = '<select>';
+$catList .= "<option value=1>Cannon</option>";
+foreach ($categories as $category) {
+    $catList .= "<option><a href='/acme/index.php?action=" . urlencode($category['categoryName']) . "' title='View our $category[categoryName] product line'>$category[categoryName]</a></option>";
+}
+$catList .= '</select>';
+
+//echo $catList;
+//exit;
+
+
 
 $action = filter_input(INPUT_POST, 'action');
 if ($action == null) {
