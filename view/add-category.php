@@ -6,17 +6,18 @@
 
 <main id="page-content"> 
   
-    <h1 class="siteTitle">Add A New Category</h1>
+    <h1 class="siteTitle">Add A Category</h1>
+    <h2>Use this form to add a new category.</h2>
 
     <section>
         <form action="" method="">
             <fieldset>
-                <label for="categoryName"> </label><br>
+                <label for="categoryName">New Category: </label><br>
                 <input type="text" name="categoryName" id="categoryName"><br>
                 
-                <input type="submit" name="submit" class="" value="Add Category">
+                <input type="submit" name="submit" class="addCategoryBtn" value="Add Category">
                 <!--add the action key/value pair-->
-                <input type="hidden" name="action" value="">
+                <input type="hidden" name="action" value="addNewCategory">
                 
             </fieldset>
             
