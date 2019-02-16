@@ -7,7 +7,7 @@
 
 // function to add new category to the acme categories table
 
-function addCategory() {
+function addCategory($categoryName) {
     
     $db = acmeConnect();  //create db connection object
     
