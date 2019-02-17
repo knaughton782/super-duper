@@ -11,8 +11,6 @@
     <section class="loginForm">
         <form action="/acme/accounts/index.php" method="post">
             <fieldset>
-
-
                 <label for="clientEmail">Email Address:</label><br>
                 <input type="email" name="clientEmail" id="clientEmail"><br>
                 
@@ -21,7 +19,7 @@
                 
                 <input type="submit" name='submit' class="loginBtn" value="Login">
                 <input type="hidden" name="action" value="signin">
-            <fieldset>
+            </fieldset>
         </form>
         </section>
         <section>

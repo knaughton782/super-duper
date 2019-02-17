@@ -9,7 +9,7 @@ require_once '../model/products-model.php'; //get model (gets info from db)
 
 // TODO: use the catlist variable in the add product view
 //get array of products - db column invName
-
+$categories = getCategories();
 
 //dynamic navigation
 $navList = '<ul>';
@@ -28,8 +28,8 @@ foreach ($categories as $category) {
     $catList .= '<option value="" ' . $category['categoryId'] . '>' . $category['categoryName'] . '</option>';
 }
 $catList .= '</select>';
-//echo $catList;
-//exit;
+echo $catList;
+exit;
 
 
 //watching for name/value pairs
@@ -37,39 +37,41 @@ $action = filter_input(INPUT_POST, 'action');
 if ($action == NULL) {
     $action = filter_input(INPUT_GET, 'action');
     if ($action == NULL) {
-        $action = 'prod-mgmt';
+        $action = 'product-management'; //is this the correct default $action?
     }
 }
 
-//TODO: FIX REGOUTCOME VARIABLE
-
 switch ($action) {
+    
+    //process category request
      case 'add-category':
 //        echo 'You are hoping for the new category page'; 
 //        exit;
         $categoryName = filter_input(INPUT_POST, 'categoryName');
                
         if (empty($categoryName)) {
-            $message = '<p>All form fields are required. Please provide complete information.</p>';
+            $message = '<p>All fields are required. Please provide complete information.</p>';
             include '../view/add-category.php';
             exit;
         }
         
         //call the function and send info to model
-        $regOutcome = regCategory($categoryName);
-        //TODO: chg function to match category instead of register
-                
+        $catOutcome = addCategory($categoryName);
+                      
         // is the return value = 1? One row changed in the db
-        if ($regOutcome === 1) {
+        if ($catOutcome === 1) {
             $message = "<p>Thank you for adding $categoryName. </p>";
             include '../view/add-category.php';
             exit;
         } else {
             $message = "<p>Sorry! $categoryName was not added. Please try again.</p>";
-            include '../view/new-cat.php';
+            include '../view/add-category.php';
             exit;
         }
         break;
+        
+        
+        //process products request
    case 'add-product':
 //        echo 'You are hoping for the new product page'; 
 //        exit;
@@ -82,30 +84,34 @@ switch ($action) {
         $invSize = filter_input(INPUT_POST, 'invSize');
         $invWeight = filter_input(INPUT_POST, 'invWeight');
         $invLocation = filter_input(INPUT_POST, 'invLocation');
+        $categoryId = filter_input(INPUT_POST, 'categoryId');
         $invVendor = filter_input(INPUT_POST, 'invVendor');
         $invStyle = filter_input(INPUT_POST, 'invStyle');
                
-        if (empty($invName) || empty($invDescription) || empty($invImage) || empty($invThumbnail) || empty($invPrice) || empty($invStock) || empty($invSize) || empty($invWeight) || empty($invLocation) || empty($invVendor) || empty($invStyle)) {
+        if (empty($invName) || empty($invDescription) || empty($invImage) || empty($invThumbnail) || empty($invPrice) || empty($invStock) || empty($invSize) || empty($invWeight) || empty($invLocation) || empty($categoryId) || empty($invVendor) || empty($invStyle)) {
             $message = '<p>All form fields are required. Please provide complete information for all form fields.</p>';
             include '../view/add-product.php';
             exit;
         }
         
         //call the function and send info to model
-        $regOutcome = regCategory($invName, $invDescription, $invImage, $invThumbnail, $invPrice, $invStock, $invSize, $invWeight, $invLocation, $invVendor, $invStyle);
-        //TODO: chg function to match product instead of register
+        $prodOutcome = addProduct($invName, $invDescription, $invImage, $invThumbnail, $invPrice, $invStock, $invSize, $invWeight, $invLocation, $categoryId, $invVendor, $invStyle);
+        
                 
         // is the return value = 1? One row changed in the db
-        if ($regOutcome === 1) {
-            $message = "<p>Thank you for adding $categoryName. </p>";
-            include '../view/add-category.php';
+        if ($prodOutcome === 1) {
+            $message = "<p>Thank you for adding $invName. </p>";
+            include '../view/add-product.php';
             exit;
         } else {
-            $message = "<p>Sorry! $categoryName was not added. Please try again.</p>";
-            include '../view/new-cat.php';
+            $message = "<p>Sorry! $invName was not added. Please try again.</p>";
+            include '../view/add-product.php';
             exit;
         }
         break;
+     case 'product-managment':
+          include '../view/product-management.php';
+         break;
     default:
-        include '../view/prod-mgmt.php';
+        include '../view/product-management.php';
 }

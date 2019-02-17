@@ -8,13 +8,14 @@
     <h1 class="siteTitle">Product Management</h1>
     <h2>Add a Category or a Product</h2>
 
-    <section>
+    <section class="prodMgt">
         <p>Please choose an option:</p>
+        <br>
         <ul>
-            <li><a href="/acme/products/index.php?action=add-category">Add a New Category</li>
-            <li><a href="/acme/products/index.php?action=add-product">Add a New Product</li>
+            <!--do I deliver view here or name/value pair?-->
+            <li><a href="/acme/index.php?action=add-category">Add a New Category</a></li> 
+            <li><a href="/acme/index.php?action=add-product">Add a New Product</a></li>
         </ul>
-
     </section>
 
 </main>

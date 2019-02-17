@@ -4,9 +4,7 @@
  *  Products Model
  */
 
-
 // function to add new category to the acme categories table
-
 function addCategory($categoryName) {
     
     $db = acmeConnect();  //create db connection object
@@ -32,7 +30,7 @@ function addProduct($invName, $invDescription, $invImage, $invThumbnail, $invPri
     
     $db = acmeConnect();  //create db connection object
     
-    $sql = 'insert into inventory ( invName, invDescription, invImage, invThumbnail, invPrice, invStock, invSize, invWeight, invLocation, invVendor, invStyle) values (:invName, :invDescription, :invImage, :invThumbnail, :invPrice, :invStock, :invSize, :invWeight, :invLocation, :invVendor, :invStyle, )'; //sql query
+    $sql = 'insert into inventory ( invName, invDescription, invImage, invThumbnail, invPrice, invStock, invSize, invWeight, invLocation, categoryId, invVendor, invStyle) values (:invName, :invDescription, :invImage, :invThumbnail, :invPrice, :invStock, :invSize, :invWeight, :invLocation, :categoryId, :invVendor, :invStyle, )'; //sql query
     
     $stmt = $db->prepare($sql); //prepared statement
     
@@ -46,6 +44,7 @@ function addProduct($invName, $invDescription, $invImage, $invThumbnail, $invPri
     $stmt->bindValue(':invSize', $invSize, PDO::PARAM_STR);
     $stmt->bindValue(':invWeight', $invWeight, PDO::PARAM_STR);
     $stmt->bindValue(':invLocation', $invLocation, PDO::PARAM_STR);
+    $stmt->bindValue(':categoryId', $categoryId, PDO::PARAM_STR);
     $stmt->bindValue(':invVendor', $invVendor, PDO::PARAM_STR);
     $stmt->bindValue(':invStyle', $invStyle, PDO::PARAM_STR);
     
