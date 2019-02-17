@@ -19,7 +19,7 @@
                 
                 <input type="submit" name="submit" class="addCategoryBtn" value="Add Category">
                 <!--add the action key/value pair-->
-                <input type="hidden" name="action" value="addNewCategory">
+                <input type="hidden" name="action" value="add-category">
                 
             </fieldset>
             

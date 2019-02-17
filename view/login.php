@@ -18,14 +18,14 @@
                 <input type="password" name='clientPassword' id='clientPassword' ><br>
                 
                 <input type="submit" name='submit' class="loginBtn" value="Login">
-                <input type="hidden" name="action" value="signin">
+                <input type="hidden" name="action" value="login">
             </fieldset>
         </form>
         </section>
         <section>
             <h2>Need to Create an Account?</h2> <br>
             <a href="/acme/index.php?action=register" title="Click to Register for an Account" id="registrationLink">Click to Register</a>
-            <!--TODO: Style link to look like button-->
+           
         </section>
         </main>
         <?php include $_SERVER['DOCUMENT_ROOT'] . '/acme/common/footer.php'; ?>

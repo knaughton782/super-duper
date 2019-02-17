@@ -1,14 +1,12 @@
 <?php
 
 /*
- *  Products controller 
+ *  Products controller ... direct user to add product or add category page and save info to the inventory or categories table in db
  */
 require_once '../library/connections.php'; //get db connection (must be first)
 require_once '../model/acme-model.php'; //get model (gets info from db)
 require_once '../model/products-model.php'; //get model (gets info from db)
 
-// TODO: use the catlist variable in the add product view
-//get array of products - db column invName
 $categories = getCategories();
 
 //dynamic navigation
@@ -42,8 +40,7 @@ if ($action == NULL) {
 }
 
 switch ($action) {
-    
-    //process category request
+        //process category request
      case 'add-category':
 //        echo 'You are hoping for the new category page'; 
 //        exit;
@@ -60,8 +57,8 @@ switch ($action) {
                       
         // is the return value = 1? One row changed in the db
         if ($catOutcome === 1) {
-            $message = "<p>Thank you for adding $categoryName. </p>";
-            include '../view/add-category.php';
+//            $message = "<p>Thank you for adding $categoryName. </p>";
+            include '/acme/products/index.php';
             exit;
         } else {
             $message = "<p>Sorry! $categoryName was not added. Please try again.</p>";
@@ -100,7 +97,7 @@ switch ($action) {
                 
         // is the return value = 1? One row changed in the db
         if ($prodOutcome === 1) {
-            $message = "<p>Thank you for adding $invName. </p>";
+            $message = "<p>Thank you for adding $invName! </p>";
             include '../view/add-product.php';
             exit;
         } else {
@@ -109,7 +106,7 @@ switch ($action) {
             exit;
         }
         break;
-     case 'product-managment':
+     case 'product-management':
           include '../view/product-management.php';
          break;
     default:

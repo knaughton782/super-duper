@@ -1,25 +1,21 @@
 <?php include $_SERVER['DOCUMENT_ROOT'] . '/acme/common/header.php'; ?>
-
-<!--
-for adding a new product
-select dropdown list for entering category type
-this list is dynamically created from db by controller
--->
-
+<?php
+    if (isset($message)) {
+        echo $message;
+    }
+    ?>
 <main id="page-content"> 
 
     <h1 class="siteTitle">Add a Product</h1>
-    <h2>Use this form to add a new product. ALL FIELDS ARE REQUIRED.</h2>
+    <h2>Use this form to add a new product. </h2>
+    <p>*All fields are required.</p>
     <section>
     
     <form action="/acme/products/index.php" method="post">
         <fieldset>
-            <p id="selectCateory">
+            <p id="selectCategory">
                 <label for="categoryId">Category:</label><br>
-                <select name="categoryId" id="categoryId">
-                    <option value="chooseCat" selected>Choose a Category:</option>
-                    <option><?php echo $catList;?></option>
-                </select>
+                <?php echo $catList;?>
             </p>
                 <label for="invName">Product Name: </label><br>
                 <input type="text" name="invName" id="invName"><br>
@@ -28,10 +24,10 @@ this list is dynamically created from db by controller
                 <input type="text" name="invDescription" id="invDescription"><br>
 
                 <label for="invImage">Product Image (path to image): </label><br>
-                <input type="text" name="invImage" id="invImage"><br>
-
+                <input type="text" name="invImage" id="invImage" ><br>
+                <!--TODO: google hard-coding images into form fields-->
                 <label for="invThumbnail">Product Thumbnail (path to thumbnail): </label><br>
-                <input type="text" name="invThumbnail" id="invThumbnail"><br>
+                <input type="text" name="invThumbnail" id="invThumbnail" ><br>
                 
                  <label for="invPrice">Product Price: </label><br>
                 <input type="text" name="invPrice" id="invPrice"><br>
@@ -56,7 +52,7 @@ this list is dynamically created from db by controller
 
                 <input type="submit" name="submit" class="addProductBtn" value="Add Product">
                 <!--add the action key/value pair-->
-                <input type="hidden" name="action" value="addNewProduct">
+                <input type="hidden" name="action" value="add-product">
            
             </fieldset>
         </form>

@@ -2,7 +2,6 @@
 
 <!-- Product Management View -->
 
-
 <main id="page-content"> 
 
     <h1 class="siteTitle">Product Management</h1>
@@ -12,9 +11,8 @@
         <p>Please choose an option:</p>
         <br>
         <ul>
-            <!--do I deliver view here or name/value pair?-->
-            <li><a href="/acme/index.php?action=add-category">Add a New Category</a></li> 
-            <li><a href="/acme/index.php?action=add-product">Add a New Product</a></li>
+            <li><a href="/acme/products/index.php?action=add-category">Add a New Category</a></li> 
+            <li><a href="/acme/products/index.php?action=add-product">Add a New Product</a></li>
         </ul>
     </section>
 

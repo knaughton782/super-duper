@@ -1,7 +1,7 @@
 <?php
 
 /*
- * accounts controller ....... should direct the user to a page and save something to the clients table in db
+ * accounts controller ... direct the user to a page and save info to clients table in db
  */
 require_once '../library/connections.php'; //get db connection 
 require_once '../model/acme-model.php'; //get model
@@ -41,7 +41,6 @@ switch ($action) {
         
         //call the function and send info to model
         $regOutcome = regClient($clientFirstname, $clientLastname, $clientEmail, $clientPassword);
-        
         
         // is the return value = 1? One row changed in the db
         if ($regOutcome === 1) {

@@ -48,6 +48,9 @@ switch ($action) {
     case 'template':
         include 'template/template.php';
         break;
+    case 'product-management':
+        include 'view/product-managment.php';
+        break;
     default:
         include 'view/home.php';
 }
