@@ -225,7 +225,7 @@ input[type=submit]:hover {
     }
 
     input:required:invalid, input:focus:invalid {
-        background-image: url(/images/invalid0.png);
+        background-image: url(/images/invalid.png);
         background-position: right top;
         background-repeat: no-repeat;
     }

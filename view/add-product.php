@@ -8,7 +8,6 @@
 
     <h1 class="siteTitle">Add a Product</h1>
     <h2>Use this form to add a new product. </h2>
-    <p>*All fields are required.</p>
     <section>
     
     <form action="/acme/products/index.php" method="post">
@@ -52,7 +51,7 @@
 
                 <input type="submit" name="submit" class="addProductBtn" value="Add Product">
                 <!--add the action key/value pair-->
-                <input type="hidden" name="action" value="add-product">
+                <input type="hidden" name="action" value="addProd">
            
             </fieldset>
         </form>
