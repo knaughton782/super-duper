@@ -3,7 +3,7 @@
   
     <h1 class="siteTitle"></h1>
 
-     Hero description text
+<!--     Hero description text-->
     <section id="heroSection">
        
 

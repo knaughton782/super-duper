@@ -13,10 +13,10 @@
     
     <form action="/acme/products/index.php" method="post">
         <fieldset>
-            <p id="selectCategory">
+
                 <label for="categoryId">Category:</label><br>
                 <?php echo $catList;?>
-            </p>
+
                 <label for="invName">Product Name: </label><br>
                 <input type="text" name="invName" id="invName"><br>
 

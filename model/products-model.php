@@ -1,7 +1,7 @@
 <?php
 
 /* 
- *  Products Model
+ *  Products Model - all db functionality exists in the model
  */
 
 // function to add new category to the acme categories table
@@ -24,6 +24,7 @@ function addCategory($categoryName) {
     
     return $rowsChanged; //shows success or failure of sql query 
 }
+
 
 
 function addProduct($invName, $invDescription, $invImage, $invThumbnail, $invPrice, $invStock, $invSize, $invWeight, $invLocation, $invVendor, $invStyle) {

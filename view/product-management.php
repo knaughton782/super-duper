@@ -11,10 +11,15 @@
         <p>Please choose an option:</p>
         <br>
         <ul>
-            <li><a href="/acme/products/index.php?action=add-category">Add a New Category</a></li> 
-            <li><a href="/acme/products/index.php?action=add-product">Add a New Product</a></li>
+            <li><a href="/acme/products/index.php?action=addCat" title="Add a new Category">Add a New Category</a></li> 
+            <li><a href="/acme/products/index.php?action=addProd" title="Add a new Product">Add a New Product</a></li>
         </ul>
     </section>
+    <?php
+    if (isset($message)) {
+        echo $message;
+    }
+    ?>
 
 </main>
 

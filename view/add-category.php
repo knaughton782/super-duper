@@ -4,7 +4,7 @@
   
     <h1 class="siteTitle">Add A Category</h1>
     <h2>Use this form to add a new category.</h2>
-    <p>*All fields are required.</p>
+<!--    <p>*All fields are required.</p>-->
     <?php
     if (isset($message)) {
         echo $message;
@@ -19,7 +19,7 @@
                 
                 <input type="submit" name="submit" class="addCategoryBtn" value="Add Category">
                 <!--add the action key/value pair-->
-                <input type="hidden" name="action" value="add-category">
+                <input type="hidden" name="action" value="addCat">
                 
             </fieldset>
             

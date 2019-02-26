@@ -224,6 +224,18 @@ input[type=submit]:hover {
         background-color: #89002d;
     }
 
+    input:required:invalid, input:focus:invalid {
+        background-image: url(/images/invalid0.png);
+        background-position: right top;
+        background-repeat: no-repeat;
+    }
+
+    input:required:valid {
+        background-image: url(/images/valid.png);
+        background-position: right top;
+        background-repeat: no-repeat;
+    }
+
     /*************** footer ******************/
 
     .border {
@@ -244,6 +256,15 @@ input[type=submit]:hover {
         justify-content: center;
         align-items: center;
     }
+}
+.instructions {
+    font-size: .7em;
+    font-style: italic;
+}
+.warning {
+    font-size: .7em;
+    font-style: italic;
+    font-color: #de2226;
 }
 /*************************** media query for larger screens **************************************************************************/
 
