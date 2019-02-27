@@ -23,22 +23,22 @@
                 <input type="text" name="invDescription" id="invDescription"><br>
 
                 <label for="invImage">Product Image (path to image): </label><br>
-                <input type="text" name="invImage" id="invImage" ><br>
-                <!--TODO: google hard-coding images into form fields-->
+                <input type="text" name="invImage" id="invImage" value="/acme/images/no-img.png" ><br>
+                
                 <label for="invThumbnail">Product Thumbnail (path to thumbnail): </label><br>
-                <input type="text" name="invThumbnail" id="invThumbnail" ><br>
+                <input type="text" name="invThumbnail" id="invThumbnail" value="/acme/images/no-img.png"  ><br>
                 
                  <label for="invPrice">Product Price: </label><br>
-                <input type="text" name="invPrice" id="invPrice"><br>
+                 <input type="number" step=".05" name="invPrice" id="invPrice"><br>
                 
                  <label for="invStock">Number in Stock: </label><br>
-                <input type="text" name="invStock" id="invStock"><br>
+                 <input type="number" name="invStock" id="invStock"><br>
                 
                  <label for="invSize">Shipping Size (W x H x L in inches): </label><br>
-                <input type="text" name="invSize" id="invSize"><br>
+                <input type="number" name="invSize" id="invSize"><br>
                 
                  <label for="invWeight">Weight (lbs.): </label><br>
-                <input type="text" name="invWeight" id="invWeight"><br>
+                <input type="number" name="invWeight" id="invWeight"><br>
                 
                  <label for="invLocation">Location (city name): </label><br>
                 <input type="text" name="invLocation" id="invLocation"><br>

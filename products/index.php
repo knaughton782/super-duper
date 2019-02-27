@@ -19,7 +19,7 @@ $navList .= '</ul>';
 //echo $navList;
 //exit;
 //dynamic drop-down select list
-$catList = '<select name="categories">';
+$catList = '<select name="categoryId">';
 $catList .= '<option>Select an option: </option>';
 foreach ($categories as $category) {
     $catList .= '<option value=" ' . $category['categoryId'] . ' ">' . $category['categoryName'] . '</option>';
@@ -62,6 +62,8 @@ switch ($action) {
         break;
 
     case 'newProd': //delivers add product page
+        
+        $categoryId = filter_input(INPUT_POST, 'categoryId');
         $invName = filter_input(INPUT_POST, 'invName');
         $invDescription = filter_input(INPUT_POST, 'invDescription');
         $invImage = filter_input(INPUT_POST, 'invImage');
@@ -72,18 +74,17 @@ switch ($action) {
         $invSize = filter_input(INPUT_POST, 'invSize');
         $invWeight = filter_input(INPUT_POST, 'invWeight');
         $invLocation = filter_input(INPUT_POST, 'invLocation');
-        $categoryId = filter_input(INPUT_POST, 'categoryId');
         $invVendor = filter_input(INPUT_POST, 'invVendor');
         $invStyle = filter_input(INPUT_POST, 'invStyle');
 
-        if (empty($invName) || empty($invDescription) || empty($invImage) || empty($invThumbnail) || empty($invPrice) || empty($invStock) || empty($invSize) || empty($invWeight) || empty($invLocation) || empty($categoryId) || empty($invVendor) || empty($invStyle)) {
+        if (empty($categoryId) || empty($invName) || empty($invDescription) || empty($invImage) || empty($invThumbnail) || empty($invPrice) || empty($invStock) || empty($invSize) || empty($invWeight) || empty($invLocation) ||  empty($invVendor) || empty($invStyle)) {
             $message = '<p>All form fields are required. Please provide complete information for all form fields.</p>';
             include '../view/add-product.php';
             exit;
         }
 
         //call the function and send info to model
-        $prodOutcome = addProduct($invName, $invDescription, $invImage, $invThumbnail, $invPrice, $invStock, $invSize, $invWeight, $invLocation, $categoryId, $invVendor, $invStyle);
+        $prodOutcome = addProduct($categoryId, $invName, $invDescription, $invImage, $invThumbnail, $invPrice, $invStock, $invSize, $invWeight, $invLocation, $invVendor, $invStyle);
 
 
         // is the return value = 1? One row changed in the db
@@ -92,7 +93,7 @@ switch ($action) {
             include '../view/add-product.php';
             exit;
         } else {
-            $message = "<p>Sorry! $invName was not added. Please try again.</p>";
+            $message = '<p class="warning">Sorry! $invName was not added. Please try again.</p>';
             include '../view/add-product.php';
             exit;
         }
