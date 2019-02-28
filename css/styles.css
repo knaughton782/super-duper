@@ -51,6 +51,19 @@ input[type=submit]:hover {
     background-color: #89002d;
 }
 
+ input:required:invalid, input:focus:invalid {
+        background: #de222;
+        background-position: right top;
+        background-repeat: no-repeat;
+    }
+
+    input:required:valid {
+        background: green;
+        background-position: right top;
+        background-repeat: no-repeat;
+    }
+
+
 @media (min-width: 310px) {
     /* TODO: need to have a drop-down menu */
 
@@ -195,7 +208,6 @@ input[type=submit]:hover {
     
     .prodMgt {
         display: flex;
-        
     }
     
     /***************** forms *******************/
@@ -224,18 +236,7 @@ input[type=submit]:hover {
         background-color: #89002d;
     }
 
-    input:required:invalid, input:focus:invalid {
-        background-image: url(/images/invalid.png);
-        background-position: right top;
-        background-repeat: no-repeat;
-    }
-
-    input:required:valid {
-        background-image: url(/images/valid.png);
-        background-position: right top;
-        background-repeat: no-repeat;
-    }
-
+   
     /*************** footer ******************/
 
     .border {

@@ -12,10 +12,14 @@
         <form action="/acme/accounts/index.php" method="post">
             <fieldset>
                 <label for="clientEmail">Email Address:</label><br>
-                <input type="email" name="clientEmail" id="clientEmail" required><br>
+                <input type="email" name="clientEmail" id="clientEmail" <?php if (isset($clientEmail)) {
+                    echo "value'$clientEmail'";
+                } ?> required><br>
                 
-                <label for='clientPassword'>Password:</label><br>
-                <span class="instructions">Passwords must be at least 8 characters. Please include at least 1 number, 1 capital, and 1 special character.</span>
+                <label for='clientPassword'>Password:<br>
+                 <span class="instructions">Passwords must be at least 8 characters. Please include at least 1 number, 1 capital, and 1 special character.</span>
+                </label><br>
+               
                 <input type="password" name="clientPassword" id="clientPassword" required pattern="(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"><br>
                 
                 <input type="submit" name='submit' class="loginBtn" value="Login">

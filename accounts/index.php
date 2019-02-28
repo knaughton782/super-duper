@@ -6,6 +6,7 @@
 require_once '../library/connections.php'; //get db connection 
 require_once '../model/acme-model.php'; //get model
 require_once '../model/accounts-model.php'; //brings accounts-model into scope
+require_once '../library/functions.php'; //get helper functions
 
 //get array of categories
 $categories = getCategories();
@@ -25,15 +26,40 @@ if ($action == NULL) {
 }
 
 switch ($action) {
+    case 'login':
+        include '../view/login.php';
+        break;
+    
+    case 'Login':
+        $clientEmail = filter_input(INPUT_POST, 'clientEmail', FILTER_SANITIZE_EMAIL);
+        $clientPassword = filter_input(INPUT_POST, 'clientPassword', FILTER_SANITIZE_STRING);
+        
+         //validate email
+        $clientEmail = checkEmail($clientEmail);
+        //check password
+        $checkPassword = checkPassword($clientPassword);
+        
+        if (empty($clientEmail) || empty($checkPassword)) {
+            $message = '<p>Please provide information for all empty form fields.</p>';
+            include '../view/login.php';
+            exit;
+        }
+        break;
+    
     case 'register':
 //        echo 'You are hoping for the registration page'; 
 //        exit;
-        $clientFirstname = filter_input(INPUT_POST, 'clientFirstname');
-        $clientLastname = filter_input(INPUT_POST, 'clientLastname');
-        $clientEmail = filter_input(INPUT_POST, 'clientEmail');
-        $clientPassword = filter_input(INPUT_POST, 'clientPassword');
+        $clientFirstname = filter_input(INPUT_POST, 'clientFirstname', FILTER_SANITIZE_STRING);
+        $clientLastname = filter_input(INPUT_POST, 'clientLastname', FILTER_SANITIZE_STRING);
+        $clientEmail = filter_input(INPUT_POST, 'clientEmail', FILTER_SANITIZE_EMAIL);
+        $clientPassword = filter_input(INPUT_POST, 'clientPassword', FILTER_SANITIZE_STRING);
         
-        if (empty($clientFirstname) || empty($clientLastname) || empty($clientEmail) || empty($clientPassword)) {
+        //validate email
+        $clientEmail = checkEmail($clientEmail);
+        //check password
+        $checkPassword = checkPassword($clientPassword);
+        
+        if (empty($clientFirstname) || empty($clientLastname) || empty($clientEmail) || empty($checkPassword)) {
             $message = '<p>Please provide information for all empty form fields.</p>';
             include '../view/registration.php';
             exit;
