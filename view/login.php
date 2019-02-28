@@ -23,7 +23,7 @@
                 <input type="password" name="clientPassword" id="clientPassword" required pattern="(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"><br>
                 
                 <input type="submit" name='submit' class="loginBtn" value="Login">
-                <input type="hidden" name="action" value="login">
+                <input type="hidden" name="action" value="login_user">
             </fieldset>
         </form>
         </section>

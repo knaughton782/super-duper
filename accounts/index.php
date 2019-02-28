@@ -30,7 +30,7 @@ switch ($action) {
         include '../view/login.php';
         break;
     
-    case 'Login':
+    case 'login_user':
         $clientEmail = filter_input(INPUT_POST, 'clientEmail', FILTER_SANITIZE_EMAIL);
         $clientPassword = filter_input(INPUT_POST, 'clientPassword', FILTER_SANITIZE_STRING);
         
@@ -65,8 +65,11 @@ switch ($action) {
             exit;
         }
         
+        // Hash the checked password
+        $hashedPassword = password_hash($clientPassword, PASSWORD_DEFAULT);
+        
         //call the function and send info to model
-        $regOutcome = regClient($clientFirstname, $clientLastname, $clientEmail, $clientPassword);
+        $regOutcome = regClient($clientFirstname, $clientLastname, $clientEmail, $hashedPassword);
         
         // is the return value = 1? One row changed in the db
         if ($regOutcome === 1) {

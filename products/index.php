@@ -4,6 +4,7 @@
  *  Products controller ... direct user to add product or add category page and save info to the inventory or categories table in db
  */
 require_once '../library/connections.php'; //get db connection (must be first)
+require_once '../library/functions.php'; //get helper functions
 require_once '../model/acme-model.php'; //get model (gets info from db)
 require_once '../model/products-model.php'; //get model (gets info from db)
 
@@ -39,7 +40,7 @@ switch ($action) {
         break;
 
     case 'addCat': //processes new category logic
-        $categoryName = filter_input(INPUT_POST, 'categoryName');
+        $categoryName = filter_input(INPUT_POST, 'categoryName', FILTER_SANITIZE_STRING);
 
         //check for empty form fields
         if (empty($categoryName)) {
@@ -63,19 +64,18 @@ switch ($action) {
 
     case 'newProd': //delivers add product page
         
-        $categoryId = filter_input(INPUT_POST, 'categoryId');
-        $invName = filter_input(INPUT_POST, 'invName');
-        $invDescription = filter_input(INPUT_POST, 'invDescription');
-        $invImage = filter_input(INPUT_POST, 'invImage');
-        $invThumbnail = filter_input(INPUT_POST, 'invThumbnail');
-        $invPrice = filter_input(INPUT_POST, 'invPrice');
-        $invStock = filter_input(INPUT_POST, 'invStock', FILTER_VALIDATE_INT); //validate is looking for an integer here 
-//FILTER_SANITIZE_NUMBER_INT
-        $invSize = filter_input(INPUT_POST, 'invSize');
-        $invWeight = filter_input(INPUT_POST, 'invWeight');
-        $invLocation = filter_input(INPUT_POST, 'invLocation');
-        $invVendor = filter_input(INPUT_POST, 'invVendor');
-        $invStyle = filter_input(INPUT_POST, 'invStyle');
+        $categoryId = filter_input(INPUT_POST, 'categoryId', FILTER_SANITIZE_NUMBER_INT);
+        $invName = filter_input(INPUT_POST, 'invName', FILTER_SANITIZE_STRING);
+        $invDescription = filter_input(INPUT_POST, 'invDescription', FILTER_SANITIZE_STRING);
+        $invImage = filter_input(INPUT_POST, 'invImage', FILTER_SANITIZE_URL);
+        $invThumbnail = filter_input(INPUT_POST, 'invThumbnail', FILTER_SANITIZE_URL);
+        $invPrice = filter_input(INPUT_POST, 'invPrice', FILTER_FLAG_ALLOW_FRACTION, FILTER_SANITIZE_NUMBER_INT);
+        $invStock = filter_input(INPUT_POST, 'invStock', FILTER_VALIDATE_INT); 
+        $invSize = filter_input(INPUT_POST, 'invSize', FILTER_SANITIZE_NUMBER_INT);
+        $invWeight = filter_input(INPUT_POST, 'invWeight', FILTER_SANITIZE_NUMBER_INT);
+        $invLocation = filter_input(INPUT_POST, 'invLocation', FILTER_SANITIZE_STRING);
+        $invVendor = filter_input(INPUT_POST, 'invVendor', FILTER_SANITIZE_STRING);
+        $invStyle = filter_input(INPUT_POST, 'invStyle', FILTER_SANITIZE_STRING);
 
         if (empty($categoryId) || empty($invName) || empty($invDescription) || empty($invImage) || empty($invThumbnail) || empty($invPrice) || empty($invStock) || empty($invSize) || empty($invWeight) || empty($invLocation) ||  empty($invVendor) || empty($invStyle)) {
             $message = '<p>All form fields are required. Please provide complete information for all form fields.</p>';

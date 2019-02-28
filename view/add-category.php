@@ -15,7 +15,9 @@
         <form action="/acme/products/index.php" method="POST">
             <fieldset>
                 <label for="categoryName">Name of New Category: </label><br>
-                <input type="text" name="categoryName" id="categoryName"><br>
+                <input type="text" name="categoryName" id="categoryName" <?php if (isset($categoryName)) {
+                    echo "value='$categoryName'";
+                    } ?> required><br>
                 
                 <input type="submit" name="submit" class="addCategoryBtn" value="Add Category">
                 <!--add the action key/value pair-->
