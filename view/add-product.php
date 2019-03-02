@@ -1,4 +1,18 @@
-<?php include $_SERVER['DOCUMENT_ROOT'] . '/acme/common/header.php'; ?>
+<?php // dynamic drop-down select list
+    $catList = '<select name="categoryId" id="categoryId">';
+    $catList .= '<option>Select an option: </option>';
+        foreach ($categories as $category) {
+            $catList .= "<option value='$category[categoryId]' ";
+        if(isset($categoryId)) {
+            
+            if($category['categoryId'] === $categoryId) {
+                $catList .= ' selected ';
+            }
+        }
+            $catList .= ">$category[categoryName]</option>";
+        }
+   $catList .= '</select>';
+?><?php include $_SERVER['DOCUMENT_ROOT'] . '/acme/common/header.php'; ?>
 <?php
     if (isset($message)) {
         echo $message;

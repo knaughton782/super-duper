@@ -8,8 +8,8 @@ require_once '../library/functions.php'; //get helper functions
 require_once '../model/acme-model.php'; //get model (gets info from db)
 require_once '../model/products-model.php'; //get model (gets info from db)
 
-$categories = getCategories();
 
+$categories = getCategories();
 //dynamic navigation
 $navList = '<ul>';
 $navList .= "<li><a href='/acme/index.php' title='View the Acme home page'>Home</a></li>";
@@ -19,15 +19,18 @@ foreach ($categories as $category) {
 $navList .= '</ul>';
 //echo $navList;
 //exit;
+
+
 //dynamic drop-down select list
-$catList = '<select name="categoryId">';
-$catList .= '<option>Select an option: </option>';
-foreach ($categories as $category) {
-    $catList .= '<option value=" ' . $category['categoryId'] . ' ">' . $category['categoryName'] . '</option>';
-}
-$catList .= '</select>';
+//$catList = '<select name="categoryId">';
+//$catList .= '<option>Select an option: </option>';
+//foreach ($categories as $category) {
+//    $catList .= '<option value=" ' . $category['categoryId'] . ' ">' . $category['categoryName'] . '</option>';
+//}
+//$catList .= '</select>';
 //echo $catList;     // for testing
 //exit;
+
 //watching for name/value pairs
 $action = filter_input(INPUT_POST, 'action');
 if ($action == NULL) {
