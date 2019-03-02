@@ -10,26 +10,7 @@ require_once '../model/products-model.php'; //get model (gets info from db)
 
 
 $categories = getCategories();
-//dynamic navigation
-$navList = '<ul>';
-$navList .= "<li><a href='/acme/index.php' title='View the Acme home page'>Home</a></li>";
-foreach ($categories as $category) {
-    $navList .= "<li><a href='/acme/index.php?action=" . urlencode($category['categoryName']) . "' title='View our $category[categoryName] product line'>$category[categoryName]</a></li>";
-}
-$navList .= '</ul>';
-//echo $navList;
-//exit;
-
-
-//dynamic drop-down select list
-//$catList = '<select name="categoryId">';
-//$catList .= '<option>Select an option: </option>';
-//foreach ($categories as $category) {
-//    $catList .= '<option value=" ' . $category['categoryId'] . ' ">' . $category['categoryName'] . '</option>';
-//}
-//$catList .= '</select>';
-//echo $catList;     // for testing
-//exit;
+$navList = navList($categories);
 
 //watching for name/value pairs
 $action = filter_input(INPUT_POST, 'action');
