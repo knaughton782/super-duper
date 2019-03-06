@@ -67,7 +67,7 @@ switch ($action) {
         $invStyle = filter_input(INPUT_POST, 'invStyle', FILTER_SANITIZE_STRING);
 
         if (empty($categoryId) || empty($invName) || empty($invDescription) || empty($invImage) || empty($invThumbnail) || empty($invPrice) || empty($invStock) || empty($invSize) || empty($invWeight) || empty($invLocation) ||  empty($invVendor) || empty($invStyle)) {
-            $message = '<p>All form fields are required. Please provide complete information for all form fields.</p>';
+             $message = '<p>All form fields are required. Please provide complete information for all form fields.</p>';
             include '../view/add-product.php';
             exit;
         }
@@ -78,11 +78,11 @@ switch ($action) {
 
         // is the return value = 1? One row changed in the db
         if ($prodOutcome === 1) {
-            $message = "<p>Thank you for adding $invName! </p>";
+             $message = "<p>Thank you for adding $invName! </p>";
             include '../view/add-product.php';
             exit;
         } else {
-            $message = '<p class="warning">Sorry! $invName was not added. Please try again.</p>';
+             $message = '<p class="warning">Sorry! $invName was not added. Please try again.</p>';
             include '../view/add-product.php';
             exit;
         }

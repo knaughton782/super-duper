@@ -1,4 +1,4 @@
-<?php if (!$_SESSION['loggedin'] && $_SESSION['clientData']['clientLevel'] < 2) {
+<?php if (!$_SESSION['loggedin'] || $_SESSION['clientData']['clientLevel'] < 2) {
     header('location: /acme/');
     exit;
 }
@@ -18,8 +18,8 @@
    $catList .= '</select>';
 ?><?php include $_SERVER['DOCUMENT_ROOT'] . '/acme/common/header.php'; ?>
 <?php
-    if (isset($message)) {
-        echo $message;
+     if (isset($message)) {
+        echo  $message;
     }
     ?>
 <main id="page-content"> 

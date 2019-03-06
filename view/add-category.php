@@ -1,4 +1,4 @@
- <?php if (!$_SESSION['loggedin'] && $_SESSION['clientData']['clientLevel'] < 2) {
+ <?php if (!$_SESSION['loggedin'] || $_SESSION['clientData']['clientLevel'] < 2) {
     header('location: /acme/');
     exit;
 }
@@ -10,8 +10,8 @@
     <h2>Use this form to add a new category.</h2>
 <!--    <p>*All fields are required.</p>-->
     <?php
-    if (isset($message)) {
-        echo $message;
+    if (isset( $message)) {
+        echo  $message;
     }
     ?>
 

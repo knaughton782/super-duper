@@ -3,8 +3,9 @@
     <h1 class="siteTitle">Acme Registration</h1>
     <p>All fields are required.</p>
     <?php
-    if (isset($message)) {
-        echo $message;
+     if (isset($message)) {
+        echo  $message;
+    
     }
     ?>
 

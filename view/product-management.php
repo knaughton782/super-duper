@@ -1,4 +1,4 @@
-<?php if (!$_SESSION['loggedin'] && $_SESSION['clientData']['clientLevel'] < 2) {
+<?php if (!$_SESSION['loggedin'] || $_SESSION['clientData']['clientLevel'] < 2) {
     header('location: /acme/');
     exit;
 }
@@ -7,6 +7,13 @@
 <!-- Product Management View -->
 
 <main id="page-content"> 
+    
+    <?php
+    if (isset($message)) {
+        echo  $message;
+     
+    }
+    ?>
 
     <h1 class="siteTitle">Product Management</h1>
     <h2>Add a Category or a Product</h2>
@@ -19,11 +26,7 @@
             <li><a href="/acme/products/index.php?action=addProd" title="Add a new Product">Add a New Product</a></li>
         </ul>
     </section>
-    <?php
-    if (isset($message)) {
-        echo $message;
-    }
-    ?>
+    
     
 </main>
 
