@@ -1,23 +1,15 @@
 <?php
 
 /*
- * accounts controller ... direct the user to a page and save info to clients table in db
+ * ACCOUNTS controller (direct the user to a page and save info to db)
  */
 require_once '../library/connections.php'; //get db connection 
 require_once '../model/acme-model.php'; //get model
 require_once '../model/accounts-model.php'; //brings accounts-model into scope
 require_once '../library/functions.php'; //get helper functions
 
-//get array of categories
 $categories = getCategories();
-
-//dynamic navigation
-$navList = '<ul>';
-$navList .= "<li><a href='/acme/index.php' title='View the Acme home page'>Home</a></li>";
-foreach ($categories as $category) {
-    $navList .= "<li><a href='/acme/index.php?action=" . urlencode($category['categoryName']) . "' title='View our $category[categoryName] product line'>$category[categoryName]</a></li>";
-}
-$navList .= '</ul>';
+$navList = navList($categories);
 
 // watch for name/value pairs
 $action = filter_input(INPUT_POST, 'action');
@@ -84,6 +76,6 @@ switch ($action) {
         break;
    
     default:
-        include '../view/login.php';
+        include '../view/admin.php';
 }
 

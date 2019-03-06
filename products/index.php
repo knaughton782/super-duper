@@ -51,10 +51,10 @@ switch ($action) {
         $categoryId = filter_input(INPUT_POST, 'categoryId', FILTER_SANITIZE_NUMBER_INT);
         $invName = filter_input(INPUT_POST, 'invName', FILTER_SANITIZE_STRING);
         $invDescription = filter_input(INPUT_POST, 'invDescription', FILTER_SANITIZE_STRING);
-        $invImage = filter_input(INPUT_POST, 'invImage', FILTER_SANITIZE_URL);
-        $invThumbnail = filter_input(INPUT_POST, 'invThumbnail', FILTER_SANITIZE_URL);
-        $invPrice = filter_input(INPUT_POST, 'invPrice', FILTER_FLAG_ALLOW_FRACTION, FILTER_SANITIZE_NUMBER_INT);
-        $invStock = filter_input(INPUT_POST, 'invStock', FILTER_VALIDATE_INT); 
+        $invImage = filter_input(INPUT_POST, 'invImage', FILTER_SANITIZE_STRING);
+        $invThumbnail = filter_input(INPUT_POST, 'invThumbnail', FILTER_SANITIZE_STRING);
+        $invPrice = filter_input(INPUT_POST, 'invPrice', FILTER_SANITIZE_NUMBER_INT, FILTER_FLAG_ALLOW_FRACTION);
+        $invStock = filter_input(INPUT_POST, 'invStock', FILTER_SANITIZE_NUMBER_INT); 
         $invSize = filter_input(INPUT_POST, 'invSize', FILTER_SANITIZE_NUMBER_INT);
         $invWeight = filter_input(INPUT_POST, 'invWeight', FILTER_SANITIZE_NUMBER_INT);
         $invLocation = filter_input(INPUT_POST, 'invLocation', FILTER_SANITIZE_STRING);

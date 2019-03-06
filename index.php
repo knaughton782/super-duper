@@ -5,26 +5,10 @@
  */
 require_once 'library/connections.php'; //get db connection (must be first)
 require_once 'model/acme-model.php'; //get model (gets info from db)
+require_once 'library/functions.php'; //brings functions into scope
 
-//require_once brings code into scope
-
-//get array of categories
 $categories = getCategories();
-
-//var_dump($categories);   // displays info about variable, array, or object
-//echo '<pre>' . print_r($categories, true) . '</pre>';
-//exit;   //stops further processing
-
-//dynamic navigation
-$navList = '<ul>';
-$navList .= "<li><a href='/acme/index.php' title='View the Acme home page'>Home</a></li>";
-foreach ($categories as $category) {
-    $navList .= "<li><a href='/acme/index.php?action=" . urlencode($category['categoryName']) . "' title='View our $category[categoryName] product line'>$category[categoryName]</a></li>";
-}
-$navList .= '</ul>';
-
-//echo $navList;
-//exit;
+$navList = navList($categories);
 
 $action = filter_input(INPUT_POST, 'action');
 if ($action == null) {

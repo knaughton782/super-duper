@@ -30,3 +30,20 @@ function regClient($clientFirstname, $clientLastname, $clientEmail, $clientPassw
     return $rowsChanged; //shows a successful function execution and provides a variable with data to work with
 }
 
+
+//checks for duplicate email, 0 means no match, 1 means match
+function checkExistingEmail($clientEmail) {
+    $db = acmeConnect();
+    $sql = 'select clientEmail from clients where clientEmail = :email';
+    $stmt = $db->prepare($sql);
+    $stmt->bindValue(':email', $clientEmail, PDO::PARAM_STR);
+    $stmt->execute();
+    $matchEmail = $stmt->fectch(PDO::FETCH_NUM);
+    $stmt->closeCursor();
+    if(empty($matchEmail)) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
+}

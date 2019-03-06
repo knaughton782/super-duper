@@ -26,7 +26,7 @@ main {
 }
 /*********************** forms general ***************/
 
-input[type=text], input[type=password], input[type=email], select {
+input[type=text], input[type=password], input[type=email], input[type=number], textarea, select {
     width: 35%;
     padding: 12px 20px;
     margin: 5px 0 0 5px;
@@ -35,6 +35,7 @@ input[type=text], input[type=password], input[type=email], select {
     border-radius: 4px;
     box-sizing: border-box;
 }
+/*TODO: figure out why not all inputs are getting the same styling*/
 
 input[type=submit] {
     width: 35%;
@@ -52,7 +53,7 @@ input[type=submit]:hover {
 }
 
  input:required:invalid, input:focus:invalid {
-        background: #de222;
+        background: #de2226;
         background-position: right top;
         background-repeat: no-repeat;
     }
@@ -211,7 +212,7 @@ input[type=submit]:hover {
     }
     
     /***************** forms *******************/
-    input[type=text], input[type=password], input[type=email], select {
+    input[type=text], input[type=password], input[type=email], input[type=number], textarea, select {
         width: 80%;
         padding: 12px 20px;
         margin: 8px 0;
@@ -265,7 +266,7 @@ input[type=submit]:hover {
 .warning {
     font-size: .7em;
     font-style: italic;
-    font-color: #de2226;
+    color: #de2226;
 }
 /*************************** media query for larger screens **************************************************************************/
 
@@ -328,7 +329,7 @@ input[type=submit]:hover {
 
     }
 /******************** forms ********************/
-    input[type=text], input[type=password], input[type=email], select {
+    input[type=text], input[type=password], input[type=email], input[type=number], textarea, select {
         width: 35%;
         padding: 12px 20px;
        margin: 5px 0 0 5px;
