@@ -2,9 +2,9 @@
 <main>
     <h1 class="siteTitle">Acme Login Page</h1>
         <?php
-    if (isset($message)) {
-        echo $message;
-    }
+    if (isset($_SESSION['message'])) {
+ echo $_SESSION['message'];
+}
     ?>
 
     <p>*All fields are required</p>

@@ -1,4 +1,8 @@
-<?php // dynamic drop-down select list made sticky
+<?php if (!$_SESSION['loggedin'] && $_SESSION['clientData']['clientLevel'] < 2) {
+    header('location: /acme/');
+    exit;
+}
+?><?php // dynamic drop-down select list made sticky
     $catList = '<select name="categoryId" id="categoryId" required>';
     $catList .= '<option>Select an option: </option>';
         foreach ($categories as $category) {
@@ -91,6 +95,7 @@
         </form>
   
     </section>
+   
 </main>
 
 <?php include $_SERVER['DOCUMENT_ROOT'] . '/acme/common/footer.php'; ?>

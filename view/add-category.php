@@ -1,4 +1,8 @@
- <?php include $_SERVER['DOCUMENT_ROOT'] . '/acme/common/header.php'; ?>
+ <?php if (!$_SESSION['loggedin'] && $_SESSION['clientData']['clientLevel'] < 2) {
+    header('location: /acme/');
+    exit;
+}
+?><?php include $_SERVER['DOCUMENT_ROOT'] . '/acme/common/header.php'; ?>
 
 <main id="page-content"> 
   
@@ -27,7 +31,7 @@
             
         </form>
     </section>
-
+    
 </main>
 
 <?php include $_SERVER['DOCUMENT_ROOT'] . '/acme/common/footer.php'; ?>
