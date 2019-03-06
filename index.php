@@ -3,6 +3,12 @@
 /* 
  * ACME controller 
  */
+
+//create or access a session
+session_start();
+
+
+
 require_once 'library/connections.php'; //get db connection (must be first)
 require_once 'model/acme-model.php'; //get model (gets info from db)
 require_once 'library/functions.php'; //brings functions into scope
@@ -18,6 +24,9 @@ if ($action == null) {
     }
 }
 
+if (isset($_COOKIE['firstname'])) {
+    $cookieFirstname = filter_input(INPUT_COOKIE, 'firstname', FILTER_SANITIZE_STRING);
+}
 
 switch ($action) {
     case 'home':

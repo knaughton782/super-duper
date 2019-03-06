@@ -16,7 +16,9 @@
                 <img src="/acme/images/site/logo.gif" alt="Acme Logo" title="ACME's Home Page to Purchase Coyote Catching Products" class="logo">
                 <div class="myAccount">
                     <img src="/acme/images/site/account.gif" alt="My Account Icon" title="Access Your Account" class="account"> 
-                    <a href="/acme/accounts/index.php?action=login" title="Login to your account">My Account</a>
+                    <a href="/acme/accounts/index.php?action=login" title="Login to your account">My Account</a><?php if(isset($cookieFirstname)) {
+                        echo "<span>Welcome $cookieFirstname!</span>";
+                    }?>
                 </div>
             </div>
             <nav id="nav">

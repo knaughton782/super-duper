@@ -3,6 +3,10 @@
 /*
  * ACCOUNTS controller (direct the user to a page and save info to db)
  */
+//create or access a session
+session_start();
+
+
 require_once '../library/connections.php'; //get db connection 
 require_once '../model/acme-model.php'; //get model
 require_once '../model/accounts-model.php'; //brings accounts-model into scope
@@ -51,6 +55,15 @@ switch ($action) {
         //check password
         $checkPassword = checkPassword($clientPassword);
         
+        //check for existing email
+        $existingEmail = checkExistingEmail($clientEmail);
+        
+        if ($existingEmail) {
+            $message = '<p>That email address already exists. Please log in.</p>';
+            include '../view/login.php';
+            exit;
+        }
+        
         if (empty($clientFirstname) || empty($clientLastname) || empty($clientEmail) || empty($checkPassword)) {
             $message = '<p>Please provide information for all empty form fields.</p>';
             include '../view/registration.php';
@@ -65,6 +78,7 @@ switch ($action) {
         
         // is the return value = 1? One row changed in the db
         if ($regOutcome === 1) {
+            setcookie('firstname', $clientFirstname, strtotime('+1 year'), '/');
             $message = "<p>Thank you for registering $clientFirstname. Please use your email and password to login.</p>";
             include '../view/login.php';
             exit;

@@ -3,6 +3,11 @@
 /*
  *  Products controller ... direct user to add product or add category page and save info to the inventory or categories table in db
  */
+
+//create or access a session
+session_start();
+
+
 require_once '../library/connections.php'; //get db connection (must be first)
 require_once '../library/functions.php'; //get helper functions
 require_once '../model/acme-model.php'; //get model (gets info from db)

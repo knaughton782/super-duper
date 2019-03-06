@@ -38,12 +38,16 @@ function checkExistingEmail($clientEmail) {
     $stmt = $db->prepare($sql);
     $stmt->bindValue(':email', $clientEmail, PDO::PARAM_STR);
     $stmt->execute();
-    $matchEmail = $stmt->fectch(PDO::FETCH_NUM);
+    $matchEmail = $stmt->fetch(PDO::FETCH_NUM);
     $stmt->closeCursor();
     if(empty($matchEmail)) {
-        return 0;
+       return 0;
+//        echo 'Nothing found';
+//        exit;
     }
     else {
-        return 1;
+       return 1;
+//        echo 'Match found';
+//        exit;
     }
 }

@@ -9,7 +9,7 @@
 
     <p>*All fields are required</p>
     <section class="loginForm">
-        <form action="/acme/accounts/index.php" method="post">
+        <form action="/acme/accounts/" method="post">
             <fieldset>
                 <label for="clientEmail">Email Address:</label><br>
                 <input type="email" name="clientEmail" id="clientEmail" <?php if (isset($clientEmail)) {
