@@ -78,11 +78,11 @@ switch ($action) {
 
         // is the return value = 1? One row changed in the db
         if ($prodOutcome === 1) {
-             $message = "<p>Thank you for adding $invName! </p>";
+             $_SESSION['message'] = "<p>Thank you for adding $invName! </p>";
             include '../view/add-product.php';
             exit;
         } else {
-             $message = '<p class="warning">Sorry! $invName was not added. Please try again.</p>';
+             $_SESSION['message'] = '<p class="warning">Sorry! $invName was not added. Please try again.</p>';
             include '../view/add-product.php';
             exit;
         }
@@ -93,5 +93,26 @@ switch ($action) {
         break;
 
     default:
-        include '../view/product-management.php';
+        
+        $products = getProductBasics();
+        if(count($products) > 0){
+                $prodList = '<table>';
+                $prodList .= '<thead>';
+                $prodList .= '<tr><th>Product Name</th><td>&nbsp;</td><td>&nbsp;</td></tr>';
+                $prodList .= '</thead>';
+                $prodList .= '<tbody>';
+                
+                    foreach ($products as $product) {
+                        $prodList .= "<tr><td>$product[invName]</td>";
+                        $prodList .= "<td><a href='/acme/products?action=mod&id=$product[invId]' title='Click to modify'>Modify</a></td>";
+                        $prodList .= "<td><a href='/acme/products?action=del&id=$product[invId]' title='Click to delete'>Delete</a></td></tr>";
+                       }
+                $prodList .= '</tbody></table>';
+                   } else {
+                    $_SESSION['message'] = '<p class="notify">Sorry, no products were returned.</p>';
+                }
+        
+        
+        include '../view/prod-mgmt.php';
+        break;
 }
