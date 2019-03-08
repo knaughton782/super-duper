@@ -335,6 +335,8 @@ th {
             flex-direction: row;
             justify-content: flex-start; */
         font-size: 1.4em;
+        margin-bottom: 0;
+        
     }
 
     /* mouse over link */
