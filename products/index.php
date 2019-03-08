@@ -33,7 +33,7 @@ switch ($action) {
 
         //check for empty form fields
         if (empty($categoryName)) {
-            $message = '<p class="warning">All fields are required. Please provide complete information.</p>';
+            $_SESSION['message'] = '<p class="warning">All fields are required. Please provide complete information.</p>';
             include '../view/add-category.php';
             exit;
         }
@@ -45,7 +45,7 @@ switch ($action) {
             header('Location: /acme/products/');
             exit;
         } else {
-            $message = "<p>Error! $categoryName was not added. Please try again.</p>";
+            $_SESSION['message'] = "<p>Error! $categoryName was not added. Please try again.</p>";
             include '../view/add-category.php';
             exit;
         }
@@ -67,7 +67,7 @@ switch ($action) {
         $invStyle = filter_input(INPUT_POST, 'invStyle', FILTER_SANITIZE_STRING);
 
         if (empty($categoryId) || empty($invName) || empty($invDescription) || empty($invImage) || empty($invThumbnail) || empty($invPrice) || empty($invStock) || empty($invSize) || empty($invWeight) || empty($invLocation) ||  empty($invVendor) || empty($invStyle)) {
-             $message = '<p>All form fields are required. Please provide complete information for all form fields.</p>';
+             $_SESSION['message'] = '<p>All form fields are required. Please provide complete information for all form fields.</p>';
             include '../view/add-product.php';
             exit;
         }
@@ -92,20 +92,35 @@ switch ($action) {
         include '../view/add-product.php';
         break;
 
+    case 'mod':
+        $invId = filter_input(INPUT_GET, 'invId', FILTER_VALIDATE_INT);
+        $prodInfo = getProductInfo($invId);
+        if (count($prodInfo) < 1) {
+                $_SESSION['message'] = 'Sorry, no product information could be found.';
+                header('Location: /acme/products/');
+                exit;
+        }
+        include '../view/prod-update.php';
+        exit;
+        break;
+    
+    
+    
+    
     default:
         
         $products = getProductBasics();
         if(count($products) > 0){
                 $prodList = '<table>';
                 $prodList .= '<thead>';
-                $prodList .= '<tr><th>Product Name</th><td>&nbsp;</td><td>&nbsp;</td></tr>';
+                $prodList .= '<tr><th>Product Name</th><th>&nbsp;</th><th>&nbsp;</th></tr>';
                 $prodList .= '</thead>';
                 $prodList .= '<tbody>';
                 
                     foreach ($products as $product) {
                         $prodList .= "<tr><td>$product[invName]</td>";
-                        $prodList .= "<td><a href='/acme/products?action=mod&id=$product[invId]' title='Click to modify'>Modify</a></td>";
-                        $prodList .= "<td><a href='/acme/products?action=del&id=$product[invId]' title='Click to delete'>Delete</a></td></tr>";
+                        $prodList .= "<td><a href='/acme/products?action=mod&invId=$product[invId]' title='Click to modify'>Modify</a></td>";
+                        $prodList .= "<td><a href='/acme/products?action=del&invId=$product[invId]' title='Click to delete'>Delete</a></td></tr>";
                        }
                 $prodList .= '</tbody></table>';
                    } else {

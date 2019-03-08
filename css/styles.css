@@ -24,6 +24,12 @@ main {
     background-color: #ffffff;
     margin: 0;
 }
+
+.prodMgt ul {
+    margin-bottom: 25px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #808080;
+}
 /*********************** forms general ***************/
 
 input[type=text], input[type=password], input[type=email], input[type=number], textarea, select {
@@ -34,13 +40,15 @@ input[type=text], input[type=password], input[type=email], input[type=number], t
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    font-size: .8em;
 }
-/*TODO: figure out why not all inputs are getting the same styling*/
+
 
 input[type=submit] {
     width: 35%;
     background-color: #de2226;
     color: white;
+    font-size: 1em;
     padding: 14px 20px;
     margin: 5px 0 0 5px;
     border: none;
@@ -52,18 +60,48 @@ input[type=submit]:hover {
     background-color: #89002d;
 }
 
- input:required:invalid, input:focus:invalid {
+input:required:invalid, input:focus:invalid {
         border-color: #de2226;
         background-position: right top;
         background-repeat: no-repeat;
-    }
+}
 
-    input:required:valid {
+input:required:valid {
         background: #fff;
         background-position: right top;
         background-repeat: no-repeat;
-    }
+}
 
+
+/******************* table styling *****************/
+table {
+        border-collapse: collapse;
+        margin-bottom: 25px;
+}
+
+td, th {
+        border: 1px solid #ddd;
+        padding: 10px 15px;
+}
+
+tr:nth-child(even){
+        background-color: #f2f2f2;
+}
+
+tr:hover {
+        background-color: #ddd;
+}
+
+th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #de2226;
+        color: white;
+        font-size: 1.2em;
+}
+
+/******************* END table styling *****************/
 
 @media (min-width: 310px) {
     /* TODO: need to have a drop-down menu */
@@ -208,7 +246,7 @@ input[type=submit]:hover {
     }
     
     .prodMgt {
-        display: flex;
+        
     }
     
     /***************** forms *******************/
@@ -220,12 +258,14 @@ input[type=submit]:hover {
         border: 1px solid #ccc;
         border-radius: 4px;
         box-sizing: border-box;
+        font-size: .8em;
     }
 
     input[type=submit] {
         width: 80%;
         background-color: #de2226;
         color: white;
+        font-size: 1em;
         padding: 14px 20px;
         margin: 8px 0;
         border: none;
@@ -332,17 +372,19 @@ input[type=submit]:hover {
     input[type=text], input[type=password], input[type=email], input[type=number], textarea, select {
         width: 35%;
         padding: 12px 20px;
-       margin: 5px 0 0 5px;
+        margin: 5px 0 0 5px;
         display: block;
         border: 1px solid #ccc;
         border-radius: 4px;
         box-sizing: border-box;
+        font-size: .8em;
     }
 
     input[type=submit] {
         width: 35%;
         background-color: #de2226;
         color: white;
+        font-size: 1em;
         padding: 14px 20px;
         margin: 5px 0 10px 5px;
         border: none;

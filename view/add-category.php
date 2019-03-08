@@ -9,11 +9,13 @@
     <h1 class="siteTitle">Add A Category</h1>
     <h2>Use this form to add a new category.</h2>
 <!--    <p>*All fields are required.</p>-->
-    <?php
-    if (isset( $message)) {
-        echo  $message;
-    }
-    ?>
+     <?php
+            if (isset($_SESSION['message'])) {
+                echo  $_SESSION['message'];
+                // unset the message after displaying it once
+                unset($_SESSION['message']);
+            }
+        ?>
 
     <section>
         <form action="/acme/products/index.php" method="POST">

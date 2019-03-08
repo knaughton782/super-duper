@@ -9,10 +9,11 @@
 <main id="page-content"> 
     
     <?php
-    if (isset($message)) {
-        echo  $message;
-     
-    }
+        if (isset($_SESSION['message'])) {
+            echo  $_SESSION['message'];
+            // unset the message after displaying it once
+            unset($_SESSION['message']);
+        }
     ?>
 
     <h1 class="siteTitle">Product Management</h1>
@@ -25,6 +26,12 @@
             <li><a href="/acme/products/index.php?action=addCat" title="Add a new Category">Add a New Category</a></li> 
             <li><a href="/acme/products/index.php?action=addProd" title="Add a new Product">Add a New Product</a></li>
         </ul>
+        
+        <?php
+             if (isset($prodList)) {
+                echo $prodList;
+            }
+        ?>
     </section>
     
     
