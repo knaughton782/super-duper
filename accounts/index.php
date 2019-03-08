@@ -113,6 +113,10 @@ switch ($action) {
         session_destroy();
         header('Location: /acme/');
         break;
+    
+    case 'update':
+        include '../view/client-update.php';
+        break;
 
     default:
         include '../view/admin.php';

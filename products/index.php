@@ -143,6 +143,41 @@ switch ($action) {
         
         break;
 
+        case 'del':
+                $invId = filter_input(INPUT_GET, 'invId', FILTER_VALIDATE_INT);
+                $prodInfo = getProductInfo($invId);
+                
+                if (count($prodInfo) < 1) {
+                         $_SESSION['message'] = 'Sorry, no product information could be found.';
+                         header('Location: /acme/products/');
+                         exit;
+                }
+                include '../view/prod-delete.php';
+                exit;
+                
+                break;
+                
+                
+        case 'deleteProd':
+                $invName = filter_input(INPUT_POST, 'invName', FILTER_SANITIZE_STRING);
+                $invId = filter_input(INPUT_POST, 'invId', FILTER_SANITIZE_NUMBER_INT);
+
+                $deleteResult = deleteProduct($invId);
+                
+                if ($deleteResult) {
+                        $message = "<p class='notice'>Congratulations, $invName was successfully deleted.</p>";
+
+                        $_SESSION['message'] = $message;
+                        header('location: /acme/products/');
+                        exit;
+                } else {
+                        $message = "<p class='notice'>Error: $invName was not deleted.</p>";
+
+                        $_SESSION['message'] = $message;
+                        header('location: /acme/products/');
+                        exit;
+                }
+                break;
 
     default:
 
