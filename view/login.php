@@ -19,7 +19,7 @@
                 } ?> required><br>
                 
                 <label for='clientPassword'>Password:<br>
-                 <span class="instructions">Passwords must be at least 8 characters. Please include at least 1 number, 1 capital, and 1 special character.</span>
+                 <span class="warning">Passwords must be at least 8 characters. Please include at least 1 number, 1 capital, and 1 special character.</span>
                 </label><br>
                
                 <input type="password" name="clientPassword" id="clientPassword" required pattern="(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"><br>

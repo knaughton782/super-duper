@@ -1,5 +1,5 @@
 <?php if (!$_SESSION['loggedin']) {
-    header('location: /acme/');
+     header('location: /acme/accounts?action=login');
     exit;
 }
 ?><?php include $_SERVER['DOCUMENT_ROOT'] . '/acme/common/header.php'; ?>
@@ -13,16 +13,32 @@
             <li>First name: <?php echo $_SESSION['clientData']['clientFirstname']; ?></li>
             <li>Last name: <?php echo $_SESSION['clientData']['clientLastname']; ?></li>
             <li>Email Address: <?php echo $_SESSION['clientData']['clientEmail']; ?></li>
-            <li>Client Level: <?php echo $_SESSION['clientData']['clientLevel']; ?></li>
+            
         </ul>
         
     </section>
-        <?php 
-                if($_SESSION['clientData']['clientLevel'] > 1) {
-            ?>
-           <p><a href="/acme/products/" title="Go to products page">Manage Products</a></p>
-           <?php
+    
+    <p><a href="/acme/accounts?action=update" title="Click to Manage Your Account" id="acctMgmtLink">Click to Manage Your Account</a><br><br>
+   
+    
+    <!-- ------- This should only be seen by admin levels ------ -->
+  
+        <?php if ($_SESSION['loggedin'] || $_SESSION['clientData']['clientLevel'] > 1) {?>
+            <p class="border"></p>
+                       
+            <h1>Products Administration:</h1>
+            <?php
+                if (isset($_SESSION['message'])) {
+                    echo  $_SESSION['message'];
+                    // unset the message after displaying it once
+                    unset($_SESSION['message']);
                 }
+            ?>
+            <p>Use the link below to manage Acme products.</p><br><br>
+
+            <p><a href="/acme/products/" id="mgProd" title="Go to products page">Manage Products</a></p>
+            <?php
+            }
         ?>
 
 </main>

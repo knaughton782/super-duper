@@ -17,16 +17,17 @@
         }
    $catList .= '</select>';
 ?><?php include $_SERVER['DOCUMENT_ROOT'] . '/acme/common/header.php'; ?>
-        <?php
+        
+<main id="page-content"> 
+
+    <h1 class="siteTitle">Add a Product</h1>
+    <?php
             if (isset($_SESSION['message'])) {
                 echo  $_SESSION['message'];
                 // unset the message after displaying it once
                 unset($_SESSION['message']);
             }
         ?>
-<main id="page-content"> 
-
-    <h1 class="siteTitle">Add a Product</h1>
     <h2>Use this form to add a new product. </h2>
     <section>
     
@@ -45,34 +46,34 @@
                     echo $invDescription; } ?></textarea><br>
 <!-- IMAGE-->
                 <label for="invImage">Product Image (path to image): </label><br>
-                <input type="text" name="invImage" id="invImage" value="/acme/images/no-img.png" required <?php if (isset($invImage)) {
+                <input type="text" name="invImage" id="invImage" value="/acme/images/no-img.png"  <?php if (isset($invImage)) {
                     echo "value='$invImage'";
-                    } ?>><br>
+                    } ?> required><br>
 <!-- THUMBNAIL-->                
                 <label for="invThumbnail">Product Thumbnail (path to thumbnail): </label><br>
-                <input type="text" name="invThumbnail" id="invThumbnail" value="/acme/images/no-img.png" required  <?php if (isset($invThumbnail)) {
+                <input type="text" name="invThumbnail" id="invThumbnail" value="/acme/images/no-img.png" <?php if (isset($invThumbnail)) {
                     echo "value='$invThumbnail'";
-                    } ?>><br>
+                    } ?> required><br>
  <!-- PRICE-->              
                  <label for="invPrice">Product Price: </label><br>
-                 <input type="number" step=".05" name="invPrice" id="invPrice" required <?php if (isset($invPrice)) {
+                 <input type="number" step="0.05" name="invPrice" id="invPrice" <?php if (isset($invPrice)) {
                     echo "value='$invPrice'";
-                    } ?>><br>
+                    } ?> required><br>
 <!-- STOCK-->               
                  <label for="invStock">Number in Stock: </label><br>
-                 <input type="number" name="invStock" id="invStock" required <?php if (isset($invStock)) {
+                 <input type="number" name="invStock" id="invStock" <?php if (isset($invStock)) {
                     echo "value='$invStock'";
-                    } ?>><br>
+                    } ?> required><br>
 <!-- SIZE-->                
                  <label for="invSize">Shipping Size (W x H x L in inches): </label><br>
-                 <input type="number" name="invSize" id="invSize" required <?php if (isset($invSize)) {
+                 <input type="number" name="invSize" id="invSize" <?php if (isset($invSize)) {
                     echo "value='$invSize'";
-                    } ?>><br>
+                    } ?> required><br>
 <!-- WEIGHT-->                
                  <label for="invWeight">Weight (lbs.): </label><br>
-                 <input type="number" name="invWeight" id="invWeight" required <?php if (isset($invWeight)) {
+                 <input type="number" name="invWeight" id="invWeight" <?php if (isset($invWeight)) {
                     echo "value='$invWeight'";
-                    } ?>><br>
+                    } ?> required><br>
 <!-- LOCATION-->                
                  <label for="invLocation">Location (city name): </label><br>
                  <input type="text" name="invLocation" id="invLocation"  <?php if (isset($invLocation)) {

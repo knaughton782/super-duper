@@ -34,10 +34,10 @@
 } ?> required><br>
 
                 <label for="clientPassword">Password: <br>
-                    <span class="instructions">Passwords must be at least 8 characters. Please include at least 1 number, 1 capital, and 1 special character.</span></label><br>
+                    <span class="warning">Passwords must be at least 8 characters. Please include at least 1 number, 1 capital, and 1 special character.</span></label><br>
                 <input type="password" name="clientPassword" id="clientPassword" required pattern="(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$">
 
-                <label>&nbsp;</label>
+                <label>&nbsp;</label><br>
                 <input type="submit" name="submit" class="registrationBtn" value="Register">
                 <!--add the action key/value pair-->
                 <input type="hidden" name="action" value="register">

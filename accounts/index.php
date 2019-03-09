@@ -14,17 +14,26 @@ require_once '../library/functions.php'; //get helper functions
 
 $categories = getCategories();
 $navList = navList($categories);
+$page_title = 'Accounts';
 
 // watch for name/value pairs
 $action = filter_input(INPUT_POST, 'action');
-if ($action == NULL) {
-    $action = filter_input(INPUT_GET, 'action');
-}
+    if ($action == NULL) {
+        $action = filter_input(INPUT_GET, 'action');
+    }
+
+    
+        
 
 switch ($action) {
+    
+   //////////////////////// login case /////////////////////    
     case 'login':
         include '../view/login.php';
         break;
+    
+    
+    //////////////////////// login user case /////////////////////   
 
     case 'login_user':
         $clientEmail = filter_input(INPUT_POST, 'clientEmail', FILTER_SANITIZE_EMAIL);
@@ -36,7 +45,7 @@ switch ($action) {
         $checkPassword = checkPassword($clientPassword);
 
         if (empty($clientEmail) || empty($checkPassword)) {
-             $_SESSION['message'] = '<p>Please provide information for all empty form fields.</p>';
+            $_SESSION['message'] = '<p class="warning">Please provide information for all empty form fields.</p>';
             include '../view/login.php';
             exit;
         }
@@ -47,7 +56,7 @@ switch ($action) {
         $hashCheck = password_verify($clientPassword, $clientData['clientPassword']);
         // If the hashes don't match create an error and return to the login view
         if (!$hashCheck) {
-             $_SESSION['message'] = '<p class="notice">Please check your password and try again.</p>';
+            $_SESSION['message'] = '<p class="warning">Please check your password and try again.</p>';
             include '../view/login.php';
             exit;
         }
@@ -57,9 +66,14 @@ switch ($action) {
         array_pop($clientData);
         // Store the array into the session
         $_SESSION['clientData'] = $clientData;
-        // Send them to the admin view
+        
+        
+        // Send them to the admin view if login is successful
         include '../view/admin.php';
         break;
+        
+        
+//////////////////////// Register case /////////////////////       
 
     case 'register':
 //        echo 'You are hoping for the registration page'; 
@@ -78,14 +92,14 @@ switch ($action) {
         $existingEmail = checkExistingEmail($clientEmail);
 
         if ($existingEmail) {
-             $_SESSION['message'] = '<p>That email address already exists. Please log in.</p>';
+             $_SESSION['message'] = '<p class="warning">That email address already exists. Please log in.</p>';
             include '../view/login.php';
             exit;
         }
         
 
         if (empty($clientFirstname) || empty($clientLastname) || empty($clientEmail) || empty($checkPassword)) {
-             $_SESSION['message'] = '<p>Please provide information for all empty form fields.</p>';
+             $_SESSION['message'] = '<p class="warning">Please provide information for all empty form fields.</p>';
             include '../view/registration.php';
             exit;
         }
@@ -99,24 +113,33 @@ switch ($action) {
         // is the return value = 1? One row changed in the db
         if ($regOutcome === 1) {
             setcookie('firstname', $clientFirstname, strtotime('+1 year'), '/');
-            $_SESSION['message'] = "Thanks for registering $clientFirstname. Please use your email and password to login.";
+            $_SESSION['message'] = "<p class='instructions'>Thanks for registering $clientFirstname. Please use your email and password to login.</p>";
             header('Location: /acme/accounts/?action=login');
             exit;
-        } else {
-             $_SESSION['message'] = "<p>Sorry $clientFirstname, but your registration failed. Please try again.</p>";
+        } 
+        else {
+            $_SESSION['message'] = "<p class='warning'>Sorry $clientFirstname, but your registration failed. Please try again.</p>";
             include '../view/registration.php';
             exit;
         }
         break;
+        
+        
+//////////////// UPDATE ///////////////////////////////     
+    
+    case 'update':
+        include '../view/client-update.php';
+        break;
+        
+//////////////// logout ///////////////////////////////        
         
     case 'logout':
         session_destroy();
         header('Location: /acme/');
         break;
     
-    case 'update':
-        include '../view/client-update.php';
-        break;
+    
+    //////////////// DEFAULT ///////////////////////////////     
 
     default:
         include '../view/admin.php';

@@ -7,7 +7,8 @@
 <!-- Product Management View -->
 
 <main id="page-content"> 
-    
+
+    <h1 class="siteTitle">Product Management</h1>
     <?php
         if (isset($_SESSION['message'])) {
             echo  $_SESSION['message'];
@@ -15,8 +16,6 @@
             unset($_SESSION['message']);
         }
     ?>
-
-    <h1 class="siteTitle">Product Management</h1>
     <h2>Add a Category or a Product</h2>
 
     <section class="prodMgt">

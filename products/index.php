@@ -16,6 +16,8 @@ require_once '../model/products-model.php'; //get model (gets info from db)
 
 $categories = getCategories();
 $navList = navList($categories);
+$page_title = 'Inventory';
+
 
 //watching for name/value pairs
 $action = filter_input(INPUT_POST, 'action');
@@ -44,14 +46,16 @@ switch ($action) {
         if ($catOutcome === 1) {
             header('Location: /acme/products/');
             exit;
-        } else {
-            $_SESSION['message'] = "<p>Error! $categoryName was not added. Please try again.</p>";
+        }
+        else {
+            $_SESSION['message'] = "<p class='warning'>Error! $categoryName was not added. Please try again.</p>";
             include '../view/add-category.php';
             exit;
         }
+
         break;
 
-    case 'newProd': //delivers add product page
+    case 'addProd': //delivers add product page
 
         $categoryId = filter_input(INPUT_POST, 'categoryId', FILTER_SANITIZE_NUMBER_INT);
         $invName = filter_input(INPUT_POST, 'invName', FILTER_SANITIZE_STRING);
@@ -67,7 +71,7 @@ switch ($action) {
         $invStyle = filter_input(INPUT_POST, 'invStyle', FILTER_SANITIZE_STRING);
 
         if (empty($categoryId) || empty($invName) || empty($invDescription) || empty($invImage) || empty($invThumbnail) || empty($invPrice) || empty($invStock) || empty($invSize) || empty($invWeight) || empty($invLocation) || empty($invVendor) || empty($invStyle)) {
-            $_SESSION['message'] = '<p>All form fields are required. Please provide complete information for all form fields.</p>';
+            $_SESSION['message'] = '<p class="warning">All form fields are required. Please provide complete information for all fields.</p>';
             include '../view/add-product.php';
             exit;
         }
@@ -78,31 +82,44 @@ switch ($action) {
 
         // is the return value = 1? One row changed in the db
         if ($prodOutcome === 1) {
-            $_SESSION['message'] = "<p>Thank you for adding $invName! </p>";
-            include '../view/add-product.php';
+            $_SESSION['message'] = "<p class='instructions'>Thank you for adding $invName! </p>";
+            include '../view/prod-mgmt.php';
             exit;
-        } else {
-            $_SESSION['message'] = '<p class="warning">Sorry! $invName was not added. Please try again.</p>';
+        }
+        else {
+            $_SESSION['message'] = "<p class='warning'>Sorry! $invName was not added. Please try again.</p>";
             include '../view/add-product.php';
             exit;
         }
+
         break;
 
-    case 'addProd': //delivers add product page
+    
+    case 'newProd': //delivers add product page
         include '../view/add-product.php';
         break;
 
+    
     case 'mod':
         $invId = filter_input(INPUT_GET, 'invId', FILTER_VALIDATE_INT);
         $prodInfo = getProductInfo($invId);
         if (count($prodInfo) < 1) {
-            $_SESSION['message'] = 'Sorry, no product information could be found.';
+            $_SESSION['message'] = '<p class="warning">Sorry, no product information could be found.</p>';
             header('Location: /acme/products/');
             exit;
         }
+
+        if (isset($prodInfo['invName'])) {
+            $page_title = "Modify $prodInfo[invName] ";
+        }
+        elseif (isset($invName)) {
+            $page_title = $invName;
+        }
+
         include '../view/prod-update.php';
         exit;
         break;
+        
 
     case 'updateProd':
         $invId = filter_input(INPUT_POST, 'invId', FILTER_SANITIZE_NUMBER_INT);
@@ -119,65 +136,66 @@ switch ($action) {
         $invVendor = filter_input(INPUT_POST, 'invVendor', FILTER_SANITIZE_STRING);
         $invStyle = filter_input(INPUT_POST, 'invStyle', FILTER_SANITIZE_STRING);
 
+
         if (empty($categoryId) || empty($invName) || empty($invDescription) || empty($invImage) || empty($invThumbnail) || empty($invPrice) || empty($invStock) || empty($invSize) || empty($invWeight) || empty($invLocation) || empty($invVendor) || empty($invStyle)) {
-                $_SESSION['message'] = '<p>Please complete all information fields including the category. </p>';
-                
-                include '../view/prod-update.php';
-                exit;
+            $_SESSION['message'] = '<p class="warning">Please complete all information fields including the category. </p>';
+
+            include '../view/prod-update.php';
+            exit;
         }
-        
+
         $updateResult = updateProduct($invId, $categoryId, $invName, $invDescription, $invImage, $invThumbnail, $invPrice, $invStock, $invSize, $invWeight, $invLocation, $invVendor, $invStyle);
-        
+
         if ($updateResult) {
-                $message = "<p>Congratulations, $invName was successfully updated.</p>";
-                $_SESSION['message'] = $message;
-                header('location: /acme/products/');
-                exit;
-        } 
-        
-        else {
-                $_SESSION['message'] = "<p>Error. The product was not updated.</p>";
-                include '../view/prod-update.php';
-                exit;
+            $message = "<p class='instructions'>Congratulations, $invName was successfully updated.</p>";
+            $_SESSION['message'] = $message;
+            header('location: /acme/products/');
+            exit;
         }
-        
+        else {
+            $_SESSION['message'] = "<p class='warning'>Error. The product was not updated.</p>";
+            include '../view/prod-update.php';
+            exit;
+        }
+
         break;
 
-        case 'del':
-                $invId = filter_input(INPUT_GET, 'invId', FILTER_VALIDATE_INT);
-                $prodInfo = getProductInfo($invId);
-                
-                if (count($prodInfo) < 1) {
-                         $_SESSION['message'] = 'Sorry, no product information could be found.';
-                         header('Location: /acme/products/');
-                         exit;
-                }
-                include '../view/prod-delete.php';
-                exit;
-                
-                break;
-                
-                
-        case 'deleteProd':
-                $invName = filter_input(INPUT_POST, 'invName', FILTER_SANITIZE_STRING);
-                $invId = filter_input(INPUT_POST, 'invId', FILTER_SANITIZE_NUMBER_INT);
+    case 'del':
+        $invId = filter_input(INPUT_GET, 'invId', FILTER_VALIDATE_INT);
+        $prodInfo = getProductInfo($invId);
 
-                $deleteResult = deleteProduct($invId);
-                
-                if ($deleteResult) {
-                        $message = "<p class='notice'>Congratulations, $invName was successfully deleted.</p>";
+        if (count($prodInfo) < 1) {
+            $_SESSION['message'] = '<p class="warning">Sorry, no product information could be found.</p>';
+            header('Location: /acme/products/');
+            exit;
+        }
+        include '../view/prod-delete.php';
+        exit;
 
-                        $_SESSION['message'] = $message;
-                        header('location: /acme/products/');
-                        exit;
-                } else {
-                        $message = "<p class='notice'>Error: $invName was not deleted.</p>";
+        break;
 
-                        $_SESSION['message'] = $message;
-                        header('location: /acme/products/');
-                        exit;
-                }
-                break;
+
+    case 'deleteProd':
+        $invName = filter_input(INPUT_POST, 'invName', FILTER_SANITIZE_STRING);
+        $invId = filter_input(INPUT_POST, 'invId', FILTER_SANITIZE_NUMBER_INT);
+
+        $deleteResult = deleteProduct($invId);
+
+        if ($deleteResult) {
+            $message = "<p class='instructions'>Congratulations, $invName was successfully deleted.</p>";
+
+            $_SESSION['message'] = $message;
+            header('location: /acme/products/');
+            exit;
+        }
+        else {
+            $message = "<p class='notice'>Error: $invName was not deleted.</p>";
+
+            $_SESSION['message'] = $message;
+            header('location: /acme/products/');
+            exit;
+        }
+        break;
 
     default:
 
@@ -195,8 +213,9 @@ switch ($action) {
                 $prodList .= "<td><a href='/acme/products?action=del&invId=$product[invId]' title='Click to delete'>Delete</a></td></tr>";
             }
             $prodList .= '</tbody></table>';
-        } else {
-            $_SESSION['message'] = '<p class="notify">Sorry, no products were returned.</p>';
+        }
+        else {
+            $_SESSION['message'] = '<p class="warning">Sorry, no products were returned.</p>';
         }
 
 

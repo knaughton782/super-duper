@@ -1,16 +1,57 @@
-<?php include $_SERVER['DOCUMENT_ROOT'] . '/acme/common/header.php'; ?>
+<?php if (!$_SESSION['loggedin']) {
+     header('location: /acme/accounts?action=login');
+    exit;
+}
+?><?php include $_SERVER['DOCUMENT_ROOT'] . '/acme/common/header.php'; ?>
 <main id="page-content"> 
-  
-    <h1 class="siteTitle"></h1>
+  <!-- -------------------- ACCOUNT UPDATE ----------------------- -->
+    <h1 class="siteTitle">Account Updates</h1>
 
-<!--     Hero description text-->
-    <section id="heroSection">
-       
+    <p>Update your profile information here:</p>
+    <section class="updateForm">
+        <form action="/acme/accounts/" method="post">
+            <fieldset>
+                <label for="clientFirstname">First name: </label><br>
+                <input type="text" name="clientFirstname" id="clientFirstname" 
+                       <?php if (isset($clientFirstname)) { echo "value='$clientFirstname'"; } ?>>
+                <br>
 
+                <label for="clientLastname">Last name: </label><br>
+                <input type="text" name="clientLastname" id="clientLastname" <?php if (isset($clientLastname)) {
+                           echo "value='$clientLastname'"; } ?>>
+                <br>
+
+                <label for="clientEmail">Email Address: </label><br>
+                <input type="email" name="clientEmail" id="clientEmail" placeholder="Pleae enter a valid email address" 
+                    <?php if (isset($clientEmail)) { echo "value='$clientEmail'"; } ?>>
+                <br>
+                
+                <input type="submit" name='submit' class="loginBtn" value="Update Profile">
+                <input type="hidden" name="action" value="update_user">
+            </fieldset>
+        </form>
     </section>
+    
+    
+    <!-- -------------------- PASSWORD UPDATE ----------------------- -->
+    <h1 class="siteTitle">Change Password</h1>
 
-    <section class="">
-        <p>Page Content Here</p>
+    <p>Change your password here:</p>
+    <section class="updateForm">
+        <form action="/acme/accounts/" method="post">
+            <fieldset>
+                
+                <label for='clientPassword'>Password:<br>
+                 <span class="warning">Passwords must be at least 8 characters. Please include at least 1 number, 1 capital, and 1 special character.</span>
+                </label>
+                <br>
+                <input type="password" name="clientPassword" id="clientPassword" pattern="(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$">
+                <br>
+                
+                <input type="submit" name='submit' class="loginBtn" value="Update Password">
+                <input type="hidden" name="action" value="update_pw">
+            </fieldset>
+        </form>
     </section>
 
 </main>
