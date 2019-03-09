@@ -23,22 +23,22 @@
     
     <!-- ------- This should only be seen by admin levels ------ -->
   
-        <?php if ($_SESSION['loggedin'] || $_SESSION['clientData']['clientLevel'] > 1) {?>
+        <?php if ($_SESSION['loggedin'] && $_SESSION['clientData']['clientLevel'] > 1) {?>
             <p class="border"></p>
                        
             <h1>Products Administration:</h1>
-            <?php
-                if (isset($_SESSION['message'])) {
+            
+                <?php  if (isset($_SESSION['message'])) {
                     echo  $_SESSION['message'];
                     // unset the message after displaying it once
                     unset($_SESSION['message']);
-                }
-            ?>
+                } ?>
+            
             <p>Use the link below to manage Acme products.</p><br><br>
 
             <p><a href="/acme/products/" id="mgProd" title="Go to products page">Manage Products</a></p>
-            <?php
-            }
+            
+           <?php }
         ?>
 
 </main>

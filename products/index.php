@@ -25,12 +25,20 @@ if ($action == NULL) {
     $action = filter_input(INPUT_GET, 'action');
 }
 
+
+///////////////////// Switch Case ///////////////////////
 switch ($action) {
-    case 'newCat': //delivers add category page
+    
+    ///////////////////// deliver new category page ///////////////////////
+    
+    case 'newCat': 
         include '../view/add-category.php';
         break;
 
-    case 'addCat': //processes new category logic
+    
+    ///////////////////// new category logic ///////////////////////
+    
+    case 'addCat': 
         $categoryName = filter_input(INPUT_POST, 'categoryName', FILTER_SANITIZE_STRING);
 
         //check for empty form fields
@@ -120,6 +128,7 @@ switch ($action) {
         exit;
         break;
         
+        ///////////////////// Update Product ///////////////////////
 
     case 'updateProd':
         $invId = filter_input(INPUT_POST, 'invId', FILTER_SANITIZE_NUMBER_INT);

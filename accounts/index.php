@@ -27,13 +27,13 @@ $action = filter_input(INPUT_POST, 'action');
 
 switch ($action) {
     
-   //////////////////////// login case /////////////////////    
+///////////////////////////// login case /////////////////////    
     case 'login':
         include '../view/login.php';
         break;
     
     
-    //////////////////////// login user case /////////////////////   
+///////////////////////////// login user case /////////////////////   
 
     case 'login_user':
         $clientEmail = filter_input(INPUT_POST, 'clientEmail', FILTER_SANITIZE_EMAIL);
@@ -73,7 +73,7 @@ switch ($action) {
         break;
         
         
-//////////////////////// Register case /////////////////////       
+//////////////////////// Register case /////////////////////////       
 
     case 'register':
 //        echo 'You are hoping for the registration page'; 
@@ -125,13 +125,82 @@ switch ($action) {
         break;
         
         
-//////////////// UPDATE ///////////////////////////////     
+////////////////////// DELIVER UPDATE PAGE ///////////////////////////////     
     
     case 'update':
         include '../view/client-update.php';
         break;
+    
+    
+///////////////////// UPDATE PROFILE INFORMATION ///////////////////////////////     
+    
+    case 'update_user':
+ 
+        $clientFirstname = filter_input(INPUT_POST, 'clientFirstname', FILTER_SANITIZE_STRING);
+        $clientLastname = filter_input(INPUT_POST, 'clientLastname', FILTER_SANITIZE_STRING);
+        $clientEmail = filter_input(INPUT_POST, 'clientEmail', FILTER_SANITIZE_EMAIL);
+        $clientId = filter_input(INPUT_POST, 'clientEmail', FILTER_SANITIZE_EMAIL);
         
-//////////////// logout ///////////////////////////////        
+         
+        
+            if (empty($clientFirstname) || empty($clientLastname) || empty($clientEmail)) {
+                 $_SESSION['message'] = '<p class="warning">Please provide information for all empty form fields.</p>';
+                include '../view/client-update.php';
+                exit;
+            }
+        //validate email
+        $clientEmail = checkEmail($clientEmail);    
+        
+        $updateResult = updateProfile($clientFirstname, $clientLastname, $clientEmail, $clientId);
+            
+            if ($updateResult) {
+                $_SESSION['message'] = "<p class='instructions'>Congratulations, $clientFirstname, your profile was updated successfully.";
+                $clientData = getClientInfo($clientId);
+                
+                $_SESSION['clientData'] = $clientData;
+
+                include '../view/admin.php';
+                exit;
+            }
+            else {
+                $_SESSION['message'] = "<p class='warning'>Sorry,your profile was not updated. Please try again.";
+                include '../view/client-update.php';
+                exit;
+            }
+                
+        
+        // Send them to the admin view if update is successful
+        include '../view/admin.php';
+        break;
+        
+///////////////////// UPDATE Password /////////////////////////////// 
+    case 'update_pw':
+        $clientPassword = filter_input(INPUT_POST, 'clientPassword', FILTER_SANITIZE_STRING);
+        $clientId = filter_input(INPUT_POST, 'clientId', FILTER_SANITIZE_NUMBER_INT);
+        
+        $checkPassword = checkPassword($clientPassword);
+        if (empty($checkPassword)) {
+            $_SESSION['message'] = '<p class="warning">Please make sure your password matches the required pattern.</p>';
+            include '../view/client-update.php';
+            exit;
+        }
+        
+        $hashedPassword = password_hash($clientPassword, PASSWORD_DEFAULT);
+        $updateResult = updatePassword($clientId, $hashedPassword);
+        
+        if ($updateResult) {
+            $_SESSION['message'] = '<p class="instructions">Congratulations, your password has been updated.</p>';
+            include '../view/admin.php';
+            exit;
+        }
+        else {
+            $_SESSION['message'] = "<p class='warning'>Your password was not updated. Please try again.</p>";
+            include '../view/admin.php';
+        }
+        
+        break;
+        
+//////////////////// logout ///////////////////////////////        
         
     case 'logout':
         session_destroy();
@@ -139,7 +208,7 @@ switch ($action) {
         break;
     
     
-    //////////////// DEFAULT ///////////////////////////////     
+/////////////////////// DEFAULT ///////////////////////////////     
 
     default:
         include '../view/admin.php';

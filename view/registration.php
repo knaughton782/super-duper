@@ -3,12 +3,12 @@
     <h1 class="siteTitle">Acme Registration</h1>
     <p>All fields are required.</p>
     <?php
-            if (isset($_SESSION['message'])) {
-                echo  $_SESSION['message'];
-                // unset the message after displaying it once
-                unset($_SESSION['message']);
-            }
-        ?>
+        if (isset($_SESSION['message'])) {
+            echo  $_SESSION['message'];
+            // unset the message after displaying it once
+            unset($_SESSION['message']);
+        }
+    ?>
 
     <section>
 
@@ -28,7 +28,7 @@
                        ?> required><br>
 
                 <label for="clientEmail">Email Address: </label><br>
-                <input type="email" name="clientEmail" id="clientEmail"  placeholder="Pleae enter a valid email address" 
+                <input type="email" name="clientEmail" id="clientEmail" placeholder="Pleae enter a valid email address" 
 <?php if (isset($clientEmail)) {
     echo "value='$clientEmail'";
 } ?> required><br>
