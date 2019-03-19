@@ -26,6 +26,7 @@ $catList .= '</select>';
 
 
 <main id="page-content"> 
+    <section>
     
     <h1><?php
             if (isset($prodInfo['invName'])) {
@@ -35,7 +36,7 @@ $catList .= '</select>';
                 echo $invName;
             }
         ?></h1>
-    <h2>Use this form to update products. All fields are required.</h2>
+        <h2>Use this form to update products. All fields are required.</h2><br><br>
     <?php
         if (isset($_SESSION['message'])) {
             echo $_SESSION['message'];
@@ -43,7 +44,7 @@ $catList .= '</select>';
             unset($_SESSION['message']);
         }
         ?>
-    <section>
+    
 
         <form action="/acme/products/index.php" method="post">
             <fieldset>

@@ -7,6 +7,11 @@
   
     <h1 class="siteTitle">You are logged in, <?php echo $_SESSION['clientData']['clientFirstname']; ?></h1>
 
+    <?php  if (isset($_SESSION['message'])) {
+                    echo  $_SESSION['message'];
+                    // unset the message after displaying it once
+                    unset($_SESSION['message']);
+    } ?>
     
     <section>
         <ul>
@@ -28,11 +33,7 @@
                        
             <h1>Products Administration:</h1>
             
-                <?php  if (isset($_SESSION['message'])) {
-                    echo  $_SESSION['message'];
-                    // unset the message after displaying it once
-                    unset($_SESSION['message']);
-                } ?>
+                
             
             <p>Use the link below to manage Acme products.</p><br><br>
 

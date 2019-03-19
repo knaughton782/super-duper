@@ -5,12 +5,13 @@
 ?><?php include $_SERVER['DOCUMENT_ROOT'] . '/acme/common/header.php'; ?>
 <main id="page-content"> 
     
-  <!-- -------------------- ACCOUNT UPDATE ----------------------- -->
+  <!--  ACCOUNT UPDATE  -->
   
+  <section class="updateForm">
     <h1 class="siteTitle">Account Updates</h1>
 
-    <p>Update your profile information here:</p>
-    <section class="updateForm">
+    <p>Update your profile information here:</p><br>
+    
         <form action="/acme/accounts/" method="post">
             <fieldset>
                 <label for="clientFirstname">First name: </label><br>
@@ -40,12 +41,13 @@
     </section>
     
     
-    <!-- -------------------- PASSWORD UPDATE ----------------------- -->
+    <!--  PASSWORD UPDATE  -->
+    <section class="updateForm">
     
     <h1 class="siteTitle">Change Password</h1>
 
-    <p>Change your password here:</p>
-    <section class="updateForm">
+    <p>Change your password here:</p><br>
+    
         <form action="/acme/accounts/" method="post">
             <fieldset>
                 

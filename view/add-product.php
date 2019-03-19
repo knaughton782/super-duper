@@ -19,6 +19,7 @@
 ?><?php include $_SERVER['DOCUMENT_ROOT'] . '/acme/common/header.php'; ?>
         
 <main id="page-content"> 
+    <section>
 
     <h1 class="siteTitle">Add a Product</h1>
     <?php
@@ -28,8 +29,8 @@
                 unset($_SESSION['message']);
             }
         ?>
-    <h2>Use this form to add a new product. </h2>
-    <section>
+    <h2>Use this form to add a new product. </h2><br><br>
+    
     
     <form action="/acme/products/index.php" method="post">
         <fieldset>

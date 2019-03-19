@@ -1,5 +1,6 @@
 <?php include $_SERVER['DOCUMENT_ROOT'] . '/acme/common/header.php'; ?>
 <main>
+    <section class="loginForm">
     <h1 class="siteTitle">Acme Login Page</h1>
         <?php
             if (isset($_SESSION['message'])) {
@@ -10,7 +11,8 @@
         ?>
 
     <p>*All fields are required</p>
-    <section class="loginForm">
+    <br>
+    
         <form action="/acme/accounts/" method="post">
             <fieldset>
                 <label for="clientEmail">Email Address:</label><br>
