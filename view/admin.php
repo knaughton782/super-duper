@@ -9,7 +9,7 @@
 
     <?php  if (isset($_SESSION['message'])) {
                     echo  $_SESSION['message'];
-                    // unset the message after displaying it once
+                    
                     unset($_SESSION['message']);
     } ?>
     
@@ -23,7 +23,7 @@
         
     </section>
     
-    <p><a href="/acme/accounts?action=update" title="Click to Manage Your Account" id="acctMgmtLink">Click to Manage Your Account</a><br><br>
+    <p><a href="/acme/accounts?action=updateClient" title="Click to Manage Your Account" id="acctMgmtLink">Click to Manage Your Account</a><br><br>
    
     
     <!-- ------- This should only be seen by admin levels ------ -->
@@ -32,8 +32,6 @@
             <p class="border"></p>
                        
             <h1>Products Administration:</h1>
-            
-                
             
             <p>Use the link below to manage Acme products.</p><br><br>
 
