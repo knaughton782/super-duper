@@ -39,7 +39,7 @@
                 <br>
                 
                 <input type="submit" name='submit' class="loginBtn" value="Update Profile">
-                <input type="hidden" name="action" value="updateClient">
+                <input type="hidden" name="action" value="updateClientInfo">
                 <input type="hidden" name="clientId" value="<?php echo $_SESSION['clientData']['clientId']; ?>">
             </fieldset>
         </form>
@@ -64,7 +64,7 @@
                 <br>
                 
                 <input type="submit" name='submit' class="loginBtn" value="Update Password">
-                <input type="hidden" name="action" value="update_pw">
+                <input type="hidden" name="action" value="updateClientPassword">
                 <input type="hidden" name="clientId" value="<?php $_SESSION['clientData']['clientId']; ?>">
             </fieldset>
         </form>

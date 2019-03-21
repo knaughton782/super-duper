@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 /*
  * ACCOUNTS controller (direct the user to a page and save info to db)
@@ -29,6 +29,7 @@ switch ($action) {
     
 ///////////////////////////// login case /////////////////////    
     case 'login':
+        $page_title = 'Login';
         include '../view/login.php';
         break;
     
@@ -78,6 +79,8 @@ switch ($action) {
     case 'register':
 //        echo 'You are hoping for the registration page'; 
 //        exit;
+        $page_title = 'Registration';
+        
         $clientFirstname = filter_input(INPUT_POST, 'clientFirstname', FILTER_SANITIZE_STRING);
         $clientLastname = filter_input(INPUT_POST, 'clientLastname', FILTER_SANITIZE_STRING);
         $clientEmail = filter_input(INPUT_POST, 'clientEmail', FILTER_SANITIZE_EMAIL);
@@ -127,75 +130,95 @@ switch ($action) {
         
 ////////////////////// DELIVER UPDATE PAGE ///////////////////////////////     
     
-    case 'update':
+    case 'updateClient':
+        $page_title = 'Update Profile';
         include '../view/client-update.php';
         break;
     
     
 ///////////////////// UPDATE PROFILE INFORMATION ///////////////////////////////     
     
-    case 'update_user':
+    case 'updateClientInfo':
  
+        $clientId = filter_input(INPUT_POST, 'clientId', FILTER_SANITIZE_NUMBER_INT);
         $clientFirstname = filter_input(INPUT_POST, 'clientFirstname', FILTER_SANITIZE_STRING);
         $clientLastname = filter_input(INPUT_POST, 'clientLastname', FILTER_SANITIZE_STRING);
         $clientEmail = filter_input(INPUT_POST, 'clientEmail', FILTER_SANITIZE_EMAIL);
-        $clientId = filter_input(INPUT_POST, 'clientEmail', FILTER_SANITIZE_EMAIL);
         
-         
         
-            if (empty($clientFirstname) || empty($clientLastname) || empty($clientEmail)) {
-                 $_SESSION['message'] = '<p class="warning">Please provide information for all empty form fields.</p>';
-                include '../view/client-update.php';
-                exit;
-            }
         //validate email
-        $clientEmail = checkEmail($clientEmail);    
+        $clientEmail = checkEmail($clientEmail); 
         
-        $updateResult = updateProfile($clientFirstname, $clientLastname, $clientEmail, $clientId);
+        
+        //check for different email in session
+        if ($clientEmail != $_SESSION['clientData']['clientEmail']) {
             
-            if ($updateResult) {
-                $_SESSION['message'] = "<p class='instructions'>Congratulations, $clientFirstname, your profile was updated successfully.";
-                $clientData = getClientInfo($clientId);
-                
-                $_SESSION['clientData'] = $clientData;
-
-                include '../view/admin.php';
-                exit;
-            }
-            else {
-                $_SESSION['message'] = "<p class='warning'>Sorry,your profile was not updated. Please try again.";
+            $existingEmail = checkExistingEmail($clientEmail);
+        
+            if ($existingEmail) {
+                 $_SESSION['message'] = '<p class="warning">That email address already exists. Please log in.</p>';
                 include '../view/client-update.php';
                 exit;
             }
-                
+        }
         
-        // Send them to the admin view if update is successful
-        include '../view/admin.php';
-        break;
         
-///////////////////// UPDATE Password /////////////////////////////// 
-    case 'update_pw':
-        $clientPassword = filter_input(INPUT_POST, 'clientPassword', FILTER_SANITIZE_STRING);
-        $clientId = filter_input(INPUT_POST, 'clientId', FILTER_SANITIZE_NUMBER_INT);
-        
-        $checkPassword = checkPassword($clientPassword);
-        if (empty($checkPassword)) {
-            $_SESSION['message'] = '<p class="warning">Please make sure your password matches the required pattern.</p>';
+        //make sure all fields have info
+        if (empty($clientFirstname) || empty($clientLastname) || empty($clientEmail)) {
+             $_SESSION['message'] = '<p class="warning">Please provide information for all empty form fields.</p>';
             include '../view/client-update.php';
             exit;
         }
         
-        $hashedPassword = password_hash($clientPassword, PASSWORD_DEFAULT);
-        $updateResult = updatePassword($clientId, $hashedPassword);
         
-        if ($updateResult) {
+        $updateOutcome = updateClientInfo($clientFirstname, $clientLastname, $clientEmail, $clientId);
+            
+            if ($updateOutcome === 1) {
+                $clientInfo = getClientInfo($clientId);
+                array_pop($clientData);
+                $_SESSION['clientData'] = $clientInfo;
+                
+                $_SESSION['message'] = "<p class='instructions'>Congratulations, $clientFirstname, your profile was updated successfully.";
+                
+                header('/acme/accounts');
+                exit;
+            }
+            else {
+                $_SESSION['message'] = "<p class='warning'>***Sorry, your profile was not updated. Please try again.";
+                include '../view/client-update.php';
+                exit;
+            }
+            
+                
+        break;
+        
+///////////////////// UPDATE Password /////////////////////////////// 
+    case 'updateClientPassword':
+        
+        $clientId = filter_input(INPUT_POST, 'clientId', FILTER_SANITIZE_NUMBER_INT);
+        $clientPassword = filter_input(INPUT_POST, 'clientPassword', FILTER_SANITIZE_STRING);
+        
+        $checkPassword = checkPassword($clientPassword);
+            
+        
+        $hashedPassword = password_hash($clientPassword, PASSWORD_DEFAULT);
+            
+        if (empty($clientPassword)) {
+                     $_SESSION['message'] = '<p class="warning">Please check password requirements and try again.</p>';
+                    include '../view/client-update.php';
+                    exit;
+            }
+        
+        $updateOutcome = updateClientPassword($hashedPassword, $clientId);
+        
+        if ($updateOutcome) {
             $_SESSION['message'] = '<p class="instructions">Congratulations, your password has been updated.</p>';
-            include '../view/admin.php';
+            header ('location: ../view/admin.php');
             exit;
         }
         else {
             $_SESSION['message'] = "<p class='warning'>Your password was not updated. Please try again.</p>";
-            include '../view/admin.php';
+            include '../view/client-update.php';
         }
         
         break;

@@ -14,6 +14,7 @@ require_once 'model/acme-model.php'; //get model (gets info from db)
 require_once 'library/functions.php'; //brings functions into scope
 
 $categories = getCategories();
+$page_title = 'Home';
 $navList = navList($categories);
 
 $action = filter_input(INPUT_POST, 'action');

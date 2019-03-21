@@ -50,15 +50,23 @@ function checkExistingEmail($clientEmail) {
 
 // Get client data based on an email address
 function getClient($clientEmail){
+    
  $db = acmeConnect();
+ 
  $sql = 'SELECT clientId, clientFirstname, clientLastname, clientEmail, clientLevel, clientPassword 
          FROM clients
          WHERE clientEmail = :clientEmail';
+ 
  $stmt = $db->prepare($sql);
+ 
  $stmt->bindValue(':clientEmail', $clientEmail, PDO::PARAM_STR);
+ 
  $stmt->execute();
+ 
  $clientData = $stmt->fetch(PDO::FETCH_ASSOC);
+ 
  $stmt->closeCursor();
+ 
  return $clientData;
 }
 
@@ -67,33 +75,64 @@ function getClient($clientEmail){
 
 // Get client data based on a client id
 function getClientInfo($clientId){
+    
  $db = acmeConnect();
- $sql = 'SELECT clientId, clientFirstname, clientLastname, clientEmail
-         FROM clients
-         WHERE clientEmail = :clientEmail';
+ 
+ $sql = 'SELECT clientId, clientFirstname, clientLastname, clientEmail, clientLevel, clientPassword from clients where clientId = :clientId';
  $stmt = $db->prepare($sql);
- $stmt->bindValue(':clientEmail', $clientEmail, PDO::PARAM_STR);
+ 
+ $stmt->bindValue(':clientId', $clientId, PDO::PARAM_INT);
+ 
  $stmt->execute();
+ 
  $clientData = $stmt->fetch(PDO::FETCH_ASSOC);
+ 
  $stmt->closeCursor();
+ 
  return $clientData;
 }
 
 
-//update profile function
-function updateProfile($clientFirstname, $clientLastname, $clientEmail) {
+
+//update client profile function
+function updateClientInfo($clientFirstname, $clientLastname, $clientEmail, $clientId) {
 
     $db = acmeConnect();
-    $sql = 'insert into clients (clientFirstname, clientLastname, clientEmail) values ( :clientFirstname, :clientLastname, :clientEmail)'; 
+    
+    $sql = 'Update clients set clientFirstname=:clientFirstname, clientLastname=:clientLastname, clientEmail=:clientEmail where clientId = :clientId'; 
+    
     $stmt = $db->prepare($sql); //prepared statement
-    // replace placeholders in sql statement with actual values in the variables and identify data type for the db
+    
+// replace placeholders in sql statement with actual values in the variables and identify data type for the db
+    
     $stmt->bindValue(':clientFirstname', $clientFirstname, PDO::PARAM_STR);
     $stmt->bindValue(':clientLastname', $clientLastname, PDO::PARAM_STR);
     $stmt->bindValue(':clientEmail', $clientEmail, PDO::PARAM_STR);
+    $stmt->bindValue(':clientId', $clientId, PDO::PARAM_INT);
     
     $stmt->execute(); //inserts the data
     
     $rowsChanged = $stmt->rowCount(); //stores the number of rows changed in a variable
+    $stmt->closeCursor(); //close db interaction
+    return $rowsChanged;
+}
+
+
+
+function updateClientPassword($clientPassword, $clientId) {
+    $db = acmeConnect();
+    $sql = 'Update clients set clientPassword=:clientPassword where clientId = :clientId'; 
+    $stmt = $db->prepare($sql); //prepared statement
+    
+   
+    // replace placeholders in sql statement with actual values in the variables and identify data type for the db
+       
+    $stmt->bindValue(':clientPassword', $clientPassword, PDO::PARAM_STR);
+    $stmt->bindValue(':clientId', $clientId, PDO::PARAM_INT);
+    $stmt->execute(); //inserts the data
+    
+    $rowsChanged = $stmt->rowCount(); //stores the number of rows changed in a variable
+    
     $stmt->closeCursor(); //close db interaction
     return $rowsChanged;
 }

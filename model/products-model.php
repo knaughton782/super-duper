@@ -18,7 +18,8 @@ function addCategory($categoryName) {
     return $rowsChanged; //shows success or failure of sql query 
 }
 
-//product function
+//product function *****************
+
 function addProduct($categoryId, $invName, $invDescription, $invImage, $invThumbnail, $invPrice, $invStock, $invSize, $invWeight, $invLocation, $invVendor, $invStyle) {
 
     $db = acmeConnect();  //create db connection object
@@ -55,7 +56,8 @@ function getProductBasics() {
     return $products;
 }
 
-// Get product information by invId
+// Get product information by invId ********************
+
 function getProductInfo($invId){
     $db = acmeConnect();
     $sql = 'SELECT * FROM inventory WHERE invId = :invId';
@@ -67,7 +69,8 @@ function getProductInfo($invId){
     return $prodInfo;
 }
 
-// Update a product
+// Update a product ********************
+
 function updateProduct($invId, $categoryId, $invName, $invDescription, $invImage, $invThumbnail, $invPrice, $invStock, $invSize, $invWeight, $invLocation, $invVendor, $invStyle) {
         // Create a connection
         $db = acmeConnect();
@@ -109,4 +112,25 @@ function deleteProduct($invId) {
         $rowsChanged = $stmt->rowCount();
         $stmt->closeCursor();
         return $rowsChanged;
+}
+
+
+// funtion to get a list of products based on the category
+
+function getProductsByCategory($categoryName) {
+    
+    $db = acmeConnect();
+    $sql = 'SELECT * FROM inventory WHERE categoryId IN (SELECT categoryId FROM categories WHERE categoryName = :categoryName)';
+    
+    $stmt = $db->prepare($sql);
+    
+    $stmt->bindValue(':categoryName', $categoryName, PDO::PARAM_STR);
+    
+    $stmt->execute();
+    
+    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    $stmt->closeCursor();
+    return $products;
+    
 }
