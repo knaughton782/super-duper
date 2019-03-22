@@ -235,6 +235,7 @@ switch ($action) {
     case 'detail':
         $invId = filter_input(INPUT_GET, 'invId', FILTER_SANITIZE_NUMBER_INT);
         $productInfo = getProductInfo($invId);
+        $page_title = "$productInfo[invName]";
         
             if (empty($productInfo)) {
                 

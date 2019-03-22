@@ -178,6 +178,23 @@ th {
         margin: 5px;
     }
 
+    
+    .productDetails {
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+   } 
+   
+   .productDetails li {
+       list-style-type: none;
+   }
+  
+   
+   #detailsDescription {
+       font-weight: bold;
+   }
+   
+   
     /*************** navigation ******************/
 
     #nav {
@@ -345,7 +362,25 @@ th {
 
    /* TODO: do I need another large size media query? */
     
-    div {
+   .productDetails {
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+   } 
+   
+   .productDetails li {
+       list-style-type: none;
+   }
+   
+   #displayDetails {
+       display:flex;
+   }
+   
+   #detailsDescription {
+       font-weight: bold;
+   }
+   
+   div {
         display: flex;
     }
 
