@@ -29,7 +29,7 @@ $page_title = 'Image Management';
 * **************************************************** */
 
 // directory name where uploaded images are stored
-$image_dir = '/acme/uploads/images';
+$image_dir = '/acme/images/products';
 
 // The path is the full path from the server root
 $image_dir_path = $_SERVER['DOCUMENT_ROOT'] . $image_dir;
@@ -67,7 +67,10 @@ switch ($action) {
             if ($result) {
                 $_SESSION['message'] = '<p class="warning">The upload succeeded.</p>';
                 
-            } else {
+            } 
+            
+            else {
+                
                 $_SESSION['message'] = '<p class="warning">Sorry, the upload failed.</p>';
           }
         }
