@@ -168,6 +168,8 @@ switch ($action) {
         }
 
         break;
+        
+        
 
     case 'del':
         $invId = filter_input(INPUT_GET, 'invId', FILTER_VALIDATE_INT);
@@ -182,6 +184,7 @@ switch ($action) {
         exit;
 
         break;
+        
 
 
     case 'deleteProd':
@@ -198,7 +201,7 @@ switch ($action) {
             exit;
         }
         else {
-            $message = "<p class='notice'>Error: $invName was not deleted.</p>";
+            $message = "<p class='warning'>Error: $invName was not deleted.</p>";
 
             $_SESSION['message'] = $message;
             header('location: /acme/products/');
@@ -215,7 +218,7 @@ switch ($action) {
         $products = getProductsByCategory($categoryName);
         
         if(!count($products)){
-            $_SESSION['message'] = "<p class='notice'>Sorry, no $categoryName products could be found.</p>";
+            $_SESSION['message'] = "<p class='warning'>Sorry, no $categoryName products could be found.</p>";
         } else {
             $prodDisplay = buildProductsDisplay($products);
         }
@@ -226,6 +229,22 @@ switch ($action) {
 
         include '../view/category.php';
 
+        break;
+        
+        
+    case 'detail':
+        $invId = filter_input(INPUT_GET, 'invId', FILTER_SANITIZE_NUMBER_INT);
+        $productInfo = getProductInfo($invId);
+        
+            if (empty($productInfo)) {
+                
+                $_SESSION['message'] = "<p class='warning'>No product information could be found.</p>";
+            }
+            else {
+                $prodDisplay = buildProductDisplay($productInfo);
+            }
+            
+        include '../view/product-detail.php';
         break;
 
     
