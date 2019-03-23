@@ -102,3 +102,29 @@ function checkExistingImage($imgName){
     
     return $imageMatch;
 }
+
+
+
+
+
+
+// Get thumbnail Images Information from images table
+function getThumbnailImages($invId) {
+    
+    $db = acmeConnect();
+    
+    $sql = 'SELECT imgId, imgPath, imgName, imgDate, inventory.invId, invName FROM images JOIN inventory ON images.invId = inventory.invId WHERE images.imgName LIKE "%-tn%" AND inventory.invId = :invId';
+    
+    $stmt = $db->prepare($sql);
+    
+    $stmt->bindValue(':invId', $invId, PDO::PARAM_INT);
+    
+    $stmt->execute();
+    
+    $imageArray = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    $stmt->closeCursor();
+    
+     return $imageArray;
+}
+

@@ -19,6 +19,16 @@
                 echo $prodDisplay;
             }
         ?>
+        <br>
+    </section>
+         <section class="productDetails">
+        <hr>
+        <h2>Additional Product Thumbnails</h2>
+        <?php
+             if (isset($thumbnailDisplayVar)) {
+                echo $thumbnailDisplayVar;
+            }
+        ?>
         
         
     </section>

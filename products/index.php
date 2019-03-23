@@ -12,6 +12,7 @@ require_once '../library/connections.php'; //get db connection (must be first)
 require_once '../library/functions.php'; //get helper functions
 require_once '../model/acme-model.php'; //get model (gets info from db)
 require_once '../model/products-model.php'; //get model (gets info from db)
+require_once '../model/uploads-model.php'; //get uploads model (gets info from db)
 
 
 $categories = getCategories();
@@ -235,6 +236,7 @@ switch ($action) {
     case 'detail':
         $invId = filter_input(INPUT_GET, 'invId', FILTER_SANITIZE_NUMBER_INT);
         $productInfo = getProductInfo($invId);
+        
         $page_title = "$productInfo[invName]";
         
             if (empty($productInfo)) {
@@ -244,6 +246,22 @@ switch ($action) {
             else {
                 $prodDisplay = buildProductDisplay($productInfo);
             }
+            
+            
+        $thumbnails = getThumbnailImages($invId);
+//        echo $thumbnail;
+//        exit;
+//           echo print_r( $thumbnails, TRUE );
+//            exit;
+            
+            
+            if ($thumbnails) {
+                $thumbnailDisplayVar = thumbnailDisplay($thumbnails);
+                
+        }
+        else {
+            $_SESSION['message'] = '<p class="warning">Sorry, no additional thumbnail images have been uploaded for this product.</p>';
+        }
             
         include '../view/product-detail.php';
         break;

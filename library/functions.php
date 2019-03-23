@@ -95,6 +95,7 @@ function buildProductDisplay($productInfo) {
 }
 
 
+
 /* * *********** IMAGE FUNCTIONS ***************** */
 
 // Adds "-tn" designation to file name
@@ -131,6 +132,23 @@ function buildImageDisplay($imageArray) {
     return $id;
 }
 
+
+//display thumbnails
+function thumbnailDisplay($thumbnails) {
+
+    //print_r($thumbnails[0]);
+    
+    foreach ($thumbnails as $thumbnail) {
+    $name = $thumbnail['imgName'];
+    $path = $thumbnail['imgPath'];
+    
+    $thumbnailImage = "<img src='$path' alt='Thumbnail of $name product'>";
+    
+   
+    }
+    return $thumbnailImage;
+    
+}
 
 
 // Build the products select list
