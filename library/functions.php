@@ -137,16 +137,25 @@ function buildImageDisplay($imageArray) {
 function thumbnailDisplay($thumbnails) {
 
     //print_r($thumbnails[0]);
+     
+        $thumbnailTable = '<table>';
+        $thumbnailTable .= '<tr>';
     
     foreach ($thumbnails as $thumbnail) {
-    $name = $thumbnail['imgName'];
-    $path = $thumbnail['imgPath'];
-    
-    $thumbnailImage = "<img src='$path' alt='Thumbnail of $name product'>";
-    
+        
+        $name = $thumbnail['imgName'];
+        $path = $thumbnail['imgPath'];
+       
+        $thumbnailTable .= '<td>';
+        $thumbnailTable .= "<img src='$path' title='$name image on Acme.com' alt='$name image on Acme.com'>";
+            
+        $thumbnailTable .= '</td>';
+        
    
     }
-    return $thumbnailImage;
+        $thumbnailTable .= '</tr>';  
+        $thumbnailTable .= '</table>';
+    return $thumbnailTable;
     
 }
 

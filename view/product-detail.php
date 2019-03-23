@@ -21,9 +21,10 @@
         ?>
         <br>
     </section>
-         <section class="productDetails">
-        <hr>
-        <h2>Additional Product Thumbnails</h2>
+    <h3>Additional Product Thumbnails</h3>
+         <section class="thumbnails">
+
+        
         <?php
              if (isset($thumbnailDisplayVar)) {
                 echo $thumbnailDisplayVar;
