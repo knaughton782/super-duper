@@ -22,18 +22,3 @@ acmeConnect();
 ?>
 
 
-<!--
-Admin user:
-Firstname: Admin
-Lastname: User
-Email: admin@cit336.net
-Password: Sup3rU$er  -->
-
-
-<!--
-non-Admin user:
-Firstname: Kirsten
-Lastname: Naughton
-Email: kirsten.naughton@gmail.com
-Password: Password1!
--->
