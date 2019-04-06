@@ -200,8 +200,8 @@ function uploadFile($name) {
     }
 }
 
-// Processes images by getting paths and
-// creating smaller versions of the image
+// Processes images by getting paths and creating smaller versions of the image
+
 function processImage($dir, $filename) {
 
     // Set up the variables
@@ -299,9 +299,51 @@ function resizeImage($old_image_path, $new_image_path, $max_width, $max_height) 
     }
     // Free any memory associated with the old image
     imagedestroy($old_image);
+}   // ends the if - else
+
+
+
+function reviewsDisplay($reviews){
+    
+    $reviewTable = '<table>';
+    $reviewTable .= '<tr>';
+
+    foreach ($reviews as $review) {
+
+        $reviewTable .= '<td>';
+        
+        // TODO: what is the table displaying? Sis W says don't even need a link, just display text and user id
+        $reviewTable .= "<span class='title'>$SCREENNAMEVARIABLE[clientId]</span><br>";
+        $reviewTable .= "<span class='text'>$TEXTVARIABLE[invId]</span><br>";
+
+        $reviewTable .= '</td>';
+    }
+    
+    $reviewTable .= '</tr>';
+    $reviewTable .= '</table>';
+    
+    return $reviewTable;
 }
 
-// ends the if - else
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -47,6 +47,10 @@ img {
 .space {
     padding: 0 10px;
 }
+
+.title {
+    font-weight: bold;
+}
 /*********************** forms general ***************/
 
 input[type=text], input[type=password], input[type=email], input[type=number], textarea, select {

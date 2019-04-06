@@ -131,7 +131,10 @@ switch ($action) {
         exit;
         break;
 
-    // Update Product 
+    
+
+
+// Update Product 
 
     case 'updateProd':
         
@@ -273,6 +276,7 @@ switch ($action) {
 
 
 
+    
     default:
 
         $products = getProductBasics();

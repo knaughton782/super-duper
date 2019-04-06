@@ -118,7 +118,7 @@ switch ($action) {
         if ($regOutcome === 1) { 
            
             setcookie('firstname', $cookieFirstname, strtotime('+1 year'), '/');
-            $_SESSION['message'] = "<p class='instructions'>Thanks for registering $clientFirstname. Please use your email and password to login.</p>";
+            $_SESSION['message'] = "<p class='instructions'>$clientFirstname, thanks for creating an account. Please use your email and password to login.</p>";
 
             header('Location: /acme/accounts/?action=login');
             exit;

@@ -48,18 +48,18 @@
             <form action="/acme/reviews/" method="post">
                 <fieldset>
                     
-                    <label for='clientId'>Review by:<br></label><br>
-                    <input type="text" name="clientId" id="clientId" readonly><br>
+                    <label for='clientId'>Review by: </label>
+                    <span class="title"><?php echo $username = substr($_SESSION['clientData']['clientFirstname'], 0, 1) . $_SESSION['clientData']['clientLastname']; ?></span>
+                    <br><br>
                     
                     <label for="reviewText">Write review here:</label><br>
-                    <textarea name="reviewText" id="reviewText" <?php if (isset($reviewText)) {
-                        echo $reviewText; } ?> required></textarea>
+                    <textarea name="reviewText" id="reviewText" <?php if (isset($reviewText)) { echo $reviewText; } ?> required></textarea>
 
                     <input type="submit" name='submit' class="reviewBtn" value="Add Review">
                     
                     <input type="hidden" name="action" value="add_review">
                     <input type="hidden" name="clientId" value="<?php echo $_SESSION['clientData']['clientId']; ?>">
-                    <input type="hidden" name="invId" value="<?php echo $_SESSION['clientData']['invId']; ?>">
+                    <input type="hidden" name="invId" value="<?php echo $productInfo['invId']; ?>">
                     
                 </fieldset>
             </form>       
