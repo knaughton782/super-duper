@@ -20,13 +20,11 @@
                 <img src="/acme/images/site/logo.gif" alt="Acme Logo" title="ACME's Home Page to Purchase Coyote Catching Products" class="logo">
                 <div class="myAccount">
                     <img src="/acme/images/site/account.gif" alt="My Account Icon" title="Access Your Account" class="account">
-                    <?php
-                    if (isset($cookieFirstname)) {
-                        echo "<span>Welcome $cookieFirstname!</span>";
-                    }
-                    ?>
 
                     <?php if (isset($_SESSION['loggedin'])) { ?>
+                    <?php if (isset($cookieFirstname)) {
+                        echo "<span class='space'>Welcome $cookieFirstname!</span>";
+                    } ?>
                         <a href="/acme/accounts/index.php?action=logout" title="Click to Log out">Logout</a>
 
                     <?php
@@ -44,8 +42,3 @@
 
             </nav>
         </header>
-
-
-
-
-

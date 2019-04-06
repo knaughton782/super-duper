@@ -7,12 +7,13 @@
 //create or access a session
 session_start();
 
+#get db connection, helper functions, and bring models into scope
 
-require_once '../library/connections.php'; //get db connection (must be first)
-require_once '../library/functions.php'; //get helper functions
-require_once '../model/acme-model.php'; //get model (gets info from db)
-require_once '../model/products-model.php'; //get model (gets info from db)
-require_once '../model/uploads-model.php'; //get uploads model (gets info from db)
+require_once '../library/connections.php'; 
+require_once '../library/functions.php';
+require_once '../model/acme-model.php'; 
+require_once '../model/products-model.php'; 
+require_once '../model/uploads-model.php';
 
 
 $categories = getCategories();
@@ -26,11 +27,8 @@ if ($action == NULL) {
     $action = filter_input(INPUT_GET, 'action');
 }
 
-if (isset($_COOKIE['firstname'])) {
-    $cookieFirstname = filter_input(INPUT_COOKIE, 'firstname', FILTER_SANITIZE_STRING);
-}
 
-// Switch Case ******************
+
 switch ($action) {
 
     // deliver new category page 
@@ -40,7 +38,7 @@ switch ($action) {
         break;
 
 
-    // new category logic 
+    // add new category logic 
 
     case 'addCat':
         $categoryName = filter_input(INPUT_POST, 'categoryName', FILTER_SANITIZE_STRING);
@@ -136,6 +134,7 @@ switch ($action) {
     // Update Product 
 
     case 'updateProd':
+        
         $invId = filter_input(INPUT_POST, 'invId', FILTER_SANITIZE_NUMBER_INT);
         $categoryId = filter_input(INPUT_POST, 'categoryId', FILTER_SANITIZE_NUMBER_INT);
         $invName = filter_input(INPUT_POST, 'invName', FILTER_SANITIZE_STRING);

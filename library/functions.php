@@ -322,3 +322,6 @@ function resizeImage($old_image_path, $new_image_path, $max_width, $max_height) 
 
 // print_r($_SESSION['clientData']);
 // exit;
+
+// echo '<pre' . print_r($reviews, true) . '<pre>';
+//exit;

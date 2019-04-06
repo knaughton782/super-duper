@@ -1,16 +1,17 @@
 <?php
 
 /*
- * ACCOUNTS controller (direct the user to a page and save info to db)
+ * ACCOUNTS controller: directs user to specific pages and saves user info to db)
  */
-//create or access a session
+
 session_start();
 
+#get db connection, helper functions, and bring models into scope
 
-require_once '../library/connections.php'; //get db connection
-require_once '../model/acme-model.php'; //get model
-require_once '../model/accounts-model.php'; //brings accounts-model into scope
-require_once '../library/functions.php'; //get helper functions
+require_once '../library/connections.php'; 
+require_once '../model/acme-model.php'; 
+require_once '../model/accounts-model.php'; 
+require_once '../library/functions.php'; 
 
 $categories = getCategories();
 $navList = navList($categories);
@@ -22,61 +23,61 @@ if ($action == NULL) {
     $action = filter_input(INPUT_GET, 'action');
 }
 
-if (isset($_COOKIE['firstname'])) {
-    $cookieFirstname = filter_input(INPUT_COOKIE, 'firstname', FILTER_SANITIZE_STRING);
-}
-
 
 switch ($action) {
 
-// login case ***********************
+# login case ***********************
     case 'login':
         $page_title = 'Login';
         include '../view/login.php';
         break;
 
 
-// login user case ***********************
+# login user case ***********************
 
     case 'login_user':
         $clientEmail = filter_input(INPUT_POST, 'clientEmail', FILTER_SANITIZE_EMAIL);
         $clientPassword = filter_input(INPUT_POST, 'clientPassword', FILTER_SANITIZE_STRING);
 
-        //validate email
-        $clientEmail = checkEmail($clientEmail);
-        //check password
-        $checkPassword = checkPassword($clientPassword);
+        
+        $clientEmail = checkEmail($clientEmail); //validate email
+        
+        $checkPassword = checkPassword($clientPassword); //check password
 
         if (empty($clientEmail) || empty($checkPassword)) {
             $_SESSION['message'] = '<p class="warning">Please provide information for all empty form fields.</p>';
             include '../view/login.php';
             exit;
         }
-        // A valid password exists, proceed with the login process
-        // Query the client data based on the email address
+        
+        # A valid password exists, proceed with the login process
+        # Query the client data based on the email address
         $clientData = getClient($clientEmail);
-        // Compare the password just submitted against the hashed password for the matching client
+        
+        # Compare the password just submitted against the hashed password for the matching client
         $hashCheck = password_verify($clientPassword, $clientData['clientPassword']);
-        // If the hashes don't match create an error and return to the login view
+        
+        # If the hashes don't match create an error and return to the login view
         if (!$hashCheck) {
             $_SESSION['message'] = '<p class="warning">Please check your password and try again.</p>';
             include '../view/login.php';
             exit;
         }
-        // A valid user exists, log them in
-        $_SESSION['loggedin'] = TRUE;
-        // Remove the password from the array with the array_pop function
-        array_pop($clientData);
-        // Store the array into the session
-        $_SESSION['clientData'] = $clientData;
+        
+        $_SESSION['loggedin'] = TRUE; // A valid user exists, log them in
+  
+        array_pop($clientData);       // Remove the password from the array with the array_pop function
+        
+        $_SESSION['clientData'] = $clientData; // Store the array into the session
 
+      
 
         // Send them to the admin view if login is successful
         include '../view/admin.php';
         break;
 
 
-// register case ***********************
+# register case ***********************
 
     case 'register':
 //        echo 'You are hoping for the registration page';
@@ -88,12 +89,10 @@ switch ($action) {
         $clientEmail = filter_input(INPUT_POST, 'clientEmail', FILTER_SANITIZE_EMAIL);
         $clientPassword = filter_input(INPUT_POST, 'clientPassword', FILTER_SANITIZE_STRING);
 
-        //validate email
         $clientEmail = checkEmail($clientEmail);
-        //check password
+        
         $checkPassword = checkPassword($clientPassword);
 
-        //check for existing email
         $existingEmail = checkExistingEmail($clientEmail);
 
         if ($existingEmail) {
@@ -115,20 +114,22 @@ switch ($action) {
         //call the function and send info to model
         $regOutcome = regClient($clientFirstname, $clientLastname, $clientEmail, $hashedPassword);
 
-        // is the return value = 1? One row changed in the db
-        if ($regOutcome === 1) {
-            setcookie('firstname', $cookieFirstname, time() - 3600, '/');
+        # One row changed in the db 
+        if ($regOutcome === 1) { 
+           
+            setcookie('firstname', $cookieFirstname, strtotime('+1 year'), '/');
             $_SESSION['message'] = "<p class='instructions'>Thanks for registering $clientFirstname. Please use your email and password to login.</p>";
-
 
             header('Location: /acme/accounts/?action=login');
             exit;
         }
+        
         else {
             $_SESSION['message'] = "<p class='warning'>Sorry $clientFirstname, but registration failed. Please try again.</p>";
             include '../view/registration.php';
             exit;
         }
+        
         break;
 
 
@@ -150,8 +151,7 @@ switch ($action) {
         $clientEmail = filter_input(INPUT_POST, 'clientEmail', FILTER_SANITIZE_EMAIL);
 
 
-        //validate email
-        $clientEmail = checkEmail($clientEmail);
+        $clientEmail = checkEmail($clientEmail); # validate
 
 
         //check for different email in session
@@ -179,12 +179,12 @@ switch ($action) {
 
         if ($updateOutcome === 1) {
             $clientInfo = getClientInfo($clientId);
-            array_pop($clientData);
+
             $_SESSION['clientData'] = $clientInfo;
 
-            $_SESSION['message'] = "<p class='instructions'>Congratulations, $clientFirstname, your profile was updated successfully.";
+            $_SESSION['message'] = "<p class='instructions'>Congratulations $clientFirstname! Your profile was updated successfully.";
 
-            header('/acme/accounts');
+            include '../view/client-update.php';
             exit;
         }
         else {
@@ -226,18 +226,17 @@ switch ($action) {
         }
 
         break;
+        
 
 // logout ***********************
-
     case 'logout':
 
-        unset($_SESSION['firstname']);
         session_destroy();
         header('Location: /acme/');
         break;
 
 
-// DEFAULT ***********************
+// DEFAULT **************************************
 
     default:
         include '../view/admin.php';

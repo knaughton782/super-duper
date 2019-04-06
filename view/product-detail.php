@@ -33,7 +33,6 @@
             }
         ?>
         
-        
     </section>
     
     <h3>Customer Reviews</h3>
@@ -44,37 +43,41 @@
         <?php if ($_SESSION['loggedin']) {?>
             <p class="border"></p>
                        
-            <h1>Add a product review:</h1>
+            <h3>Add a product review:</h3>
             
-<!--                <form action="" method="post">
-                    <fieldset>
-                        <label for="reviewText">Write review here:</label><br>
-                        <input type="" name="" id="" //<?php if (isset()) {
-//                            echo "value'$variablehere'";
-                    //} ?> required><br>
+            <form action="/acme/reviews/" method="post">
+                <fieldset>
+                    
+                    <label for='clientId'>Review by:<br></label><br>
+                    <input type="text" name="clientId" id="clientId" readonly><br>
+                    
+                    <label for="reviewText">Write review here:</label><br>
+                    <textarea name="reviewText" id="reviewText" <?php if (isset($reviewText)) {
+                        echo $reviewText; } ?> required></textarea>
 
-                        <label for='clientPassword'>Password:<br>
-                        <span class="warning">Passwords must be at least 8 characters. Please include at least 1 number, 1 capital, and 1 special character.</span>
-                        </label><br>
-
-                        <input type="password" name="clientPassword" id="clientPassword" required pattern="(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"><br>
-
-                        <input type="submit" name='submit' class="loginBtn" value="Login">
-                        <input type="hidden" name="action" value="login_user">
-                    </fieldset>
-            </form>-->
-            
-           <?php }
-        ?>
+                    <input type="submit" name='submit' class="reviewBtn" value="Add Review">
+                    
+                    <input type="hidden" name="action" value="add_review">
+                    <input type="hidden" name="clientId" value="<?php echo $_SESSION['clientData']['clientId']; ?>">
+                    <input type="hidden" name="invId" value="<?php echo $_SESSION['clientData']['invId']; ?>">
+                    
+                </fieldset>
+            </form>       
+           <?php } ?>
             
             <!-- ----------- if not logged in ----------- --> 
             
-            <?php if (!$_SESSION['loggedin']) {
+            <?php if (!$_SESSION['loggedin']) { ?>
             
-//                provide a link to the login page
+               <!--provide a link to the login page-->
+                <section>
+                    <h3>Want to review a product?</h3> <br>
+                    <a href="/acme/index.php?action=login" title="Click to login to review a product" id="registrationLink">Please log in</a>
+           
+                </section>
              
-             }
-            ?>
+          <?php   }  ?>
+           
 
         
         

@@ -4,7 +4,9 @@
  * REVIEWS MODEL
  */
 
-//*  Insert a review
+
+
+//  Insert a review
 
 
 function addReview($reviewText, $reviewDate, $invId, $clientId) {

@@ -5,7 +5,8 @@
 ?><?php include $_SERVER['DOCUMENT_ROOT'] . '/acme/common/header.php'; ?>
 <main id="page-content"> 
   
-    <h1 class="siteTitle">You are logged in, <?php echo $_SESSION['clientData']['clientFirstname']; ?></h1>
+    <h1 class="siteTitle">Welcome <?php echo $_SESSION['clientData']['clientFirstname']; ?></h1>
+    <h3>You are successfully logged in.</h3>
 
     <?php  if (isset($_SESSION['message'])) {
                     echo  $_SESSION['message'];

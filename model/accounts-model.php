@@ -99,7 +99,7 @@ function updateClientInfo($clientFirstname, $clientLastname, $clientEmail, $clie
 
     $db = acmeConnect();
     
-    $sql = 'Update clients set clientFirstname=:clientFirstname, clientLastname=:clientLastname, clientEmail=:clientEmail where clientId = :clientId'; 
+    $sql = 'Update clients set clientFirstname = :clientFirstname, clientLastname = :clientLastname, clientEmail = :clientEmail where clientId = :clientId'; 
     
     $stmt = $db->prepare($sql); //prepared statement
     

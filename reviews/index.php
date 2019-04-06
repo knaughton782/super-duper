@@ -6,37 +6,64 @@
 
 session_start();
 
-require_once '../library/connections.php'; //get db connection (must be first)
-require_once '../library/functions.php'; //get helper functions
-require_once '../model/acme-model.php'; //get model (gets info from db)
-require_once '../model/products-model.php'; //get model (gets info from db)
-require_once '../model/uploads-model.php'; //get uploads model (gets info from db)
-require_once '../model/reviews-model.php'; //get reviews model (gets info from db)
+# get db connection, helper functions, bring models into scope
+require_once '../library/connections.php'; 
+require_once '../library/functions.php'; 
+require_once '../model/acme-model.php'; 
+require_once '../model/products-model.php'; 
+require_once '../model/uploads-model.php'; 
+require_once '../model/reviews-model.php'; 
 
 $categories = getCategories();
 $navList = navList($categories);
 $page_title = 'Reviews';
 
 
-//watching for name/value pairs
+//watchß for name/value pairs
 $action = filter_input(INPUT_POST, 'action');
 if ($action == NULL) {
     $action = filter_input(INPUT_GET, 'action');
 }
 
-if (isset($_COOKIE['firstname'])) {
-    $cookieFirstname = filter_input(INPUT_COOKIE, 'firstname', FILTER_SANITIZE_STRING);
-}
+$_SESSION['loggedin'] = TRUE;
 
 switch ($action) {
 
 
-    // add a new review **************
-    case 'addReview':
+    // insert a review **************
+    case 'add_review':
+        $reviewText = filter_input(INPUT_POST, 'reviewText', FILTER_SANITIZE_STRING);
+        $reviewDate = filter_input(INPUT_POST, 'reviewDate', FILTER_SANITIZE_STRING);
+        $invId = filter_input(INPUT_POST, 'invId', FILTER_SANITIZE_NUMBER_INT);
+        $clientId = filter_input(INPUT_POST, 'clientId', FILTER_SANITIZE_NUMBER_INT);
 
-        include '';
+        //check for empty form fields
+        if (empty($reviewText)) {
+            $_SESSION['message'] = '<p class="warning">All fields are required. Please provide complete information.</p>';
+            
+            include '../view/product_detail.php';
+            exit;
+        }
+        
+        // call the function and send info to model
+        $reviewOutcome = addReview($reviewText, $reviewDate, $invId, $clientId);
+
+        //is the return value = 1? One row changed in the db
+        if ($reviewOutcome === 1) {
+            header('Location: /acme/products/');
+            exit;
+        }
+        
+        else {
+            $_SESSION['message'] = "<p class='warning'>Error! Your review was not added. Please try again.</p>";
+            
+            include '../view/product_detail.php';
+            exit;
+        }
 
         break;
+        
+        
 
     // Deliver a view to edit a review **************
     case '':
@@ -59,7 +86,7 @@ switch ($action) {
 
         break;
 
-    // Handle the review deletion **************
+    // delete review **************
     case '':
 
         include '';
