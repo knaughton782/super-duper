@@ -26,20 +26,23 @@ if ($action == NULL) {
     $action = filter_input(INPUT_GET, 'action');
 }
 
+if (isset($_COOKIE['firstname'])) {
+    $cookieFirstname = filter_input(INPUT_COOKIE, 'firstname', FILTER_SANITIZE_STRING);
+}
 
-///////////////////// Switch Case ///////////////////////
+// Switch Case ******************
 switch ($action) {
-    
-    ///////////////////// deliver new category page ///////////////////////
-    
-    case 'newCat': 
+
+    // deliver new category page 
+
+    case 'newCat':
         include '../view/add-category.php';
         break;
 
-    
-    ///////////////////// new category logic ///////////////////////
-    
-    case 'addCat': 
+
+    // new category logic 
+
+    case 'addCat':
         $categoryName = filter_input(INPUT_POST, 'categoryName', FILTER_SANITIZE_STRING);
 
         //check for empty form fields
@@ -63,6 +66,7 @@ switch ($action) {
         }
 
         break;
+        
 
     case 'addProd': //delivers add product page
 
@@ -103,12 +107,12 @@ switch ($action) {
 
         break;
 
-    
+
     case 'newProd': //delivers add product page
         include '../view/add-product.php';
         break;
 
-    
+
     case 'mod':
         $invId = filter_input(INPUT_GET, 'invId', FILTER_VALIDATE_INT);
         $prodInfo = getProductInfo($invId);
@@ -128,8 +132,8 @@ switch ($action) {
         include '../view/prod-update.php';
         exit;
         break;
-        
-        ///////////////////// Update Product ///////////////////////
+
+    // Update Product 
 
     case 'updateProd':
         $invId = filter_input(INPUT_POST, 'invId', FILTER_SANITIZE_NUMBER_INT);
@@ -169,8 +173,8 @@ switch ($action) {
         }
 
         break;
-        
-        
+
+
 
     case 'del':
         $invId = filter_input(INPUT_GET, 'invId', FILTER_VALIDATE_INT);
@@ -185,7 +189,7 @@ switch ($action) {
         exit;
 
         break;
-        
+
 
 
     case 'deleteProd':
@@ -209,65 +213,67 @@ switch ($action) {
             exit;
         }
         break;
-        
-    
-        
-        
+
+
+
+
     case 'category':
         $categoryName = filter_input(INPUT_GET, 'categoryName', FILTER_SANITIZE_STRING);
-        
+
         $products = getProductsByCategory($categoryName);
-        
-        if(!count($products)){
+
+        if (!count($products)) {
             $_SESSION['message'] = "<p class='warning'>Sorry, no $categoryName products could be found.</p>";
-        } else {
+        }
+        else {
             $prodDisplay = buildProductsDisplay($products);
         }
-        
+
 //        echo $prodDisplay;
 //        exit;
-        
+
 
         include '../view/category.php';
 
         break;
-        
-        
+
+
     case 'detail':
+        
         $invId = filter_input(INPUT_GET, 'invId', FILTER_SANITIZE_NUMBER_INT);
+        
         $productInfo = getProductInfo($invId);
-        
+
         $page_title = "$productInfo[invName]";
-        
-            if (empty($productInfo)) {
-                
-                $_SESSION['message'] = "<p class='warning'>No product information could be found.</p>";
-            }
-            else {
-                $prodDisplay = buildProductDisplay($productInfo);
-            }
-            
-            
+
+        if (empty($productInfo)) {
+
+            $_SESSION['message'] = "<p class='warning'>No product information could be found.</p>";
+        }
+        else {
+            $prodDisplay = buildProductDisplay($productInfo);
+        }
+
+
         $thumbnails = getThumbnailImages($invId);
 //        echo $thumbnail;
 //        exit;
 //           echo print_r( $thumbnails, TRUE );
 //            exit;
-            
-            
-            if ($thumbnails) {
-                $thumbnailDisplayVar = thumbnailDisplay($thumbnails);
-                
+
+
+        if ($thumbnails) {
+            $thumbnailDisplayVar = thumbnailDisplay($thumbnails);
         }
         else {
             $_SESSION['message'] = '<p class="warning">Sorry, no additional thumbnail images have been uploaded for this product.</p>';
         }
-            
+
         include '../view/product-detail.php';
         break;
 
-    
-        
+
+
     default:
 
         $products = getProductBasics();
