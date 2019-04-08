@@ -2,7 +2,7 @@
 <main id="page-content"> 
   
     <h1 class="siteTitle"><?php echo $productInfo['invName'] ?> Details</h1>
-    <h2>Product reviews are available at the bottom of the page.</h2>
+    
     
         <?php
             if (isset($_SESSION['message'])) {
@@ -23,7 +23,7 @@
         <br>
     </section>
     
-    <h3>Product Thumbnails</h3>
+    <h2><?php echo $productInfo['invName'] ?> Thumbnails</h2>
     <section class="thumbnails">
 
         
@@ -35,20 +35,20 @@
         
     </section>
     
-    <h3>Customer Reviews</h3>
+    <h2><?php echo $productInfo['invName'] ?> Reviews</h2>
     <section class="reviews">
         
-        <!-- ------- show form if they are logged in ------ -->
+        <!-- show form if they are logged in ********************* -->
   
         <?php if ($_SESSION['loggedin']) {?>
             <p class="border"></p>
                        
-            <h3>Add a product review:</h3>
+            <h3>Add a <?php echo $productInfo['invName'] ?> review:</h3>
             
             <form action="/acme/reviews/" method="post">
                 <fieldset>
                     
-                    <label for='clientId'>Review by: </label>
+                    <label>Review by: </label>
                     <span class="title"><?php echo $username = substr($_SESSION['clientData']['clientFirstname'], 0, 1) . $_SESSION['clientData']['clientLastname']; ?></span>
                     <br><br>
                     
@@ -64,8 +64,17 @@
                 </fieldset>
             </form>       
            <?php } ?>
+            <section class="reviewBox">
+                
+                <?php
+             if (isset($reviewDisplay)) {
+                    echo $reviewDisplay;
+                }
+                ?>
             
-            <!-- ----------- if not logged in ----------- --> 
+            </section>
+            
+            <!-- if not logged in ********************* --> 
             
             <?php if (!$_SESSION['loggedin']) { ?>
             

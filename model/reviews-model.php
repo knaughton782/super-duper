@@ -58,7 +58,7 @@ function getReviewsByProduct($invId) {
 function getReviewsByUser($clientId) {
     
     $db = acmeConnect();
-    $sql = 'SELECT * FROM reviews WHERE clientId IN (SELECT clientId FROM clients WHERE clientId = :clientId)';
+    $sql = 'SELECT * FROM reviews WHERE clientId IN (SELECT clientId FROM clients WHERE clientId = :clientId) order by reviewDate desc';
 
     $stmt = $db->prepare($sql);
 
@@ -73,13 +73,14 @@ function getReviewsByUser($clientId) {
     return $reviews;
 }
 
-//*  Get a specific review
-function getSpecificReview($reviewId) {
+
+
+//*  Get a specific review by reviewId
+function getReviewById($reviewId) {
     
-    //get review by reviewId
     $db = acmeConnect();
     
-    $sql = 'SELECT * FROM inventory WHERE reviewId = :reviewId';
+    $sql = 'SELECT * FROM reviews WHERE reviewId = :reviewId';
 
     $stmt = $db->prepare($sql);
 

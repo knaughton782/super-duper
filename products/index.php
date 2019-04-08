@@ -14,6 +14,7 @@ require_once '../library/functions.php';
 require_once '../model/acme-model.php'; 
 require_once '../model/products-model.php'; 
 require_once '../model/uploads-model.php';
+require_once '../model/reviews-model.php';
 
 
 $categories = getCategories();
@@ -38,7 +39,8 @@ switch ($action) {
         break;
 
 
-    // add new category logic 
+// add new category logic // -----------------------------------------------------------
+
 
     case 'addCat':
         $categoryName = filter_input(INPUT_POST, 'categoryName', FILTER_SANITIZE_STRING);
@@ -65,6 +67,7 @@ switch ($action) {
 
         break;
         
+// -----------------------------------------------------------
 
     case 'addProd': //delivers add product page
 
@@ -105,11 +108,13 @@ switch ($action) {
 
         break;
 
-
+// -----------------------------------------------------------
     case 'newProd': //delivers add product page
         include '../view/add-product.php';
         break;
 
+
+// -----------------------------------------------------------
 
     case 'mod':
         $invId = filter_input(INPUT_GET, 'invId', FILTER_VALIDATE_INT);
@@ -134,7 +139,8 @@ switch ($action) {
     
 
 
-// Update Product 
+// Update Product // -----------------------------------------------------------
+
 
     case 'updateProd':
         
@@ -177,6 +183,7 @@ switch ($action) {
         break;
 
 
+// -----------------------------------------------------------
 
     case 'del':
         $invId = filter_input(INPUT_GET, 'invId', FILTER_VALIDATE_INT);
@@ -193,6 +200,7 @@ switch ($action) {
         break;
 
 
+// -----------------------------------------------------------
 
     case 'deleteProd':
         $invName = filter_input(INPUT_POST, 'invName', FILTER_SANITIZE_STRING);
@@ -218,6 +226,7 @@ switch ($action) {
 
 
 
+// -----------------------------------------------------------
 
     case 'category':
         $categoryName = filter_input(INPUT_GET, 'categoryName', FILTER_SANITIZE_STRING);
@@ -239,15 +248,16 @@ switch ($action) {
 
         break;
 
-
+// -----------------------------------------------------------
+//        display reviews will be on products controller
     case 'detail':
         
         $invId = filter_input(INPUT_GET, 'invId', FILTER_SANITIZE_NUMBER_INT);
+        //$page_title = "$productInfo[invName]"; productInfo variable undefined
         
+        
+        // product info
         $productInfo = getProductInfo($invId);
-
-        $page_title = "$productInfo[invName]";
-
         if (empty($productInfo)) {
 
             $_SESSION['message'] = "<p class='warning'>No product information could be found.</p>";
@@ -256,13 +266,13 @@ switch ($action) {
             $prodDisplay = buildProductDisplay($productInfo);
         }
 
-
+        
+        // thumbnail info
         $thumbnails = getThumbnailImages($invId);
 //        echo $thumbnail;
 //        exit;
 //           echo print_r( $thumbnails, TRUE );
 //            exit;
-
 
         if ($thumbnails) {
             $thumbnailDisplayVar = thumbnailDisplay($thumbnails);
@@ -270,13 +280,28 @@ switch ($action) {
         else {
             $_SESSION['message'] = '<p class="warning">Sorry, no additional thumbnail images have been uploaded for this product.</p>';
         }
+        
+        
+        // review info
+        $reviews = getReviewsByProduct($invId); 
+         
+//        echo print_r( $reviews, TRUE );
+//        exit;
+        if ($reviews) {
+            $reviewDisplay = reviewsDisplay($reviews);
+            $_SESSION['message'] = '<h2 class="warning">Product reviews are available at the bottom of the page.</h2>';
+        }
+        else {
+            $_SESSION['message'] = '<p class="warning">Sorry, no customer reviews have been uploaded for this product.</p>';
+        }
 
         include '../view/product-detail.php';
         break;
 
 
 
-    
+ // -----------------------------------------------------------
+   
     default:
 
         $products = getProductBasics();

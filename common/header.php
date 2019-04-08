@@ -17,9 +17,9 @@
 
         <header id="headerContainer">
             <div class="headerImages">
-                <img src="/acme/images/site/logo.gif" alt="Acme Logo" title="ACME's Home Page to Purchase Coyote Catching Products" class="logo">
+                <a href="/acme/"><img src="/acme/images/site/logo.gif" alt="Acme Logo" title="ACME's Home Page to Purchase Coyote Catching Products" class="logo"></a>
                 <div class="myAccount">
-                    <img src="/acme/images/site/account.gif" alt="My Account Icon" title="Access Your Account" class="account">
+                    <a href="/acme/accounts/"><img src="/acme/images/site/account.gif" alt="My Account Icon" title="Access Your Account" class="account"></a>
 
                     <?php if (isset($_SESSION['loggedin'])) { ?>
                     <?php if (isset($cookieFirstname)) {

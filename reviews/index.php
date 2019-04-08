@@ -28,12 +28,12 @@ if ($action == NULL) {
 //$_SESSION['loggedin'] = TRUE;
 
 
-//only add, update, and delete, maybe see review
-//        display reviews will be on products controller
+//only add, update, and delete, maybe see review, not display
+
 
 switch ($action) {
 
-// insert a review **************
+    // insert a review **************
     case 'add_review':
         $reviewText = filter_input(INPUT_POST, 'reviewText', FILTER_SANITIZE_STRING);
         $reviewDate = filter_input(INPUT_POST, 'reviewDate', FILTER_SANITIZE_STRING);
@@ -41,7 +41,7 @@ switch ($action) {
         $clientId = filter_input(INPUT_POST, 'clientId', FILTER_SANITIZE_NUMBER_INT);
 
         
-//check for empty form fields
+        //check for empty form fields
         if (empty($reviewText)) {
             $_SESSION['message'] = '<p class="warning">All fields are required. Please provide complete information.</p>';
             
@@ -50,11 +50,11 @@ switch ($action) {
         }
         
         
-// call the function and send info to model
+        // call the function and send info to model
         $reviewOutcome = addReview($reviewText, $reviewDate, $invId, $clientId);
 
         
-//is the return value = 1? One row changed in the db
+        //is the return value = 1? One row changed in the db
         if ($reviewOutcome === 1) {
             header('Location: /acme/products?action=detail&invId=' . $invId); 
             exit;
@@ -80,10 +80,26 @@ switch ($action) {
 
 
     // delete review **************
-    case '':
+   case 'deleteReview':
+        $invName = filter_input(INPUT_POST, 'invName', FILTER_SANITIZE_STRING);
+        $invId = filter_input(INPUT_POST, 'invId', FILTER_SANITIZE_NUMBER_INT);
 
-        include '';
+        $deleteResult = deleteProduct($invId);
 
+        if ($deleteResult) {
+            $message = "<p class='instructions'>Congratulations, $invName was successfully deleted.</p>";
+
+            $_SESSION['message'] = $message;
+            header('location: /acme/products/');
+            exit;
+        }
+        else {
+            $message = "<p class='warning'>Error: $invName was not deleted.</p>";
+
+            $_SESSION['message'] = $message;
+            header('location: /acme/products/');
+            exit;
+        }
         break;
 
     

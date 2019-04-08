@@ -301,28 +301,36 @@ function resizeImage($old_image_path, $new_image_path, $max_width, $max_height) 
     imagedestroy($old_image);
 }   // ends the if - else
 
+//end image functions *******************************************
 
 
 function reviewsDisplay($reviews){
     
-    $reviewTable = '<table>';
-    $reviewTable .= '<tr>';
-
+    
+    $reviewList = '<h3>Previous Reviews</h3>';
+    $reviewList .= '<ul>';
+    
+//    $username = substr($clientFirstname, 0, 1) . $clientLastname;
+//    $timestamp = strtotime($review[reviewDate]);
+    $date = date('M d, Y');
+    
+    
     foreach ($reviews as $review) {
-
-        $reviewTable .= '<td>';
         
-        // TODO: what is the table displaying? Sis W says don't even need a link, just display text and user id
-        $reviewTable .= "<span class='title'>$SCREENNAMEVARIABLE[clientId]</span><br>";
-        $reviewTable .= "<span class='text'>$TEXTVARIABLE[invId]</span><br>";
+       
+        $reviewList .= '<li>';
+        
+        $reviewList .= "<span class='title'>Written by: James on $date</span><br>";
+        $reviewList .= "<span class='text'>$review[reviewText]</span><br>";
 
-        $reviewTable .= '</td>';
+        $reviewList .= '</li>';
+        $reviewList .= '<br>';
     }
     
-    $reviewTable .= '</tr>';
-    $reviewTable .= '</table>';
+
+    $reviewList .= '</ul>';
     
-    return $reviewTable;
+    return $reviewList;
 }
 
 

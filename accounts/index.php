@@ -36,6 +36,12 @@ switch ($action) {
 # login user case ***********************
 
     case 'login_user':
+        
+        if(isset($_COOKIE['firstname'])) {
+            unset($_COOKIE['firstname']);
+            setcookie('firstname', '', strtotime('now'), '/');
+        }
+        
         $clientEmail = filter_input(INPUT_POST, 'clientEmail', FILTER_SANITIZE_EMAIL);
         $clientPassword = filter_input(INPUT_POST, 'clientPassword', FILTER_SANITIZE_STRING);
 
