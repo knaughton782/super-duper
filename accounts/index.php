@@ -123,7 +123,7 @@ switch ($action) {
         # One row changed in the db 
         if ($regOutcome === 1) { 
            
-            setcookie('firstname', $cookieFirstname, strtotime('+1 year'), '/');
+            setcookie('firstname', $clientFirstname, strtotime('+1 year'), '/');
             $_SESSION['message'] = "<p class='instructions'>$clientFirstname, thanks for creating an account. Please use your email and password to login.</p>";
 
             header('Location: /acme/accounts/?action=login');
@@ -185,8 +185,7 @@ switch ($action) {
 
         if ($updateOutcome === 1) {
             $clientInfo = getClientInfo($clientId);
-
-            $_SESSION['clientData'] = $clientInfo;
+            $clientId = $_SESSION['clientData']['clientId'];
 
             $_SESSION['message'] = "<p class='instructions'>Congratulations $clientFirstname! Your profile was updated successfully.";
 
@@ -210,7 +209,6 @@ switch ($action) {
 
         $checkPassword = checkPassword($clientPassword);
 
-
         $hashedPassword = password_hash($clientPassword, PASSWORD_DEFAULT);
 
         if (empty($clientPassword)) {
@@ -223,7 +221,7 @@ switch ($action) {
 
         if ($updateOutcome) {
             $_SESSION['message'] = '<p class="instructions">Congratulations, your password has been updated.</p>';
-            header('location: ../view/admin.php');
+            header('location: /acme/accounts/');
             exit;
         }
         else {

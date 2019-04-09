@@ -24,6 +24,7 @@
                 <label for="clientFirstname">First name: </label><br>
                 <input type="text" name="clientFirstname" id="clientFirstname" <?php if (isset($clientFirstname)) { 
                     echo "value='$clientFirstname'"; } elseif (isset($_SESSION['clientData']['clientFirstName'])) { echo "value='" . $_SESSION['clientData']['clientFirstName'] . "'";
+                    
  
 }?> required>
                 <br>

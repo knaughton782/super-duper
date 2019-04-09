@@ -22,16 +22,16 @@
                     <a href="/acme/accounts/"><img src="/acme/images/site/account.gif" alt="My Account Icon" title="Access Your Account" class="account"></a>
 
                     <?php if (isset($_SESSION['loggedin'])) { ?>
-                    <?php if (isset($cookieFirstname)) {
-                        echo "<span class='space'>Welcome $cookieFirstname!</span>";
-                    } ?>
+                    
+                    <a href="/acme/accounts/"><span class='space'>Welcome <?php echo$_SESSION['clientData']['clientFirstname'] ?></span></a>
+                    
                         <a href="/acme/accounts/index.php?action=logout" title="Click to Log out">Logout</a>
 
                     <?php
                     }
                     else {
                         ?>
-                        <a href="/acme/accounts/index.php?action=login" title="Login to your account">My Account</a>
+                        <a href="/acme/accounts/index.php?action=login" title="Login to your account">Login or Register</a>
 <?php } ?>
 
                 </div>

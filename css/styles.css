@@ -25,6 +25,10 @@ section {
     padding: 1rem 0 2rem 1rem;
 }
 
+a {
+    text-decoration: none;
+}
+
 .prodMgt ul {
     margin-bottom: 25px;
     padding-bottom: 25px;
