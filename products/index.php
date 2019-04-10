@@ -254,8 +254,7 @@ switch ($action) {
         
         $invId = filter_input(INPUT_GET, 'invId', FILTER_SANITIZE_NUMBER_INT);
         //$page_title = "$productInfo[invName]"; productInfo variable undefined
-        
-        
+                
         // product info
         $productInfo = getProductInfo($invId);
         if (empty($productInfo)) {
@@ -266,11 +265,8 @@ switch ($action) {
             $prodDisplay = buildProductDisplay($productInfo);
         }
 
-        
         // thumbnail info
         $thumbnails = getThumbnailImages($invId);
-//        echo $thumbnail;
-//        exit;
 //           echo print_r( $thumbnails, TRUE );
 //            exit;
 
@@ -281,18 +277,17 @@ switch ($action) {
             $_SESSION['message'] = '<p class="warning">Sorry, no additional thumbnail images have been uploaded for this product.</p>';
         }
         
-        
         // review info
-        $reviews = getReviewsByProduct($invId); 
-         
+        $reviews = getReviewsByProduct($invId);      
 //        echo print_r( $reviews, TRUE );
 //        exit;
+        
         if ($reviews) {
             $reviewDisplay = reviewsDisplay($reviews);
             $_SESSION['message'] = '<h2 class="warning">Product reviews are available at the bottom of the page.</h2>';
         }
         else {
-            $_SESSION['message'] = '<p class="warning">Sorry, no customer reviews have been uploaded for this product.</p>';
+            $_SESSION['message'] = '<p class="warning">No customer reviews have been added for this product.</p>';
         }
 
         include '../view/product-detail.php';

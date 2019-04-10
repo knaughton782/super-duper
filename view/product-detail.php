@@ -35,12 +35,13 @@
         
     </section>
     
-    <h2><?php echo $productInfo['invName'] ?> Reviews</h2>
+   
     <section class="reviews">
         
         <!-- show form if they are logged in ********************* -->
   
-        <?php if ($_SESSION['loggedin']) {?>
+        <?php if (isset ($_SESSION['loggedin'])) {?>
+         <h2><?php echo $productInfo['invName'] ?> Reviews</h2>
             <p class="border"></p>
                        
             <h3>Add a <?php echo $productInfo['invName'] ?> review:</h3>
@@ -62,36 +63,27 @@
                     <input type="hidden" name="invId" value="<?php echo $productInfo['invId']; ?>">
                     
                 </fieldset>
-            </form>       
-           <?php } ?>
-            <section class="reviewBox">
-                
-                <?php
-             if (isset($reviewDisplay)) {
-                    echo $reviewDisplay;
-                }
-                ?>
-            
-            </section>
-            
-            <!-- if not logged in ********************* --> 
-            
-            <?php if (!$_SESSION['loggedin']) { ?>
+            </form>    
+    </section>
+        <?php } 
+             else { ?>
             
                <!--provide a link to the login page-->
                 <section>
                     <h3>Want to review a product?</h3> <br>
                     <a href="/acme/index.php?action=login" title="Click to login to review a product" id="registrationLink">Please log in</a>
            
+                </section>  <?php   }  ?>
+               
+                <section class="reviewBox">
+                
+                        <?php
+                            if (isset($reviewDisplay)) {
+                                   echo $reviewDisplay;
+                               }
+                        ?>
+            
                 </section>
-             
-          <?php   }  ?>
-           
-
-        
-        
-    </section>
-
 </main>
 
 <?php include $_SERVER['DOCUMENT_ROOT'] . '/acme/common/footer.php'; ?>

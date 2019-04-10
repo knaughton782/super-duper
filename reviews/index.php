@@ -27,8 +27,7 @@ if ($action == NULL) {
 
 //$_SESSION['loggedin'] = TRUE;
 
-
-//only add, update, and delete, maybe see review, not display
+//only add, update, and delete review, not display admin view for reviews
 
 
 switch ($action) {
@@ -40,7 +39,6 @@ switch ($action) {
         $invId = filter_input(INPUT_POST, 'invId', FILTER_SANITIZE_NUMBER_INT);
         $clientId = filter_input(INPUT_POST, 'clientId', FILTER_SANITIZE_NUMBER_INT);
 
-        
         //check for empty form fields
         if (empty($reviewText)) {
             $_SESSION['message'] = '<p class="warning">All fields are required. Please provide complete information.</p>';
@@ -48,53 +46,48 @@ switch ($action) {
             include '../view/product_detail.php';
             exit;
         }
-        
-        
+              
         // call the function and send info to model
         $reviewOutcome = addReview($reviewText, $reviewDate, $invId, $clientId);
-
         
         //is the return value = 1? One row changed in the db
         if ($reviewOutcome === 1) {
             header('Location: /acme/products?action=detail&invId=' . $invId); 
             exit;
         }
-        
         else {
             $_SESSION['message'] = "<p class='warning'>Error! Your review was not added. Please try again.</p>";
             
             include '../view/product_detail.php';
             exit;
         }
-
         break;
         
         
 // edit review ****************
     
-    case '':
-
-        include '';
-
-        break;
+//    case '':
+//
+//        include '';
+//
+//        break;
 
 
     // delete review **************
    case 'deleteReview':
-        $invName = filter_input(INPUT_POST, 'invName', FILTER_SANITIZE_STRING);
-        $invId = filter_input(INPUT_POST, 'invId', FILTER_SANITIZE_NUMBER_INT);
+        $reviewId = filter_input(INPUT_POST, 'reviewId', FILTER_SANITIZE_NUMBER_INT);
 
-        $deleteResult = deleteProduct($invId);
+        $deleteResult = deleteReview($invId);
 
         if ($deleteResult) {
-            $message = "<p class='instructions'>Congratulations, $invName was successfully deleted.</p>";
+            $message = "<p class='instructions'>Congratulations, $reviewId was successfully deleted.</p>";
 
             $_SESSION['message'] = $message;
             header('location: /acme/products/');
             exit;
         }
         else {
-            $message = "<p class='warning'>Error: $invName was not deleted.</p>";
+            $message = "<p class='warning'>Error: $reviewId was not deleted.</p>";
 
             $_SESSION['message'] = $message;
             header('location: /acme/products/');
@@ -110,11 +103,10 @@ switch ($action) {
             include '../view/admin.php';
         }
         
-        elseif (!$_SESSION['loggedin']) {
+        else {
             
             header('Location: /acme/');
             exit;
-           
         }
         break;
 }

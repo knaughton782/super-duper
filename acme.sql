@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 08, 2019 at 04:49 AM
+-- Generation Time: Apr 10, 2019 at 12:37 AM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.1.27
 
@@ -68,9 +68,12 @@ CREATE TABLE `clients` (
 INSERT INTO `clients` (`clientId`, `clientFirstname`, `clientLastname`, `clientEmail`, `clientPassword`, `clientLevel`, `comments`) VALUES
 (1, 'Kirsten', 'Naughton', 'kirsten.naughton@gmail.com', '$2y$10$sD0i2C4S9f9yNNEyKwhW9eFZ5JxUKl2G9Fic.BqtuTbuDgJRqUu6e', '1', ''),
 (3, 'James', 'Dean', 'james.dean@dean.com', '$2y$10$jpaneALWnBNMSLWWlb..DOstajJyB2UGYHY5/OIjpSJG71B2wLDRG', '1', ''),
-(5, 'Tony', 'Stark', 'iam@ironman.net', '$2y$10$2J4qH1eWecby/8g.ooL2A.V2IAs7d3lTKvBkrcy04cMffklOUnpQy', '1', ''),
+(5, 'Antonio', 'Stark', 'iam@ironman.net', '$2y$10$2J4qH1eWecby/8g.ooL2A.V2IAs7d3lTKvBkrcy04cMffklOUnpQy', '1', ''),
 (6, 'Will', 'Naughton', 'will@naughton.com', '$2y$10$4mXbJWmHSVQP9LayVkPqee5yhRFam5LGMzhdh1XPVxKAQxhEIl0Qa', '1', ''),
-(8, 'Admin', 'User', 'admin@cit336.net', '$2y$10$hyVQ33vJ1DvOqpdmQKNjZe2jOit6AMo2i4arWkSHfpMycCg4PdeUy', '3', '');
+(8, 'Admin', 'User', 'admin@cit336.net', '$2y$10$hyVQ33vJ1DvOqpdmQKNjZe2jOit6AMo2i4arWkSHfpMycCg4PdeUy', '3', ''),
+(9, 'Jane', 'Doe', 'janedoe@doe.com', '$2y$10$a7VRoColJnulPQrlWQCXauZDSAuRF/36VLs62uIHgXBp2NJjNorPC', '1', ''),
+(10, 'Lucky', 'Dog', 'lucky@dogslife.com', '$2y$10$ll1Hkp.j/cnnD56t5u6H/.PF6ylMlgbftIGlqWJJ3hvgjOMwjfsgS', '1', ''),
+(11, 'acme', 'site', 'acme@site.com', '$2y$10$xMY61IPhXNatyKe9dpdYIueRZq1wJ2BX9p47BBQcrYeJ0.rPi.PcG', '1', '');
 
 -- --------------------------------------------------------
 
@@ -181,7 +184,7 @@ INSERT INTO `inventory` (`invId`, `invName`, `invDescription`, `invImage`, `invT
 (14, 'Crash Helmet', 'This carbon fiber and plastic helmet is the ultimate in protection for your head. comes in assorted colors.', '/acme/images/products/helmet.png', '/acme/images/products/helmet-tn.png', '100.00', 25, 48, 9, 'San Jose', 3, 'Suzuki', 'Carbon Fiber'),
 (15, 'Nylon Rope', 'This nylon rope is ideal for all uses. Each rope is the highest quality nylon and comes in 100 foot lengths.', '/acme/images/products/rope.jpg', '/acme/images/products/rope-tn.jpg', '15.00', 200, 200, 6, 'San Jose', 3, 'Marina Sales', 'Nylon'),
 (16, 'Sticky Fence', 'This fence is covered with Gorilla Glue and is guaranteed to stick to anything that touches it and is sure to hold it tight.', '/acme/images/products/fence.png', '/acme/images/products/fence-tn.png', '75.00', 15, 48, 2, 'San Jose', 3, 'Acme', 'Nylon'),
-(17, 'Small Bomb', 'Bomb with a fuse - A little old fashioned, but highly effective. This bomb has the ability to devistate anything within 30 feet.', '/acme/images/products/bomb.png', '/acme/images/products/bomb-tn.png', '275.00', 58, 30, 12, 'San Jose', 2, 'Nobel Enterprises', 'Metal'),
+(17, 'Small Bomb', 'Bomb with a fuse - A little old fashioned, but highly effective. This bomb has the ability to devastate anything within 30 feet.', '/acme/images/products/bomb.png', '/acme/images/products/bomb-tn.png', '275.00', 58, 30, 12, 'San Jose', 2, 'Nobel Enterprises', 'Metal'),
 (18, 'Evil Companion', 'Sometimes you need a partner-in-crime. Someone to snigger with as you wait behind the highway billboard for your nemesis to come along. This is the perfect evil companion for you.', '/acme/images/products/buff-evil-companion.jpeg', '/acme/images/products/buff-evil-companion-tn.jpeg', '1000000.00', 1, 55, 205, 'Alaska', 6, 'Villains, Inc', 'Evilness');
 
 -- --------------------------------------------------------
@@ -207,7 +210,10 @@ INSERT INTO `reviews` (`reviewId`, `reviewText`, `reviewDate`, `invId`, `clientI
 (3, 'Nothing like having an additional couple of TNT sticks around. These worked great! I recommend also buying the extra long fuse which is not included.... sadly.', '2019-04-06 07:44:10', 11, 8),
 (4, 'This cannon backfired.', '2019-04-06 07:46:54', 2, 8),
 (5, 'I got carried away', '2019-04-06 07:47:58', 1, 8),
-(6, 'I forgot the bait', '2019-04-06 07:50:16', 5, 8);
+(6, 'I forgot the bait', '2019-04-06 07:50:16', 5, 8),
+(7, 'This bomb was too heavy to throw, and the fuse was very short. You have to run very fast.', '2019-04-08 07:03:44', 17, 9),
+(8, 'This catapult put me right over the wall as intended.', '2019-04-08 07:42:25', 3, 9),
+(9, 'I found this catapult technology to be a little old school.', '2019-04-08 09:08:12', 3, 5);
 
 --
 -- Indexes for dumped tables
@@ -262,7 +268,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `clients`
 --
 ALTER TABLE `clients`
-  MODIFY `clientId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `clientId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `images`
@@ -280,7 +286,7 @@ ALTER TABLE `inventory`
 -- AUTO_INCREMENT for table `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `reviewId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `reviewId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables

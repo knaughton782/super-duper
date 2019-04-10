@@ -4,7 +4,7 @@
  *  Helper functions file - NOT MODEL FUNCTIONS
  */
 
-//to check for valide email
+//to check for valid email
 function checkEmail($clientEmail) {
     $valEmail = filter_var($clientEmail, FILTER_VALIDATE_EMAIL);
     return $valEmail;
@@ -16,48 +16,34 @@ function checkPassword($clientPassword) {
     return preg_match($pattern, $clientPassword);
 }
 
-// NAVLIST FUNCTION ************************
-
 function navList($categories) {
     $navList = '<ul>';
-
     $navList .= "<li><a href='/acme/' title='View the Acme home page'>Home</a></li>";
 
     foreach ($categories as $category) {
 
         $navList .= "<li><a href='/acme/products?action=category&categoryName=" . urlencode($category['categoryName']) . "' title='View our $category[categoryName] product line'>$category[categoryName]</a></li>";
     }
-
     $navList .= '</ul>';
 
     return $navList;
 }
 
 // products display function: uses <ul> ******************
-
 function buildProductsDisplay($products) {
     $pd = '<ul id="prod-display">';
 
     foreach ($products as $product) {
 
         $pd .= '<li>';
-
         $pd .= "<a href='/acme/products/?action=detail&invId=$product[invId]' title='View $product[invName]'>";
-
         $pd .= "<img src='$product[invThumbnail]' alt='Image of $product[invName] on Acme.com'>";
-
         $pd .= '</a>';
-
         $pd .= '<hr>';
-
         $pd .= "<a href='/acme/products/?action=detail&invId=$product[invId]' title='View $product[invName]'>";
-
         $pd .= "<h2>$product[invName]</h2>";
-
         $pd .= '</a>';
-
         $pd .= "<span>$product[invPrice]</span>";
-
         $pd .= '</li>';
     }
 
@@ -126,7 +112,7 @@ function buildImageDisplay($imageArray) {
 function thumbnailDisplay($thumbnails) {
 
     //print_r($thumbnails[0]);
-
+    
     $thumbnailTable = '<table>';
     $thumbnailTable .= '<tr>';
 
@@ -137,7 +123,6 @@ function thumbnailDisplay($thumbnails) {
 
         $thumbnailTable .= '<td>';
         $thumbnailTable .= "<img src='$path' title='$name image on Acme.com' alt='$name image on Acme.com'>";
-
         $thumbnailTable .= '</td>';
     }
     $thumbnailTable .= '</tr>';
@@ -148,7 +133,6 @@ function thumbnailDisplay($thumbnails) {
 // Build the products select list
 function buildProductsSelect($products) {
     $prodList = '<select name="invId" id="invId">';
-
     $prodList .= "<option>Choose a Product</option>";
 
     foreach ($products as $product) {
@@ -305,36 +289,51 @@ function resizeImage($old_image_path, $new_image_path, $max_width, $max_height) 
 
 
 function reviewsDisplay($reviews){
-    
-    
+
     $reviewList = '<h3>Previous Reviews</h3>';
     $reviewList .= '<ul>';
     
-//    $username = substr($clientFirstname, 0, 1) . $clientLastname;
-//    $timestamp = strtotime($review[reviewDate]);
-    $date = date('M d, Y');
-    
-    
     foreach ($reviews as $review) {
+         
+        $username = substr($review['clientFirstname'], 0, 1) . $review['clientLastname'];
+        $date = date('M d, Y', strtotime($review['reviewDate']));
         
-       
         $reviewList .= '<li>';
-        
-        $reviewList .= "<span class='title'>Written by: James on $date</span><br>";
+        $reviewList .= "<span class='title'>Written by: $username on $date</span><br>";
         $reviewList .= "<span class='text'>$review[reviewText]</span><br>";
-
         $reviewList .= '</li>';
         $reviewList .= '<br>';
     }
     
-
     $reviewList .= '</ul>';
     
     return $reviewList;
 }
 
+//function to display reviews to edit or delete
+function personalReviewsTable($reviews) {
+        if (count($reviews) > 0) {
+            $personalReviewList = '<table>';
+            $personalReviewList .= '<thead>';
+            $personalReviewList .= '<tr><th>Your reviews:</th><th>Date Reviewed:</th><th>&nbsp;</th></tr>';
+            $personalReviewList .= '</thead>';
+            $personalReviewList .= '<tbody>';
 
-
+            foreach ($reviews as $review) {
+                $date = date('M d, Y', strtotime($review['reviewDate']));
+                
+                $personalReviewList .= "<tr><td>$review[invName]</td>";
+                $personalReviewList .= "<td>$date</td>";
+                $personalReviewList .= "<td><a href='/acme/reviews?action=modifyReview&reviewId=$review[reviewId]' title='Click to modify'>Modify</a></td>";
+                $personalReviewList .= "<td><a href='/acme/reviews?action=deleteReview&invId=$review[reviewId]' title='Click to delete'>Delete</a></td></tr>";
+            }
+            $personalReviewList .= '</tbody></table>';
+            return $personalReviewList;
+        }
+        else {
+            $_SESSION['message'] = '<p class="warning">Sorry, you haven\'t reviewed any products yet.</p>';
+        }
+}
 
 
 

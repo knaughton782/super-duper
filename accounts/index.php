@@ -26,14 +26,11 @@ if ($action == NULL) {
 
 switch ($action) {
 
-# login case ***********************
     case 'login':
         $page_title = 'Login';
         include '../view/login.php';
         break;
 
-
-# login user case ***********************
 
     case 'login_user':
         
@@ -45,9 +42,7 @@ switch ($action) {
         $clientEmail = filter_input(INPUT_POST, 'clientEmail', FILTER_SANITIZE_EMAIL);
         $clientPassword = filter_input(INPUT_POST, 'clientPassword', FILTER_SANITIZE_STRING);
 
-        
         $clientEmail = checkEmail($clientEmail); //validate email
-        
         $checkPassword = checkPassword($clientPassword); //check password
 
         if (empty($clientEmail) || empty($checkPassword)) {
@@ -71,23 +66,15 @@ switch ($action) {
         }
         
         $_SESSION['loggedin'] = TRUE; // A valid user exists, log them in
-  
         array_pop($clientData);       // Remove the password from the array with the array_pop function
-        
         $_SESSION['clientData'] = $clientData; // Store the array into the session
-
-      
 
         // Send them to the admin view if login is successful
         include '../view/admin.php';
         break;
 
 
-# register case ***********************
-
     case 'register':
-//        echo 'You are hoping for the registration page';
-//        exit;
         $page_title = 'Registration';
 
         $clientFirstname = filter_input(INPUT_POST, 'clientFirstname', FILTER_SANITIZE_STRING);
@@ -96,9 +83,7 @@ switch ($action) {
         $clientPassword = filter_input(INPUT_POST, 'clientPassword', FILTER_SANITIZE_STRING);
 
         $clientEmail = checkEmail($clientEmail);
-        
         $checkPassword = checkPassword($clientPassword);
-
         $existingEmail = checkExistingEmail($clientEmail);
 
         if ($existingEmail) {
@@ -106,7 +91,6 @@ switch ($action) {
             include '../view/login.php';
             exit;
         }
-
 
         if (empty($clientFirstname) || empty($clientLastname) || empty($clientEmail) || empty($checkPassword)) {
             $_SESSION['message'] = '<p class="warning">Please provide information for all empty form fields.</p>';
@@ -116,7 +100,6 @@ switch ($action) {
 
         // Hash the checked password
         $hashedPassword = password_hash($clientPassword, PASSWORD_DEFAULT);
-
         //call the function and send info to model
         $regOutcome = regClient($clientFirstname, $clientLastname, $clientEmail, $hashedPassword);
 
@@ -139,15 +122,11 @@ switch ($action) {
         break;
 
 
-// deliver update page ***********************
-
     case 'updateClient':
         $page_title = 'Update Profile';
         include '../view/client-update.php';
         break;
 
-
-// update profile information ***********************
 
     case 'updateClientInfo':
 
@@ -156,9 +135,7 @@ switch ($action) {
         $clientLastname = filter_input(INPUT_POST, 'clientLastname', FILTER_SANITIZE_STRING);
         $clientEmail = filter_input(INPUT_POST, 'clientEmail', FILTER_SANITIZE_EMAIL);
 
-
         $clientEmail = checkEmail($clientEmail); # validate
-
 
         //check for different email in session
         if ($clientEmail != $_SESSION['clientData']['clientEmail']) {
@@ -172,14 +149,12 @@ switch ($action) {
             }
         }
 
-
         //make sure all fields have info
         if (empty($clientFirstname) || empty($clientLastname) || empty($clientEmail)) {
             $_SESSION['message'] = '<p class="warning">Please provide information for all empty form fields.</p>';
             include '../view/client-update.php';
             exit;
         }
-
 
         $updateOutcome = updateClientInfo($clientFirstname, $clientLastname, $clientEmail, $clientId);
 
@@ -198,17 +173,15 @@ switch ($action) {
             exit;
         }
 
-
         break;
 
-// update password ***********************
+        
     case 'updateClientPassword':
 
         $clientId = filter_input(INPUT_POST, 'clientId', FILTER_SANITIZE_NUMBER_INT);
         $clientPassword = filter_input(INPUT_POST, 'clientPassword', FILTER_SANITIZE_STRING);
 
         $checkPassword = checkPassword($clientPassword);
-
         $hashedPassword = password_hash($clientPassword, PASSWORD_DEFAULT);
 
         if (empty($clientPassword)) {
@@ -232,15 +205,12 @@ switch ($action) {
         break;
         
 
-// logout ***********************
     case 'logout':
 
         session_destroy();
         header('Location: /acme/');
         break;
 
-
-// DEFAULT **************************************
 
     default:
         include '../view/admin.php';
