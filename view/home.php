@@ -8,11 +8,14 @@
         <!-- hero image goes here -->
 
         <ul class="acmeRocket">
-            <li><h2>Acme Rocket</h2></li>
+            <li>
+                <h2>Acme Rocket</h2>
+            </li>
             <li>Quick lighting fuse</li>
             <li>NHTSA approved seat belts</li>
             <li>Mobile launch stand included</li>
-            <li><a href="./products/?action=detail&invId=1"><img id="actionbtn" alt="Buy the Rocket" src="/acme/images/site/iwantit.gif"></a></li>
+            <li><a href="./products/?action=detail&invId=1"><img id="actionbtn" alt="Buy the Rocket"
+                        src="/acme/images/site/iwantit.gif"></a></li>
         </ul>
     </section>
 
@@ -33,8 +36,10 @@
             <h3>Featured Recipes</h3>
             <table class="recipeImages">
                 <tr>
-                    <td class="img"><img src="/acme/images/recipes/bbqsand.jpg" alt="bbq" title="image for bbq sandwich"></td>
-                    <td class="img"><img src="/acme/images/recipes/potpie.jpg" alt="potpie" title="image for pot pie"></td>
+                    <td class="img"><img src="/acme/images/recipes/bbqsand.jpg" alt="bbq"
+                            title="image for bbq sandwich"></td>
+                    <td class="img"><img src="/acme/images/recipes/potpie.jpg" alt="potpie" title="image for pot pie">
+                    </td>
                 </tr>
                 <tr>
                     <td><a href="#" title="See the recipe for Roadrunner BBQ sandwich">Pulled Roadrunner BBQ</a></td>
@@ -45,8 +50,8 @@
                     <td class="img"><img src="/acme/images/recipes/taco.jpg" alt="taco" title="roadrunner tacos"></td>
                 </tr>
                 <tr>
-                    <td><a href="#"  title="See the recipe for Roadrunner Soup">Roadrunner Soup</a></td>
-                    <td><a href="#"  title="See the recipe for Roadrunner Tacos">Roadrunner Tacos</a></td>
+                    <td><a href="#" title="See the recipe for Roadrunner Soup">Roadrunner Soup</a></td>
+                    <td><a href="#" title="See the recipe for Roadrunner Tacos">Roadrunner Tacos</a></td>
 
                 </tr>
 

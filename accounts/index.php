@@ -1,5 +1,4 @@
 <?php
-
 /*
  * ACCOUNTS controller: directs user to specific pages and saves user info to db)
  */
@@ -7,11 +6,11 @@
 session_start();
 
 #get db connection, helper functions, and bring models into scope
-
-require_once '../library/connections.php'; 
-require_once '../model/acme-model.php'; 
-require_once '../model/accounts-model.php'; 
-require_once '../library/functions.php'; 
+require_once '../library/connections.php';
+require_once '../library/functions.php';
+require_once '../model/acme-model.php';
+require_once '../model/accounts-model.php';
+require_once '../model/reviews-model.php';
 
 $categories = getCategories();
 $navList = navList($categories);
@@ -23,7 +22,6 @@ if ($action == NULL) {
     $action = filter_input(INPUT_GET, 'action');
 }
 
-
 switch ($action) {
 
     case 'login':
@@ -31,17 +29,15 @@ switch ($action) {
         include '../view/login.php';
         break;
 
-
     case 'login_user':
-        
-        if(isset($_COOKIE['firstname'])) {
+
+        if (isset($_COOKIE['firstname'])) {
             unset($_COOKIE['firstname']);
             setcookie('firstname', '', strtotime('now'), '/');
         }
-        
+
         $clientEmail = filter_input(INPUT_POST, 'clientEmail', FILTER_SANITIZE_EMAIL);
         $clientPassword = filter_input(INPUT_POST, 'clientPassword', FILTER_SANITIZE_STRING);
-
         $clientEmail = checkEmail($clientEmail); //validate email
         $checkPassword = checkPassword($clientPassword); //check password
 
@@ -50,21 +46,21 @@ switch ($action) {
             include '../view/login.php';
             exit;
         }
-        
+
         # A valid password exists, proceed with the login process
         # Query the client data based on the email address
         $clientData = getClient($clientEmail);
-        
+
         # Compare the password just submitted against the hashed password for the matching client
         $hashCheck = password_verify($clientPassword, $clientData['clientPassword']);
-        
+
         # If the hashes don't match create an error and return to the login view
         if (!$hashCheck) {
             $_SESSION['message'] = '<p class="warning">Please check your password and try again.</p>';
             include '../view/login.php';
             exit;
         }
-        
+
         $_SESSION['loggedin'] = TRUE; // A valid user exists, log them in
         array_pop($clientData);       // Remove the password from the array with the array_pop function
         $_SESSION['clientData'] = $clientData; // Store the client information array into the session
@@ -84,6 +80,7 @@ switch ($action) {
         $clientEmail = filter_input(INPUT_POST, 'clientEmail', FILTER_SANITIZE_EMAIL);
         $clientPassword = filter_input(INPUT_POST, 'clientPassword', FILTER_SANITIZE_STRING);
 
+        // validation
         $clientEmail = checkEmail($clientEmail);
         $checkPassword = checkPassword($clientPassword);
         $existingEmail = checkExistingEmail($clientEmail);
@@ -106,34 +103,24 @@ switch ($action) {
         $regOutcome = regClient($clientFirstname, $clientLastname, $clientEmail, $hashedPassword);
 
         # One row changed in the db 
-        if ($regOutcome === 1) { 
-           
+        if ($regOutcome === 1) {
+
             setcookie('firstname', $clientFirstname, strtotime('+1 year'), '/');
             $_SESSION['message'] = "<p class='instructions'>$clientFirstname, thanks for creating an account. Please use your email and password to login.</p>";
 
             header('Location: /acme/accounts/?action=login');
             exit;
-        }
-        
-        else {
+        } else {
             $_SESSION['message'] = "<p class='warning'>Sorry $clientFirstname, but registration failed. Please try again.</p>";
             include '../view/registration.php';
             exit;
         }
-        
         break;
-        
-    case 'adminClient':
-        $page_title = 'Manage Reviews';
-        include '../view/client-update.php';
-        break;
-
 
     case 'updateClient':
         $page_title = 'Update Profile';
         include '../view/client-update.php';
         break;
-
 
     case 'updateClientInfo':
 
@@ -141,12 +128,10 @@ switch ($action) {
         $clientFirstname = filter_input(INPUT_POST, 'clientFirstname', FILTER_SANITIZE_STRING);
         $clientLastname = filter_input(INPUT_POST, 'clientLastname', FILTER_SANITIZE_STRING);
         $clientEmail = filter_input(INPUT_POST, 'clientEmail', FILTER_SANITIZE_EMAIL);
-
         $clientEmail = checkEmail($clientEmail); # validate
 
         //check for different email in session
         if ($clientEmail != $_SESSION['clientData']['clientEmail']) {
-
             $existingEmail = checkExistingEmail($clientEmail);
 
             if ($existingEmail) {
@@ -156,7 +141,7 @@ switch ($action) {
             }
         }
 
-        //make sure all fields have info
+        //make sure all fields have info (server side validation)
         if (empty($clientFirstname) || empty($clientLastname) || empty($clientEmail)) {
             $_SESSION['message'] = '<p class="warning">Please provide information for all empty form fields.</p>';
             include '../view/client-update.php';
@@ -173,21 +158,17 @@ switch ($action) {
 
             include '../view/client-update.php';
             exit;
-        } 
-        else {
+        } else {
             $_SESSION['message'] = "<p class='warning'>***Sorry, your profile was not updated. Please try again.";
             include '../view/client-update.php';
             exit;
         }
-
         break;
 
-        
     case 'updateClientPassword':
 
         $clientId = filter_input(INPUT_POST, 'clientId', FILTER_SANITIZE_NUMBER_INT);
         $clientPassword = filter_input(INPUT_POST, 'clientPassword', FILTER_SANITIZE_STRING);
-
         $checkPassword = checkPassword($clientPassword);
         $hashedPassword = password_hash($clientPassword, PASSWORD_DEFAULT);
 
@@ -203,14 +184,12 @@ switch ($action) {
             $_SESSION['message'] = '<p class="instructions">Congratulations, your password has been updated.</p>';
             header('location: /acme/accounts/');
             exit;
-        }
-        else {
+        } else {
             $_SESSION['message'] = "<p class='warning'>Your password was not updated. Please try again.</p>";
             include '../view/client-update.php';
         }
-
         break;
-        
+
 
     case 'logout':
 
@@ -218,9 +197,15 @@ switch ($action) {
         header('Location: /acme/');
         break;
 
+    case 'review-admin':
+        $clientId = $_SESSION['clientData']['clientId'];
+        $clientReviewsArray = getReviewsByUser($clientId);
+        $clientReviewsdisplay = buildClientReviewsDisplay($clientReviewsArray);
+        include '../view/admin.php';
+        break;
 
     default:
+
         include '../view/admin.php';
         break;
 }
-

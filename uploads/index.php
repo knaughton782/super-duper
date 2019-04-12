@@ -50,12 +50,10 @@ switch ($action) {
         if ($imageCheck) {
 
             $_SESSION['message'] = '<p class="warning">An image by that name already exists.</p>';
-        }
-        elseif (empty($invId) || empty($imgName)) {
+        } elseif (empty($invId) || empty($imgName)) {
 
             $_SESSION['message'] = '<p class="warning">You must select a product and image file for the product.</p>';
-        }
-        else {
+        } else {
 
             // Upload the image, store the returned path to the file
             $imgPath = uploadFile('file1');
@@ -66,8 +64,7 @@ switch ($action) {
             // Set a message based on the insert result
             if ($result) {
                 $_SESSION['message'] = '<p class="warning">The upload succeeded.</p>';
-            }
-            else {
+            } else {
 
                 $_SESSION['message'] = '<p class="warning">Sorry, the upload failed.</p>';
             }
@@ -106,8 +103,7 @@ switch ($action) {
         if ($remove) {
 
             $_SESSION['message'] = "<p class='warning'>$filename was successfully deleted.</p>";
-        }
-        else {
+        } else {
 
             $_SESSION['message'] = "<p class='warning'>$filename was NOT deleted.</p>";
         }
@@ -128,8 +124,7 @@ switch ($action) {
         if (count($imageArray)) {
 
             $imageDisplay = buildImageDisplay($imageArray);
-        }
-        else {
+        } else {
 
             $imageDisplay = '<p class="warning">Sorry, no images could be found.</p>';
         }

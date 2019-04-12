@@ -5,7 +5,8 @@
  */
 
 // function to add new category to the acme categories table
-function addCategory($categoryName) {
+function addCategory($categoryName)
+{
 
     $db = acmeConnect();  //create db connection object
     $sql = 'insert into categories ( categoryName) values (:categoryName)'; //sql query
@@ -20,7 +21,8 @@ function addCategory($categoryName) {
 
 //product function *****************
 
-function addProduct($categoryId, $invName, $invDescription, $invImage, $invThumbnail, $invPrice, $invStock, $invSize, $invWeight, $invLocation, $invVendor, $invStyle) {
+function addProduct($categoryId, $invName, $invDescription, $invImage, $invThumbnail, $invPrice, $invStock, $invSize, $invWeight, $invLocation, $invVendor, $invStyle)
+{
 
     $db = acmeConnect();  //create db connection object
     $sql = 'insert into inventory (invName, invDescription, invImage, invThumbnail, invPrice, invStock, invSize, invWeight, invLocation, categoryId,  invVendor, invStyle) values ( :invName, :invDescription, :invImage, :invThumbnail, :invPrice, :invStock, :invSize, :invWeight, :invLocation, :categoryId, :invVendor, :invStyle)'; //sql query
@@ -46,7 +48,8 @@ function addProduct($categoryId, $invName, $invDescription, $invImage, $invThumb
 }
 
 //this function will get basic product info from the inventory for the update/delete process
-function getProductBasics() {
+function getProductBasics()
+{
     $db = acmeConnect();
     $sql = 'SELECT invName, invId FROM inventory ORDER BY invName ASC';
     $stmt = $db->prepare($sql);
@@ -58,7 +61,8 @@ function getProductBasics() {
 
 // Get product information by invId ********************
 
-function getProductInfo($invId) {
+function getProductInfo($invId)
+{
     $db = acmeConnect();
     $sql = 'SELECT * FROM inventory WHERE invId = :invId';
     $stmt = $db->prepare($sql);
@@ -71,7 +75,8 @@ function getProductInfo($invId) {
 
 // Update a product ********************
 
-function updateProduct($invId, $categoryId, $invName, $invDescription, $invImage, $invThumbnail, $invPrice, $invStock, $invSize, $invWeight, $invLocation, $invVendor, $invStyle) {
+function updateProduct($invId, $categoryId, $invName, $invDescription, $invImage, $invThumbnail, $invPrice, $invStock, $invSize, $invWeight, $invLocation, $invVendor, $invStyle)
+{
     // Create a connection
     $db = acmeConnect();
 
@@ -103,7 +108,8 @@ function updateProduct($invId, $categoryId, $invName, $invDescription, $invImage
     return $rowsChanged;
 }
 
-function deleteProduct($invId) {
+function deleteProduct($invId)
+{
     $db = acmeConnect();
     $sql = 'DELETE FROM inventory WHERE invId = :invId';
     $stmt = $db->prepare($sql);
@@ -116,7 +122,8 @@ function deleteProduct($invId) {
 
 // funtion to get a list of products based on the category
 
-function getProductsByCategory($categoryName) {
+function getProductsByCategory($categoryName)
+{
 
     $db = acmeConnect();
     $sql = 'SELECT * FROM inventory WHERE categoryId IN (SELECT categoryId FROM categories WHERE categoryName = :categoryName)';

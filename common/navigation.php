@@ -1,2 +1,1 @@
-<?php echo $navList; ?>
-
+<?php echo $navList;

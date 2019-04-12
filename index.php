@@ -20,7 +20,7 @@ $navList = navList($categories);
 $action = filter_input(INPUT_POST, 'action');
 if ($action == null) {
     $action = filter_input(INPUT_GET, 'action');
-    if( $action == NULL) {
+    if ($action == NULL) {
         $action = 'home';
     }
 }

@@ -1,22 +1,21 @@
 <?php
-
 /*
  *  Helper functions file - NOT MODEL FUNCTIONS
  */
 
 //to check for valid email
-function checkEmail($clientEmail) {
+function checkEmail($clientEmail){
     $valEmail = filter_var($clientEmail, FILTER_VALIDATE_EMAIL);
     return $valEmail;
 }
 
 // Check the password for requirements
-function checkPassword($clientPassword) {
+function checkPassword($clientPassword){
     $pattern = '/^(?=.*[[:digit:]])(?=.*[[:punct:]])(?=.*[A-Z])(?=.*[a-z])([^\s]){8,}$/';
     return preg_match($pattern, $clientPassword);
 }
 
-function navList($categories) {
+function navList($categories){
     $navList = '<ul>';
     $navList .= "<li><a href='/acme/' title='View the Acme home page'>Home</a></li>";
 
@@ -30,11 +29,10 @@ function navList($categories) {
 }
 
 // products display function: uses <ul> ******************
-function buildProductsDisplay($products) {
+function buildProductsDisplay($products){
     $pd = '<ul id="prod-display">';
 
     foreach ($products as $product) {
-
         $pd .= '<li>';
         $pd .= "<a href='/acme/products/?action=detail&invId=$product[invId]' title='View $product[invName]'>";
         $pd .= "<img src='$product[invThumbnail]' alt='Image of $product[invName] on Acme.com'>";
@@ -46,13 +44,12 @@ function buildProductsDisplay($products) {
         $pd .= "<span>$product[invPrice]</span>";
         $pd .= '</li>';
     }
-
     $pd .= '</ul>';
 
     return $pd;
 }
 
-function buildProductDisplay($productInfo) {
+function buildProductDisplay($productInfo){
 
     $details = '<ul id="displayDetails">';
     $details .= '<li>';
@@ -78,7 +75,7 @@ function buildProductDisplay($productInfo) {
 /* * *********** IMAGE FUNCTIONS ***************** */
 
 // Adds "-tn" designation to file name
-function makeThumbnailName($image) {
+function makeThumbnailName($image){
 
     $i = strrpos($image, '.');
 
@@ -92,8 +89,7 @@ function makeThumbnailName($image) {
 }
 
 // Build images display for image management view
-function buildImageDisplay($imageArray) {
-
+function buildImageDisplay($imageArray){
     $id = '<ul id="image-display">';
 
     foreach ($imageArray as $image) {
@@ -102,22 +98,18 @@ function buildImageDisplay($imageArray) {
         $id .= "<p><a href='/acme/uploads?action=delete&imgId=$image[imgId]&filename=$image[imgName]' title='Delete the image'>Delete $image[imgName]</a></p>";
         $id .= '</li>';
     }
-
     $id .= '</ul>';
 
     return $id;
 }
 
 //display thumbnails
-function thumbnailDisplay($thumbnails) {
-
+function thumbnailDisplay($thumbnails){
     //print_r($thumbnails[0]);
-    
     $thumbnailTable = '<table>';
     $thumbnailTable .= '<tr>';
 
     foreach ($thumbnails as $thumbnail) {
-
         $name = $thumbnail['imgName'];
         $path = $thumbnail['imgPath'];
 
@@ -131,28 +123,20 @@ function thumbnailDisplay($thumbnails) {
 }
 
 // Build the products select list
-function buildProductsSelect($products) {
+function buildProductsSelect($products){
     $prodList = '<select name="invId" id="invId">';
     $prodList .= "<option>Choose a Product</option>";
 
     foreach ($products as $product) {
         $prodList .= "<option value='$product[invId]'>$product[invName]</option>";
     }
-
     $prodList .= '</select>';
 
     return $prodList;
 }
 
-/* This file is somewhat complicated. It stores the physical file to the server and
- * returns the path of where the file was stored. That path will then be inserted
- * to the database.
- */
-
-// Handles the file upload process and returns the path
-// The file path is stored into the database
-function uploadFile($name) {
-
+/* This file stores the physical file to the server and returns the path of where the file was stored. That path will then be inserted to the database. */
+function uploadFile($name){
     // Gets the paths, full and local directory
     global $image_dir, $image_dir_path;
 
@@ -185,9 +169,7 @@ function uploadFile($name) {
 }
 
 // Processes images by getting paths and creating smaller versions of the image
-
-function processImage($dir, $filename) {
-
+function processImage($dir, $filename){
     // Set up the variables
     $dir = $dir . '/';
 
@@ -205,8 +187,7 @@ function processImage($dir, $filename) {
 }
 
 // Checks and Resizes image
-function resizeImage($old_image_path, $new_image_path, $max_width, $max_height) {
-
+function resizeImage($old_image_path, $new_image_path, $max_width, $max_height){
     // Get image type
     $image_info = getimagesize($old_image_path);
     $image_type = $image_info[2];
@@ -253,14 +234,11 @@ function resizeImage($old_image_path, $new_image_path, $max_width, $max_height) 
 
         // Set transparency according to image type
         if ($image_type == IMAGETYPE_GIF) {
-
             $alpha = imagecolorallocatealpha($new_image, 0, 0, 0, 127);
-
             imagecolortransparent($new_image, $alpha);
         }
 
         if ($image_type == IMAGETYPE_PNG || $image_type == IMAGETYPE_GIF) {
-
             imagealphablending($new_image, false);
             imagesavealpha($new_image, true);
         }
@@ -276,8 +254,7 @@ function resizeImage($old_image_path, $new_image_path, $max_width, $max_height) 
         $image_to_file($new_image, $new_image_path);
         // Free any memory associated with the new image
         imagedestroy($new_image);
-    }
-    else {
+    } else {
         // Write the old image to a new file
         $image_to_file($old_image, $new_image_path);
     }
@@ -292,47 +269,45 @@ function reviewsDisplay($reviews){
 
     $reviewList = '<h3>Previous Reviews</h3>';
     $reviewList .= '<ul>';
-    
+
     foreach ($reviews as $review) {
-         
         $username = substr($review['clientFirstname'], 0, 1) . $review['clientLastname'];
         $date = date('M d, Y', strtotime($review['reviewDate']));
-        
+
         $reviewList .= '<li>';
         $reviewList .= "<span class='title'>Written by: $username on $date</span><br>";
         $reviewList .= "<span class='text'>$review[reviewText]</span><br>";
         $reviewList .= '</li>';
         $reviewList .= '<br>';
     }
-    
+
     $reviewList .= '</ul>';
-    
+
     return $reviewList;
 }
 
 //function to display reviews to edit or delete
-function personalReviewsTable($reviews) {
-        if (count($reviews) > 0) {
-            $personalReviewList = '<table>';
-            $personalReviewList .= '<thead>';
-            $personalReviewList .= '<tr><th>Your reviews:</th><th>Date Reviewed:</th><th>&nbsp;</th></tr>';
-            $personalReviewList .= '</thead>';
-            $personalReviewList .= '<tbody>';
+function personalReviewsTable($reviews){
+    if (count($reviews) > 0) {
+        $personalReviewList = '<table>';
+        $personalReviewList .= '<thead>';
+        $personalReviewList .= '<tr><th>Your reviews:</th><th>Date Reviewed:</th><th>&nbsp;</th></tr>';
+        $personalReviewList .= '</thead>';
+        $personalReviewList .= '<tbody>';
 
-            foreach ($reviews as $review) {
-                $date = date('M d, Y', strtotime($review['reviewDate']));
-                
-                $personalReviewList .= "<tr><td>$review[invName]</td>";
-                $personalReviewList .= "<td>$date</td>";
-                $personalReviewList .= "<td><a href='/acme/reviews?action=modifyReview&reviewId=$review[reviewId]' title='Click to modify'>Modify</a></td>";
-                $personalReviewList .= "<td><a href='/acme/reviews?action=deleteReview&invId=$review[reviewId]' title='Click to delete'>Delete</a></td></tr>";
-            }
-            $personalReviewList .= '</tbody></table>';
-            return $personalReviewList;
+        foreach ($reviews as $review) {
+            $date = date('M d, Y', strtotime($review['reviewDate']));
+
+            $personalReviewList .= "<tr><td>$review[invName]</td>";
+            $personalReviewList .= "<td>$date</td>";
+            $personalReviewList .= "<td><a href='/acme/reviews?action=modifyReview&reviewId=$review[reviewId]' title='Click to modify'>Modify</a></td>";
+            $personalReviewList .= "<td><a href='/acme/reviews?action=deleteReview&invId=$review[reviewId]' title='Click to delete'>Delete</a></td></tr>";
         }
-        else {
-            $_SESSION['message'] = '<p class="warning">Sorry, you haven\'t reviewed any products yet.</p>';
-        }
+        $personalReviewList .= '</tbody></table>';
+        return $personalReviewList;
+    } else {
+        $_SESSION['message'] = '<p class="warning">Sorry, you haven\'t reviewed any products yet.</p>';
+    }
 }
 
 
