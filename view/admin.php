@@ -23,11 +23,18 @@
     </section>
     
     <p><a href="/acme/accounts?action=updateClient" title="Click to Manage Your Account" id="acctMgmtLink">Click to Manage Your Account</a><br><br>
+        <p class="border"></p> 
         
-    <p>Manage your reviews: </p>
-        <?php if (isset($personalReviewsTable)) {
+        
+        
+    <h1>Manage your reviews: </h1>
+        <?php // if () {
+            //echo message if there are review or only show the review section if there are reviews
+        //} ?>
+    <?php if (isset($personalReviewsTable)) {
             echo $personalReviewsTable;
         } ?>
+    <p class='border bottom-space'></p>
    
 <!-- ------- This should only be seen by admin levels ------ -->
   

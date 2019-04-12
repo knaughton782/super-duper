@@ -66,12 +66,25 @@ switch ($action) {
         
 // edit review ****************
     
-//    case '':
-//
-//        include '';
-//
-//        break;
+    case 'deliverModifyReview':
 
+        include '../view/accounts/';
+
+        break;
+
+    
+    case 'modifyReview':
+        
+        if ($reviews) {
+            $modifyReviews = personalReviewsTable($reviews);
+            $_SESSION['message'] = '<h2 class="warning">Modify your reviews at the bottom of the page.</h2>';
+        }
+        else {
+            $_SESSION['message'] = '<p class="warning">No product reviews have been found for your account.</p>';
+        }
+        
+        include '';
+        break;
 
     // delete review **************
    case 'deleteReview':

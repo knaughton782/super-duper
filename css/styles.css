@@ -47,6 +47,10 @@ img {
     padding: 0 10px;
 }
 
+.bottom-space {
+    padding: 0 0 30px 0;
+}
+
 .title {
     font-weight: bold;
 }

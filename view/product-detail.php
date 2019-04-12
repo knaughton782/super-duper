@@ -2,45 +2,38 @@
 <main id="page-content"> 
   
     <h1 class="siteTitle"><?php echo $productInfo['invName'] ?> Details</h1>
-    
-    
+        
         <?php
             if (isset($_SESSION['message'])) {
                 echo $_SESSION['message'];
-
                 unset ($_SESSION['message']);
-            }
-        ?>
-
+            } ?>
 
     <section class="productDetails">
         
         <?php
              if (isset($prodDisplay)) {
                 echo $prodDisplay;
-            }
-        ?>
+            } ?>
         <br>
     </section>
     
     <h2><?php echo $productInfo['invName'] ?> Thumbnails</h2>
     <section class="thumbnails">
-
         
         <?php
              if (isset($thumbnailDisplayVar)) {
                 echo $thumbnailDisplayVar;
-            }
-        ?>
+            } ?>
         
     </section>
-    
-   
+       
     <section class="reviews">
         
         <!-- show form if they are logged in ********************* -->
   
         <?php if (isset ($_SESSION['loggedin'])) {?>
+        
          <h2><?php echo $productInfo['invName'] ?> Reviews</h2>
             <p class="border"></p>
                        
@@ -80,8 +73,7 @@
                         <?php
                             if (isset($reviewDisplay)) {
                                    echo $reviewDisplay;
-                               }
-                        ?>
+                               } ?>
             
                 </section>
 </main>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 10, 2019 at 12:37 AM
+-- Generation Time: Apr 10, 2019 at 07:19 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.1.27
 
@@ -175,7 +175,7 @@ INSERT INTO `inventory` (`invId`, `invName`, `invDescription`, `invImage`, `invT
 (5, 'Giant Mouse Trap', 'Our big mouse trap. This trap is multifunctional. It can be used to catch dogs, mountain lions, road runners or even muskrats. Must be staked for larger varmints [stakes not included] and baited with approptiate bait [sold seperately].\r\n', '/acme/images/products/trap.jpg', '/acme/images/products/trap-tn.jpg', '20.00', 34, 470, 28, 'Cedar Point, IO', 5, 'Rodent Control', 'Wood'),
 (6, 'Instant Hole', 'Instant hole - Wonderful for creating the appearance of openings.', '/acme/images/products/hole.png', '/acme/images/products/hole-tn.png', '25.00', 269, 24, 2, 'San Jose', 3, 'Hidden Valley', 'Ether'),
 (7, 'Koenigsegg CCX', 'This high performance car is sure to get you where you are going fast. It holds the production car land speed record at an amazing 250mph.', '/acme/images/products/no-image.png', '/acme/images/products/no-image.png', '500000.00', 1, 25000, 3000, 'San Jose', 3, 'Koenigsegg', 'Metal'),
-(8, 'Anvil', '50 lb. Anvil - perfect for any task requireing lots of weight. Made of solid, tempered steel.', '/acme/images/products/anvil.png', '/acme/images/products/anvil-tn.png', '150.00', 15, 80, 50, 'San Jose', 5, 'Steel Made', 'Metal'),
+(8, 'Anvil', '50 lb. Anvil - perfect for any task requireing lots of weight. Made of solid, tempered steel.', '/acme/images/no-img.png', '/acme/images/no-img.png', '150.00', 15, 80, 50, 'San Jose', 3, 'Steel Made', 'Metal'),
 (9, 'Monster Rubber Band', 'These are not tiny rubber bands. These are MONSTERS! These bands can stop a train locamotive or be used as a slingshot for cows. Only the best materials are used!', '/acme/images/products/rubberband.jpg', '/acme/images/products/rubberband-tn.jpg', '4.00', 4589, 75, 1, 'Cedar Point, IO', 3, 'Rubbermaid', 'Rubber'),
 (10, 'Mallet', 'Ten pound mallet for bonking roadrunners on the head. Can also be used for bunny rabbits.', '/acme/images/products/mallet.png', '/acme/images/products/mallet-tn.png', '25.00', 100, 36, 10, 'Cedar Point, IA', 3, 'Wooden Creations', 'Wood'),
 (11, 'TNT', 'The biggest bang for your buck with our nitro-based TNT. Price is per stick.', '/acme/images/products/tnt.png', '/acme/images/products/tnt-tn.png', '10.00', 1000, 25, 2, 'San Jose', 2, 'Nobel Enterprises', 'Plastic'),
@@ -213,7 +213,11 @@ INSERT INTO `reviews` (`reviewId`, `reviewText`, `reviewDate`, `invId`, `clientI
 (6, 'I forgot the bait', '2019-04-06 07:50:16', 5, 8),
 (7, 'This bomb was too heavy to throw, and the fuse was very short. You have to run very fast.', '2019-04-08 07:03:44', 17, 9),
 (8, 'This catapult put me right over the wall as intended.', '2019-04-08 07:42:25', 3, 9),
-(9, 'I found this catapult technology to be a little old school.', '2019-04-08 09:08:12', 3, 5);
+(9, 'I found this catapult technology to be a little old school.', '2019-04-08 09:08:12', 3, 5),
+(10, 'I didn&#39;t like my evil companion. He was so... evil.', '2019-04-10 03:54:44', 18, 1),
+(11, 'This is such a cute little mortar. I want to get two so they match.', '2019-04-10 05:05:31', 2, 1),
+(12, 'I thought the rubber band would be stretchier. Sure, its big, but its not really fantastically elastic.', '2019-04-10 05:33:47', 9, 10),
+(13, 'It was really hard to store this hole before I used it.', '2019-04-10 05:42:40', 6, 9);
 
 --
 -- Indexes for dumped tables
@@ -286,7 +290,7 @@ ALTER TABLE `inventory`
 -- AUTO_INCREMENT for table `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `reviewId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `reviewId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Constraints for dumped tables

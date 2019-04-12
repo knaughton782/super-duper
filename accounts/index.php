@@ -67,7 +67,9 @@ switch ($action) {
         
         $_SESSION['loggedin'] = TRUE; // A valid user exists, log them in
         array_pop($clientData);       // Remove the password from the array with the array_pop function
-        $_SESSION['clientData'] = $clientData; // Store the array into the session
+        $_SESSION['clientData'] = $clientData; // Store the client information array into the session
+        unset($_COOKIE['firstname']);
+        setcookie('firstname', $_SESSION['clientData']['clientFirstname'], strtotime('+1 year'), '/');
 
         // Send them to the admin view if login is successful
         include '../view/admin.php';
@@ -120,6 +122,11 @@ switch ($action) {
         }
         
         break;
+        
+    case 'adminClient':
+        $page_title = 'Manage Reviews';
+        include '../view/client-update.php';
+        break;
 
 
     case 'updateClient':
@@ -166,7 +173,7 @@ switch ($action) {
 
             include '../view/client-update.php';
             exit;
-        }
+        } 
         else {
             $_SESSION['message'] = "<p class='warning'>***Sorry, your profile was not updated. Please try again.";
             include '../view/client-update.php';
