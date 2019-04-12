@@ -96,7 +96,7 @@ function reviewsDisplayOnAdmin($reviews){
 
     $revList = '<table>';
     $revList .= '<thead>';
-    $revList .= '<tr><th>Your reviews:</th><th>Date Reviewed:</th><th>&nbsp;</th><th>&nbsp;</th></tr>';
+    $revList .= '<tr><th>Date Reviewed:</th><th>Your reviews:</th><th>&nbsp;</th><th>&nbsp;</th></tr>';
     $revList .= '</thead>';
     $revList .= '<tbody>';
 

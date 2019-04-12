@@ -215,7 +215,7 @@ switch ($action) {
              $revList = reviewsDisplayOnAdmin($reviews);
          }
         else {
-            $_SESSION['message'] = "<p class='warning'>You haven't written any product reviews.</p>";
+            $_SESSION['message'] = "<p class='warning'>You haven't written any reviews.</p>";
         }
 
         include '../view/admin.php';

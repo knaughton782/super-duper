@@ -188,15 +188,13 @@ switch ($action) {
         $deleteResult = deleteProduct($invId);
 
         if ($deleteResult) {
-            $message = "<p class='instructions'>Congratulations, $invName was successfully deleted.</p>";
+            $_SESSION['message'] = "<p class='instructions'>Congratulations, $invName was successfully deleted.</p>";
 
-            $_SESSION['message'] = $message;
             header('location: /acme/products/');
             exit;
         } else {
-            $message = "<p class='warning'>Error: $invName was not deleted.</p>";
+            $_SESSION['message'] = "<p class='warning'>Error: $invName was not deleted.</p>";
 
-            $_SESSION['message'] = $message;
             header('location: /acme/products/');
             exit;
         }

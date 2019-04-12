@@ -4,12 +4,13 @@
  */
 
 //get basic review info for update/delete process
-function getReviewInfo() {
+function getReviewInfo($reviewId) {
     $db = acmeConnect();
-    $sql = 'SELECT * FROM reviews ORDER BY reviewDate ASC';
+    $sql = 'SELECT *, inventory.invName FROM reviews JOIN inventory ON reviews.invId = inventory.invId WHERE reviewId = :reviewId';
     $stmt = $db->prepare($sql);
+    $stmt->bindValue(':reviewId', $reviewId, PDO::PARAM_INT);
     $stmt->execute();
-    $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $reviews = $stmt->fetch(PDO::FETCH_ASSOC);
     $stmt->closeCursor();
     return $reviews;
 }
@@ -70,14 +71,16 @@ function getReviewById($reviewId) {
 }
 
 //    get & update specific review by id
-function updateSpecificReview($reviewText, $reviewDate, $invId, $clientId) {
+function updateReview($reviewId, $reviewText, $reviewDate, $invId, $clientId) {
     $db = acmeConnect();
     $sql = 'UPDATE reviews SET reviewText = :reviewText, reviewDate = :reviewDate, invId = :invId, clientId = :iclientId';
     $stmt = $db->prepare($sql);
-    $stmt->bindValue(':invId', $invId, PDO::PARAM_INT);
-    $stmt->bindValue(':clientId', $clientId, PDO::PARAM_INT);
+    $stmt->bindValue(':reviewId', $reviewId, PDO::PARAM_INT);
     $stmt->bindValue(':reviewText', $reviewText, PDO::PARAM_STR);
     $stmt->bindValue(':reviewDate', $reviewDate, PDO::PARAM_STR);
+    $stmt->bindValue(':invId', $invId, PDO::PARAM_INT);
+    $stmt->bindValue(':clientId', $clientId, PDO::PARAM_INT);
+    
     $stmt->execute();
     $rowsChanged = $stmt->rowCount();
     $stmt->closeCursor();
@@ -89,7 +92,7 @@ function updateSpecificReview($reviewText, $reviewDate, $invId, $clientId) {
 function deleteReview($reviewId) {
     //delete review by id
     $db = acmeConnect();
-    $sql = 'DELETE FROM review WHERE reviewId = :reviewId';
+    $sql = 'DELETE FROM reviews WHERE reviewId = :reviewId';
     $stmt = $db->prepare($sql);
     $stmt->bindValue(':reviewId', $reviewId, PDO::PARAM_INT);
     $stmt->execute();

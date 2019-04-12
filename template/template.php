@@ -1,11 +1,11 @@
 <?php include $_SERVER['DOCUMENT_ROOT'] . '/acme/common/header.php'; ?>
-<main id="page-content"> 
-  
+<main id="page-content">
+
     <h1 class="siteTitle"></h1>
 
-<!--     Hero description text-->
+    <!--     Hero description text-->
     <section id="heroSection">
-       
+
 
     </section>
 

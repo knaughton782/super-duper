@@ -17,8 +17,7 @@
             <li>Email Address: <?php echo $_SESSION['clientData']['clientEmail']; ?></li>
         </ul>
         <br>
-        <p><a href="/acme/accounts?action=updateClient" title="Click to Manage Your Account" id="acctMgmtLink">Click to
-                Manage Your Profile</a></p>
+        <p><a href="/acme/accounts?action=updateClient" title="Click to Manage Your Account" id="acctMgmtLink">Manage Your Profile</a></p>
         <br>
     </section>
     <section>

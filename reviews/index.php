@@ -1,4 +1,5 @@
 <?php
+
 /*
  * REVIEWS CONTROLLER :
  */
@@ -27,7 +28,7 @@ if ($action == NULL) {
 //only add, update, and delete review, not display admin view for reviews
 switch ($action) {
 
-        // insert a review **************
+    // insert a review **************
     case 'add_review':
         $reviewText = filter_input(INPUT_POST, 'reviewText', FILTER_SANITIZE_STRING);
         $reviewDate = filter_input(INPUT_POST, 'reviewDate', FILTER_SANITIZE_STRING);
@@ -47,69 +48,113 @@ switch ($action) {
 
         //is the return value = 1? One row changed in the db
         if ($reviewOutcome === 1) {
-            
+
             header('Location: /acme/products?action=detail&invId=' . $invId);
             $_SESSION['message'] = "<p class='warning'>Your product review was successfully added! </p>";
-           // echo print_r( $_SESSION['message'], TRUE );
+            // echo print_r( $_SESSION['message'], TRUE );
             //exit;
-            
+
             exit;
-        } else {
+        }
+        else {
             $_SESSION['message'] = "<p class='warning'>Error! Your review was not added. Please try again.</p>";
             include '../view/product-detail.php';
             exit;
         }
         break;
 
-        // deliver a view to edit a review
+    // deliver a view to edit a review
+//    case 'editReview':
+//        include '../view/review-update.php';
+//        break;
+    
+    //gets the review to edit
     case 'editReview':
+        $reviewId = filter_input(INPUT_GET, 'reviewId', FILTER_VALIDATE_INT);
+        $reviewInfo = getReviewInfo($reviewId);
+        if (count($reviewInfo) < 1) {
+            $_SESSION['message'] = '<p class="warning">Sorry, no reviews were found.</p>';
+            header('Location: /acme/reviews/');
+            exit;
+        } 
+
+        include '../view/review-update.php';
+        exit;
+        break;
+    
+    // handles the review update
+    case 'updateReview':
+               
+        $reviewId = filter_input(INPUT_POST, 'reviewId', FILTER_SANITIZE_NUMBER_INT);
+        $reviewText = filter_input(INPUT_POST, 'reviewText', FILTER_SANITIZE_STRING);
+        $reviewDate = filter_input(INPUT_POST, 'reviewDate', FILTER_SANITIZE_STRING);
+        $invId = filter_input(INPUT_POST, 'invId', FILTER_SANITIZE_NUMBER_INT);
+        $clientId = filter_input(INPUT_POST, 'clientId', FILTER_SANITIZE_NUMBER_INT);
+        
+        $clientId = $_SESSION['clientData']['clientId'];
+
+        //check for empty form fields
+        if (empty($reviewId) || empty($reviewText) || empty($reviewDate) || empty($invId) || empty($clientId)) {
+            $_SESSION['message'] = '<p class="warning">All fields are required.</p>';
+
+            header('Location: /acme/products?action=detail&invId=' . $invId);
+            exit;
+        }
+        $updateReview = updateReview($reviewId, $reviewText, $reviewDate, $invId, $clientId);
+        
         include '../view/review-update.php';
         break;
 
-        // handle the reveiw update
-    case 'update-review':
-        $clientId = $_SESSION['clientData']['clientId'];
-        $reviewsList = getReviewsByUser($clientId);
-        $reviewsListDisplay = buildClientReviewsDisplay($reviewsList);
-        include '../view/admin.php';
+
+
+    case 'delRev':
+        $reviewId = filter_input(INPUT_GET, 'reviewId', FILTER_VALIDATE_INT);
+        $revInfo = getReviewById($reviewId);
+
+        if (count($revInfo) < 1) {
+            $_SESSION['message'] = '<p class="warning">Sorry, no review information could be found.</p>';
+            header('Location: /acme/reviews/');
+            exit;
+        }
+        include '../view/review-delete.php';
+        exit;
+
+        break;
+        
+    // delete review **************
+    case 'deleteReview':
+        $reviewId = filter_input(INPUT_POST, 'reviewId', FILTER_SANITIZE_NUMBER_INT);
+        $deleteResult = deleteReview($reviewId);
+
+        if ($deleteResult) {
+            $_SESSION['message'] = "<p class='instructions'>Congratulations, your review was successfully deleted.</p>";
+
+            header('location: /acme/reviews/');
+            exit;
+        }
+        else {
+            $_SESSION['message'] = "<p class='warning'>Error: your review was not deleted.</p>";
+            header('location: /acme/reviews/');
+            exit;
+        }
         break;
 
-    // // edit review ****************
-    // case 'modifyReview':
-    //     if ($reviews) {
-    //         $modifyReviews = personalReviewsTable($reviews);
-    //         $_SESSION['message'] = '<h2 class="warning">Modify your reviews at the bottom of the page.</h2>';
-    //     } else {
-    //         $_SESSION['message'] = '<p class="warning">No product reviews have been found for your account.</p>';
-    //     }
-    //     include '/acme/accounts/';
-    //     break;
 
-    //     // delete review **************
-    // case 'deleteReview':
-    //     $reviewId = filter_input(INPUT_POST, 'reviewId', FILTER_SANITIZE_NUMBER_INT);
-    //     $deleteResult = deleteReview($invId);
-
-    //     if ($deleteResult) {
-    //         $message = "<p class='instructions'>Congratulations, $reviewId was successfully deleted.</p>";
-
-    //         $_SESSION['message'] = $message;
-    //         header('location: /acme/products/');
-    //         exit;
-    //     } else {
-    //         $message = "<p class='warning'>Error: $reviewId was not deleted.</p>";
-    //         $_SESSION['message'] = $message;
-    //         header('location: /acme/products/');
-    //         exit;
-    //     }
-    //     break;
-
-
-        // default delivers admin view if the client is logged in or the acme home view if not
+    // default delivers admin view if the client is logged in or the acme home view if not
     default:
         if ($_SESSION['loggedin']) {
+            $clientId = $_SESSION['clientData']['clientId'];
+            $reviews = getReviewsByUser($clientId);
+
+            if (count($reviews) > 0) {
+                $revList = reviewsDisplayOnAdmin($reviews);
+            }
+            else {
+                $_SESSION['message'] = "<p class='warning'>No reviews found for this user.</p>";
+            }
             include '../view/admin.php';
-        } else {
+        }
+        else {
 
             header('Location: /acme/');
             exit;

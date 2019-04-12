@@ -23,27 +23,25 @@
             <fieldset>
                 <label for="clientFirstname">First name: </label><br>
                 <input type="text" name="clientFirstname" id="clientFirstname" <?php if (isset($clientFirstname)) {
-                                                                                    echo "value='$clientFirstname'";
-                                                                                } elseif (isset($_SESSION['clientData']['clientFirstName'])) {
-                                                                                    echo "value='" . $_SESSION['clientData']['clientFirstName'] . "'";
-                                                                                } ?> required>
+                        echo "value='$clientFirstname'";
+                        } elseif (isset($_SESSION['clientData']['clientFirstname'])) {
+                        echo "value='" . $_SESSION['clientData']['clientFirstname'] . "'";
+                        } ?> required>
                 <br>
 
                 <label for="clientLastname">Last name: </label><br>
                 <input type="text" name="clientLastname" id="clientLastname" <?php if (isset($clientLastname)) {
-                                                                                    echo "value='$clientLastname'";
-                                                                                } elseif (isset($_SESSION['clientData']['clientLastname'])) {
-                                                                                    echo "value='" . $_SESSION['clientData']['clientLastname'] . "'";
-                                                                                } ?> required>
+                        echo "value='$clientLastname'";
+                        } elseif (isset($_SESSION['clientData']['clientLastname'])) {
+                            echo "value='" . $_SESSION['clientData']['clientLastname'] . "'";
+                        } ?> required>
                 <br>
 
                 <label for="clientEmail">Email Address: </label><br>
                 <input type="email" name="clientEmail" id="clientEmail" placeholder="Pleae enter a valid email address"
-                    <?php if (isset($clientEmail)) {
-                                                                                                                            echo "value='$clientEmail'";
-                                                                                                                        } elseif (isset($_SESSION['clientData']['clientEmail'])) {
-                                                                                                                            echo "value='" . $_SESSION['clientData']['clientEmail'] . "'";
-                                                                                                                        } ?> required>
+                    <?php if (isset($clientEmail)) { echo "value='$clientEmail'";} elseif (isset($_SESSION['clientData']['clientEmail'])) {
+                        echo "value='" . $_SESSION['clientData']['clientEmail'] . "'";
+                        } ?> required>
                 <br>
 
                 <input type="submit" name='submit' class="loginBtn" value="Update Profile">
