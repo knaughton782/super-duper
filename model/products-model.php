@@ -48,8 +48,7 @@ function addProduct($categoryId, $invName, $invDescription, $invImage, $invThumb
 }
 
 //this function will get basic product info from the inventory for the update/delete process
-function getProductBasics()
-{
+function getProductBasics() {
     $db = acmeConnect();
     $sql = 'SELECT invName, invId FROM inventory ORDER BY invName ASC';
     $stmt = $db->prepare($sql);
@@ -60,9 +59,7 @@ function getProductBasics()
 }
 
 // Get product information by invId ********************
-
-function getProductInfo($invId)
-{
+function getProductInfo($invId) {
     $db = acmeConnect();
     $sql = 'SELECT * FROM inventory WHERE invId = :invId';
     $stmt = $db->prepare($sql);
@@ -74,7 +71,6 @@ function getProductInfo($invId)
 }
 
 // Update a product ********************
-
 function updateProduct($invId, $categoryId, $invName, $invDescription, $invImage, $invThumbnail, $invPrice, $invStock, $invSize, $invWeight, $invLocation, $invVendor, $invStyle)
 {
     // Create a connection

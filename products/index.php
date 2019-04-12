@@ -1,5 +1,4 @@
 <?php
-
 /*
  *  Products controller ... direct user to add product or add category page and save info to the inventory or categories table in db
  */
@@ -8,7 +7,6 @@
 session_start();
 
 #get db connection, helper functions, and bring models into scope
-
 require_once '../library/connections.php';
 require_once '../library/functions.php';
 require_once '../model/acme-model.php';
@@ -32,7 +30,6 @@ switch ($action) {
     case 'newCat':
         include '../view/add-category.php';
         break;
-
        
         // add new category logic // -----------------------------------------------------------
     case 'addCat':
@@ -84,7 +81,6 @@ switch ($action) {
         //call the function and send info to model
         $prodOutcome = addProduct($categoryId, $invName, $invDescription, $invImage, $invThumbnail, $invPrice, $invStock, $invSize, $invWeight, $invLocation, $invVendor, $invStyle);
 
-
         // is the return value = 1? One row changed in the db
         if ($prodOutcome === 1) {
             $_SESSION['message'] = "<p class='instructions'>Thank you for adding $invName! </p>";
@@ -124,12 +120,8 @@ switch ($action) {
         exit;
         break;
 
-
-
-
+        
         // Update Product // -----------------------------------------------------------
-
-
     case 'updateProd':
 
         $invId = filter_input(INPUT_POST, 'invId', FILTER_SANITIZE_NUMBER_INT);
@@ -225,9 +217,6 @@ switch ($action) {
             $prodDisplay = buildProductsDisplay($products);
         }
 
-        //        echo $prodDisplay;
-        //        exit;
-
 
         include '../view/category.php';
 
@@ -251,8 +240,8 @@ switch ($action) {
 
         // thumbnail info
         $thumbnails = getThumbnailImages($invId);
-        //           echo print_r( $thumbnails, TRUE );
-        //            exit;
+                // echo print_r( $thumbnails, TRUE );
+                // exit;
 
         if ($thumbnails) {
             $thumbnailDisplayVar = thumbnailDisplay($thumbnails);
@@ -266,15 +255,15 @@ switch ($action) {
         //        exit;
 
         if ($reviews) {
-            $reviewDisplay = reviewsDisplay($reviews);
+            $reviewDisplay = reviewsDisplayOnProduct($reviews);
             $_SESSION['message'] = '<h2 class="warning">Product reviews are available at the bottom of the page.</h2>';
         } else {
             $_SESSION['message'] = '<p class="warning">No customer reviews have been added for this product.</p>';
         }
-
+        
+        
         include '../view/product-detail.php';
         break;
-
 
 
         // -----------------------------------------------------------

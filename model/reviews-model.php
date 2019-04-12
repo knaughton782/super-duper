@@ -3,18 +3,26 @@
  * REVIEWS MODEL
  */
 
-//  Insert a review
-function addReview($reviewText, $reviewDate, $invId, $clientId)
-{
+//get basic review info for update/delete process
+function getReviewInfo() {
     $db = acmeConnect();
-    $sql = 'insert into reviews ( reviewText, reviewDate, invId, clientId ) values (:reviewText, :reviewDate, :invId, :clientId)';
+    $sql = 'SELECT * FROM reviews ORDER BY reviewDate ASC';
+    $stmt = $db->prepare($sql);
+    $stmt->execute();
+    $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt->closeCursor();
+    return $reviews;
+}
+ 
+//  Insert a review
+function addReview($reviewText, $reviewDate, $invId, $clientId) {
+    $db = acmeConnect();
+    $sql = 'insert into reviews (reviewText, reviewDate, invId, clientId ) values (:reviewText, :reviewDate, :invId, :clientId)';
     $stmt = $db->prepare($sql); // replace placeholders in sql statement with actual values in the variables and identifies data type for the db
-
     $stmt->bindValue(':reviewText', $reviewText, PDO::PARAM_STR);
     $stmt->bindValue(':reviewDate', $reviewDate, PDO::PARAM_STR);
     $stmt->bindValue(':invId', $invId, PDO::PARAM_INT);
     $stmt->bindValue(':clientId', $clientId, PDO::PARAM_INT);
-
     $stmt->execute(); //inserts the data or executes the query
     $rowsChanged = $stmt->rowCount(); //stores the number of rows changed in a variable so we can test for success
     $stmt->closeCursor(); //close db interaction
@@ -22,11 +30,8 @@ function addReview($reviewText, $reviewDate, $invId, $clientId)
     return $rowsChanged; //shows success or failure of sql query
 }
 
-
-
 //*  Get reviews for a specific inventory item
-function getReviewsByProduct($invId)
-{    //NEED A JOIN HERE
+function getReviewsByProduct($invId) {    //NEED A JOIN HERE
     $db = acmeConnect();
     $sql = 'SELECT *, clients.clientFirstname, clients.clientLastname FROM reviews join clients on reviews.clientId = clients.clientId where invId = :invId order by reviewDate desc';
     $stmt = $db->prepare($sql);
@@ -39,9 +44,9 @@ function getReviewsByProduct($invId)
 }
 
 //*  Get reviews written by a specific client
-function getReviewsByUser($clientId){
+function getReviewsByUser($clientId) {
     $db = acmeConnect();
-    $sql = 'SELECT * FROM reviews JOIN inventory ON reviews.invId = inventory.invId WHERE clientId = :clientId ORDER BY reviewDate DESC';
+    $sql = 'SELECT * FROM reviews JOIN inventory ON reviews.invId = inventory.invId WHERE reviews.clientId = :clientId ORDER BY reviewDate DESC';
     $stmt = $db->prepare($sql);
     $stmt->bindValue(':clientId', $clientId, PDO::PARAM_INT);
     $stmt->execute();
@@ -52,9 +57,7 @@ function getReviewsByUser($clientId){
 }
 
 //*  Get a specific review by reviewId
-function getReviewById($reviewId)
-{
-
+function getReviewById($reviewId) {
     $db = acmeConnect();
     $sql = 'SELECT * FROM reviews WHERE reviewId = :reviewId';
     $stmt = $db->prepare($sql);
@@ -67,8 +70,7 @@ function getReviewById($reviewId)
 }
 
 //    get & update specific review by id
-function updateSpecificReview($reviewText, $reviewDate, $invId, $clientId)
-{
+function updateSpecificReview($reviewText, $reviewDate, $invId, $clientId) {
     $db = acmeConnect();
     $sql = 'UPDATE reviews SET reviewText = :reviewText, reviewDate = :reviewDate, invId = :invId, clientId = :iclientId';
     $stmt = $db->prepare($sql);
@@ -84,8 +86,7 @@ function updateSpecificReview($reviewText, $reviewDate, $invId, $clientId)
 }
 
 //*  Delete a specific review
-function deleteReview($reviewId)
-{
+function deleteReview($reviewId) {
     //delete review by id
     $db = acmeConnect();
     $sql = 'DELETE FROM review WHERE reviewId = :reviewId';

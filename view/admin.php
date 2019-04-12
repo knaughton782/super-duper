@@ -22,17 +22,27 @@
         <br>
     </section>
     <section>
-        <h1>Manage your reviews: </h1>
-
-        <?php if (isset($personalReviewsTable)) { 
-            echo $personalReviewsTable; 
-            } ?>
         <p class='border'></p>
+        <br>
+        <h1>Manage your reviews: </h1>
+        <br>
+
+        <?php
+            if (isset($_SESSION['message'])) {
+            echo $_SESSION['message'];
+            } 
+            
+            if (isset($revList)) {
+            echo $revList;
+            }
+            ?>
+        
 
         <!-- ------- This should only be seen by admin levels ------ -->
 
         <?php if ($_SESSION['loggedin'] && $_SESSION['clientData']['clientLevel'] > 1) { ?>
         <p class="border"></p>
+        <br>
         <h1>Products Administration:</h1>
         <p>Use the link below to manage Acme products.</p><br><br>
         <p><a href="/acme/products/" id="mgProd" title="Go to products page">Manage Products</a></p>

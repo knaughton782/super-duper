@@ -1,7 +1,7 @@
 <?php include $_SERVER['DOCUMENT_ROOT'] . '/acme/common/header.php'; ?>
 <main id="page-content">
 
-    <h1 class="siteTitle"><?php echo $productInfo['invName'] ?> Details</h1>
+    <h1 class="siteTitle"><?php if (isset($productInfo['invName'])){ echo $productInfo['invName'];} ?> Details</h1>
 
     <?php if (isset($_SESSION['message'])) { echo $_SESSION['message'];
         unset($_SESSION['message']); } ?>
@@ -10,10 +10,10 @@
         <?php
         if (isset($prodDisplay)) {
             echo $prodDisplay;
-        } ?> <br>
+            } ?> <br>
     </section>
 
-    <h2><?php echo $productInfo['invName'] ?> Thumbnails</h2>
+    <h2><?php if (isset($productInfo['invName'])){ echo $productInfo['invName'];} ?> Thumbnails</h2>
     <section class="thumbnails">
         <?php
         if (isset($thumbnailDisplayVar)) {
@@ -25,10 +25,10 @@
         <!-- show form if they are logged in ********************* -->
         <?php if (isset($_SESSION['loggedin'])) { ?>
 
-        <h2><?php echo $productInfo['invName'] ?> Reviews</h2>
+        <h2><?php if (isset($productInfo['invName'])){ echo $productInfo['invName'];} ?> Reviews</h2>
         <p class="border"></p>
 
-        <h3>Add a <?php echo $productInfo['invName'] ?> review:</h3>
+        <h3>Add a <?php if (isset($productInfo['invName'])){ echo $productInfo['invName'];} ?> review:</h3>
 
         <form action="/acme/reviews/" method="post">
             <fieldset>

@@ -1,5 +1,4 @@
 <?php
-
 /*
  * REVIEWS CONTROLLER :
  */
@@ -25,11 +24,7 @@ if ($action == NULL) {
     $action = filter_input(INPUT_GET, 'action');
 }
 
-//$_SESSION['loggedin'] = TRUE;
-
 //only add, update, and delete review, not display admin view for reviews
-
-
 switch ($action) {
 
         // insert a review **************
@@ -41,9 +36,9 @@ switch ($action) {
 
         //check for empty form fields
         if (empty($reviewText)) {
-            $_SESSION['message'] = '<p class="warning">All fields are required. Please provide complete information.</p>';
+            $_SESSION['message'] = '<p class="warning">All fields are required.</p>';
 
-            include '../view/product_detail.php';
+            header('Location: /acme/products?action=detail&invId=' . $invId);
             exit;
         }
 
@@ -52,56 +47,65 @@ switch ($action) {
 
         //is the return value = 1? One row changed in the db
         if ($reviewOutcome === 1) {
+            
             header('Location: /acme/products?action=detail&invId=' . $invId);
+            $_SESSION['message'] = "<p class='warning'>Your product review was successfully added! </p>";
+           // echo print_r( $_SESSION['message'], TRUE );
+            //exit;
+            
             exit;
         } else {
             $_SESSION['message'] = "<p class='warning'>Error! Your review was not added. Please try again.</p>";
-
-            include '../view/product_detail.php';
+            include '../view/product-detail.php';
             exit;
         }
         break;
 
-
-       
-        //deliver edit/delete page
-    case 'deliverModifyReview':
-        include '../view/accounts/';
+        // deliver a view to edit a review
+    case 'editReview':
+        include '../view/review-update.php';
         break;
 
-    // edit review ****************
-    case 'modifyReview':
-        if ($reviews) {
-            $modifyReviews = personalReviewsTable($reviews);
-            $_SESSION['message'] = '<h2 class="warning">Modify your reviews at the bottom of the page.</h2>';
-        } else {
-            $_SESSION['message'] = '<p class="warning">No product reviews have been found for your account.</p>';
-        }
-        include '../view/accounts/';
+        // handle the reveiw update
+    case 'update-review':
+        $clientId = $_SESSION['clientData']['clientId'];
+        $reviewsList = getReviewsByUser($clientId);
+        $reviewsListDisplay = buildClientReviewsDisplay($reviewsList);
+        include '../view/admin.php';
         break;
 
-        // delete review **************
-    case 'deleteReview':
-        $reviewId = filter_input(INPUT_POST, 'reviewId', FILTER_SANITIZE_NUMBER_INT);
-        $deleteResult = deleteReview($invId);
+    // // edit review ****************
+    // case 'modifyReview':
+    //     if ($reviews) {
+    //         $modifyReviews = personalReviewsTable($reviews);
+    //         $_SESSION['message'] = '<h2 class="warning">Modify your reviews at the bottom of the page.</h2>';
+    //     } else {
+    //         $_SESSION['message'] = '<p class="warning">No product reviews have been found for your account.</p>';
+    //     }
+    //     include '/acme/accounts/';
+    //     break;
 
-        if ($deleteResult) {
-            $message = "<p class='instructions'>Congratulations, $reviewId was successfully deleted.</p>";
+    //     // delete review **************
+    // case 'deleteReview':
+    //     $reviewId = filter_input(INPUT_POST, 'reviewId', FILTER_SANITIZE_NUMBER_INT);
+    //     $deleteResult = deleteReview($invId);
 
-            $_SESSION['message'] = $message;
-            header('location: /acme/products/');
-            exit;
-        } else {
-            $message = "<p class='warning'>Error: $reviewId was not deleted.</p>";
-            $_SESSION['message'] = $message;
-            header('location: /acme/products/');
-            exit;
-        }
-        break;
+    //     if ($deleteResult) {
+    //         $message = "<p class='instructions'>Congratulations, $reviewId was successfully deleted.</p>";
+
+    //         $_SESSION['message'] = $message;
+    //         header('location: /acme/products/');
+    //         exit;
+    //     } else {
+    //         $message = "<p class='warning'>Error: $reviewId was not deleted.</p>";
+    //         $_SESSION['message'] = $message;
+    //         header('location: /acme/products/');
+    //         exit;
+    //     }
+    //     break;
 
 
         // default delivers admin view if the client is logged in or the acme home view if not
-
     default:
         if ($_SESSION['loggedin']) {
             include '../view/admin.php';

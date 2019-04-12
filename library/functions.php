@@ -72,6 +72,49 @@ function buildProductDisplay($productInfo){
     return $details;
 }
 
+function reviewsDisplayOnProduct($reviews){
+
+    $reviewList = '<h3>Previous Reviews</h3>';
+    $reviewList .= '<ul>';
+
+    foreach ($reviews as $review) {
+        $username = substr($review['clientFirstname'], 0, 1) . $review['clientLastname'];
+        $date = date('M d, Y', strtotime($review['reviewDate']));
+
+        $reviewList .= '<li>';
+        $reviewList .= "<span class='title'>Written by: $username on $date</span>";
+        $reviewList .= "<span class='text'>$review[reviewText]</span>";
+        $reviewList .= '</li>';
+    }
+
+    $reviewList .= '</ul>';
+
+    return $reviewList;
+}
+
+function reviewsDisplayOnAdmin($reviews){
+
+    $revList = '<table>';
+    $revList .= '<thead>';
+    $revList .= '<tr><th>Your reviews:</th><th>Date Reviewed:</th><th>&nbsp;</th><th>&nbsp;</th></tr>';
+    $revList .= '</thead>';
+    $revList .= '<tbody>';
+
+        foreach ($reviews as $review) {
+            $date = date('M d, Y', strtotime($review['reviewDate']));
+
+            $revList .= "<tr><td>$date</td>";
+            $revList .= "<td>$review[reviewText]</td>";
+            $revList .= "<td><a href='/acme/reviews?action=editReview&reviewId=$review[reviewId]' title='Click to modify'>Modify</a></td>";
+            $revList .= "<td><a href='/acme/reviews?action=deleteReview&reviewId=$review[reviewId]'
+                        title='Click to delete'>Delete</a></td></tr>";
+            }
+        $revList .= '</tbody></table>';
+        
+        return $revList;
+}
+
+
 /* * *********** IMAGE FUNCTIONS ***************** */
 
 // Adds "-tn" designation to file name
@@ -263,54 +306,6 @@ function resizeImage($old_image_path, $new_image_path, $max_width, $max_height){
 }   // ends the if - else
 
 //end image functions *******************************************
-
-
-function reviewsDisplay($reviews){
-
-    $reviewList = '<h3>Previous Reviews</h3>';
-    $reviewList .= '<ul>';
-
-    foreach ($reviews as $review) {
-        $username = substr($review['clientFirstname'], 0, 1) . $review['clientLastname'];
-        $date = date('M d, Y', strtotime($review['reviewDate']));
-
-        $reviewList .= '<li>';
-        $reviewList .= "<span class='title'>Written by: $username on $date</span><br>";
-        $reviewList .= "<span class='text'>$review[reviewText]</span><br>";
-        $reviewList .= '</li>';
-        $reviewList .= '<br>';
-    }
-
-    $reviewList .= '</ul>';
-
-    return $reviewList;
-}
-
-//function to display reviews to edit or delete
-function personalReviewsTable($reviews){
-    if (count($reviews) > 0) {
-        $personalReviewList = '<table>';
-        $personalReviewList .= '<thead>';
-        $personalReviewList .= '<tr><th>Your reviews:</th><th>Date Reviewed:</th><th>&nbsp;</th></tr>';
-        $personalReviewList .= '</thead>';
-        $personalReviewList .= '<tbody>';
-
-        foreach ($reviews as $review) {
-            $date = date('M d, Y', strtotime($review['reviewDate']));
-
-            $personalReviewList .= "<tr><td>$review[invName]</td>";
-            $personalReviewList .= "<td>$date</td>";
-            $personalReviewList .= "<td><a href='/acme/reviews?action=modifyReview&reviewId=$review[reviewId]' title='Click to modify'>Modify</a></td>";
-            $personalReviewList .= "<td><a href='/acme/reviews?action=deleteReview&invId=$review[reviewId]' title='Click to delete'>Delete</a></td></tr>";
-        }
-        $personalReviewList .= '</tbody></table>';
-        return $personalReviewList;
-    } else {
-        $_SESSION['message'] = '<p class="warning">Sorry, you haven\'t reviewed any products yet.</p>';
-    }
-}
-
-
 
 
 

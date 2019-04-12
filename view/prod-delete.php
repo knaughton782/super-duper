@@ -26,9 +26,12 @@ if (!$_SESSION['loggedin'] || $_SESSION['clientData']['clientLevel'] < 2) {
 
                 <!-- NAME-->
                 <label for="invName">Product Name: </label><br>
-                <input type="text" name="invName" id="invName" <?php if (isset($prodInfo['invName'])) {
-                                                                    echo "value='$prodInfo[invName]'";
-                                                                } ?> readonly><br>
+                <input type="text" name="invName" id="invName" 
+                    <?php if (isset($prodInfo['invName'])) {
+                        
+                        echo "value='$prodInfo[invName]'";
+                        
+                        } ?> readonly><br>
 
 
                 <!-- DESCRIPTION-->

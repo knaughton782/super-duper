@@ -49,7 +49,9 @@ img {
 
 .title {
     font-weight: bold;
+    display: block;
 }
+
 /*********************** forms general ***************/
 
 input[type=text], input[type=password], input[type=email], input[type=number], textarea, select {
@@ -216,10 +218,9 @@ th {
 
 .reviewBox ul li {
     background-color: #fff;
-    display: inline-block;
-    width: 50%;
     padding: 8px;
-    margin: 5px 0;
+    margin: 10px 75px 10px 0;
+    width: 75%;
 }
     
 @media (min-width: 310px) {

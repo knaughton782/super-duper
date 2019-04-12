@@ -66,6 +66,16 @@ switch ($action) {
         $_SESSION['clientData'] = $clientData; // Store the client information array into the session
         unset($_COOKIE['firstname']);
         setcookie('firstname', $_SESSION['clientData']['clientFirstname'], strtotime('+1 year'), '/');
+        
+        $clientId = $_SESSION['clientData']['clientId'];
+        $reviews = getReviewsByUser($clientId);
+        
+         if(count($reviews) > 0) {
+             $revList = reviewsDisplayOnAdmin($reviews);
+         }
+        else {
+            $_SESSION['message'] = "<p class='warning'>You haven't written any product reviews.</p>";
+        }
 
         // Send them to the admin view if login is successful
         include '../view/admin.php';
@@ -197,15 +207,17 @@ switch ($action) {
         header('Location: /acme/');
         break;
 
-    case 'review-admin':
-        $clientId = $_SESSION['clientData']['clientId'];
-        $clientReviewsArray = getReviewsByUser($clientId);
-        $clientReviewsdisplay = buildClientReviewsDisplay($clientReviewsArray);
-        include '../view/admin.php';
-        break;
-
     default:
+        $clientId = $_SESSION['clientData']['clientId'];
+        $reviews = getReviewsByUser($clientId);
+        
+         if(count($reviews) > 0) {
+             $revList = reviewsDisplayOnAdmin($reviews);
+         }
+        else {
+            $_SESSION['message'] = "<p class='warning'>You haven't written any product reviews.</p>";
+        }
 
         include '../view/admin.php';
         break;
-}
+    }
